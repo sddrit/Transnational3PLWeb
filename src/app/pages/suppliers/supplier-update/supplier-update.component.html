@@ -1,0 +1,165 @@
+<h3 class="content-block">
+    {{supplier.Id == 0 ? 'Add': 'Update' }} Supplier
+    <dx-button class="btn-back" type="back" (onClick)="backToSuppliers()">
+    </dx-button>
+</h3>
+
+<div class="content-block dx-card responsive-paddings">
+
+    <form (submit)="handleSubmit($event)">
+        <dx-form id="form" [(formData)]="supplier" method="post" labelLocation="top" [colCount]="2">
+
+            <dxi-item dataField="SupplierName" [isRequired]="true"></dxi-item>
+            <dxi-item>
+                <dxo-label text="Is Active"> </dxo-label>
+                <dx-check-box [(value)]="supplier.Active">
+                </dx-check-box>
+            </dxi-item>
+
+
+            <dxi-item dataField="BusinessRegistrationId"></dxi-item>
+            <dxi-item dataField="VatNumber"></dxi-item>
+
+            <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
+            <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
+
+            <dxi-item itemType="group" caption="Contact information">
+                <dxi-item itemType="tabbed">
+                    <dxo-tab-panel-options>
+                    </dxo-tab-panel-options>
+                    <dxi-tab title="Contact" [colCount]="2">
+                        <dxi-item dataField="Contact.ContactPerson" [colSpan]="2">
+                            <dxo-label text="Contact Person"> </dxo-label>
+                        </dxi-item>
+                        <dxi-item dataField="Contact.Phone" [isRequired]="true">
+                            <dxo-label text="Phone"> </dxo-label>
+                        </dxi-item>
+                        <dxi-item dataField="Contact.Mobile">
+                            <dxo-label text="Mobile"> </dxo-label>
+                        </dxi-item>
+                        <dxi-item dataField="Contact.Email" [colSpan]="2">
+                            <dxo-label text="Email"> </dxo-label>
+                        </dxi-item>
+                    </dxi-tab>
+                    <dxi-tab title="Address" [colCount]="2">
+                        <dxi-item dataField="Address.FirstName">
+                            <dxo-label text="First Name"> </dxo-label>
+                        </dxi-item>
+                        <dxi-item dataField="Address.LastName">
+                            <dxo-label text="Last Name"> </dxo-label>
+                        </dxi-item>
+                        <dxi-item dataField="Address.AddressLine1" [isRequired]="true">
+                            <dxo-label text="Address Line 1"> </dxo-label>
+                        </dxi-item>
+                        <dxi-item dataField="Address.AddressLine2">
+                            <dxo-label text="Address Line 2"> </dxo-label>
+                        </dxi-item>
+
+                        <dxi-item *ngIf="supplier && supplier.Address">
+                            <dxo-label text="City"> </dxo-label>
+                            <dx-select-box [dataSource]="cities" [(value)]="supplier.Address.CityId"
+                                displayExpr="CityName" valueExpr="Id" [searchMode]="'contains'"
+                                [searchExpr]="'CityName'" [searchTimeout]="200" [minSearchLength]="0"
+                                [searchEnabled]="true"></dx-select-box>
+                        </dxi-item>
+
+                        <dxi-item dataField="Address.PostalCode" [isRequired]="true">
+                            <dxo-label text="Postal Code"> </dxo-label>
+                        </dxi-item>
+                    </dxi-tab>
+                </dxi-item>
+            </dxi-item>
+
+            <dxi-item itemType="group" caption="Supplier Charges">
+                <dxi-item dataField="SupplierCharges.AllocatedUnits">
+                    <dxo-label text="Allocated Units"> </dxo-label>
+                </dxi-item>
+                <dxi-item dataField="SupplierCharges.StorageChargePerUnit">
+                    <dxo-label text="Storage Charge Per Unit"> </dxo-label>
+                </dxi-item>
+                <dxi-item dataField="SupplierCharges.AdditionalChargePerUnitPrice">
+                    <dxo-label text="Additional Charge Per Unit Price"> </dxo-label>
+                </dxi-item>
+                <dxi-item dataField="SupplierCharges.HandlingCharge">
+                    <dxo-label text="Handling Charge"> </dxo-label>
+                </dxi-item>
+            </dxi-item>
+
+            <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
+
+            <dxi-item>
+                <dxo-label text="Invoice Policy"> </dxo-label>
+                <dx-text-area [height]="90" [(value)]="supplier.InvoicePolicy">
+                </dx-text-area>
+            </dxi-item>
+            <dxi-item>
+                <dxo-label text="Return Policy"> </dxo-label>
+                <dx-text-area [height]="90" [(value)]="supplier.ReturnPolicy">
+                </dx-text-area>
+            </dxi-item>
+
+            <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
+            <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
+
+            <dxi-item itemType="group" cssClass="pickup-list-address-container dx-card responsive-paddings"
+                [colSpan]="2" *ngIf="supplier && supplier.PickupAddress">
+                <h3>Pickup Addresses
+                    <dx-button class="btn-back" text="Add" (onClick)="openAddPickupAddressUpdatePopup()">
+                    </dx-button>
+                </h3>
+                <hr />
+
+                <dx-list id="list" [dataSource]="supplier.PickupAddress" [allowItemDeleting]="true"
+                    (onItemClick)="openUpdatePickupAddressUpdatePopup($event)">
+                    <div *dxTemplate="let item of 'item'">
+                        <div>
+                            <div>{{getPickupAddressDisplayStrinng(item)}}</div>
+                        </div>
+                    </div>
+                </dx-list>
+            </dxi-item>
+
+            <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
+            <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
+
+            <dxi-item cssClass="btn-save-supplier" itemType="button" [colSpan]="2"
+                [buttonOptions]="{ text:'Save supplier', useSubmitBehavior: true, type:'default'}">
+            </dxi-item>
+
+
+        </dx-form>
+    </form>
+</div>
+
+
+<dx-popup [width]="500" [showTitle]="true" [dragEnabled]="false" [height]="450"
+    (onHidden)="closePickupAddressUpdatePopup()"
+    title="{{selectedPickupAddress && selectedPickupAddress.Id == 0 ? 'Add': 'Update' }} Pickup Address "
+    [closeOnOutsideClick]="true" [(visible)]="isShowPickupAddressUpdatePopup">
+
+    <div *dxTemplate="let data of 'content'">
+        <form (submit)="handlePickupAddressUpdateFormSubmit($event)">
+            <dx-form id="pickupAddressUpdateForm" #pickupAddressUpdateForm [(formData)]="selectedPickupAddress"
+                method="post" labelLocation="top" [colCount]="2">
+                <dxi-item dataField="FirstName"></dxi-item>
+                <dxi-item dataField="LastName"></dxi-item>
+                <dxi-item dataField="AddressLine1" [isRequired]="true"> </dxi-item>
+                <dxi-item dataField="AddressLine2"></dxi-item>
+                <dxi-item *ngIf="selectedPickupAddress">
+                    <dxo-label text="City"></dxo-label>
+                    <dx-select-box [dataSource]="cities" [(value)]="selectedPickupAddress.CityId" displayExpr="CityName"
+                        valueExpr="Id" [searchMode]="'contains'" [searchExpr]="'CityName'" [searchTimeout]="200"
+                        [minSearchLength]="0" [searchEnabled]="true"></dx-select-box>
+                </dxi-item>
+
+                <dxi-item dataField="PostalCode" [isRequired]="true"></dxi-item>
+
+                <dxi-item cssClass="btn-save-supplier" [colSpan]="2" itemType="button" type="default"
+                    [buttonOptions]="{ cssClass:'btn-save-supplier', text:'Save', useSubmitBehavior: true, type:'default'}">
+                </dxi-item>
+
+            </dx-form>
+        </form>
+    </div>
+
+</dx-popup>

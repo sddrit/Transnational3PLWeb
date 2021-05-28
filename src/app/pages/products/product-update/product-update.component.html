@@ -1,0 +1,26 @@
+<h2 class="content-block">Update Product
+
+    <dx-button class="btn-save-product" text="Save" type="default" (onClick)="saveProduct()">
+    </dx-button>
+    <dx-button class="btn-back" type="back" (onClick)="saveProduct()">
+    </dx-button>
+
+</h2>
+
+
+<div class="content-block dx-card responsive-paddings">
+    <dx-form id="form" [formData]="product" [colCount]="2" (submit)="handleSubmit($event)">
+        <dxi-item dataField="name" [isRequired]="true" variant="outlined"></dxi-item>
+        <dxi-item dataField="sku" [isRequired]="true"></dxi-item>
+        <dxi-item dataField="description" [colSpan]="2"></dxi-item>
+        <dxi-item dataField="storageUnits"></dxi-item>
+        <dxi-item dataField="unitPrice"></dxi-item>
+        <dxi-item dataField="massUnit"></dxi-item>
+        <dxi-item dataField="weight"></dxi-item>
+        <dxi-item dataField="reorderLevel"></dxi-item>
+        <dxi-item dataField="supplierId"></dxi-item>
+        <dxi-item class="btn-save-product" itemType="button" [buttonOptions]="submitButtonOptions">
+        </dxi-item>
+
+    </dx-form>
+</div>

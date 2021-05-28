@@ -1,0 +1,20 @@
+<h2 class="content-block">Update Warehouse
+
+    <dx-button class="btn-save-warehouse" text="Save" type="default" (onClick)="saveWarehouse()">
+    </dx-button>
+    <dx-button class="btn-back" type="back" (onClick)="saveWarehouse()">
+    </dx-button>
+
+</h2>
+
+
+<div class="content-block dx-card responsive-paddings">
+    <dx-form id="form" [formData]="warehouse" labelLocation="top"  (submit)="handleSubmit($event)">
+        <dxi-item dataField="name" [isRequired]="true"></dxi-item>
+        <dxi-item dataField="location" ></dxi-item>
+
+        <dxi-item class="btn-save-warehouse" itemType="button" [buttonOptions]="submitButtonOptions">
+        </dxi-item>
+
+    </dx-form>
+</div>

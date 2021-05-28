@@ -1,0 +1,28 @@
+@import "../../../../themes/threepl-custom-theme/variables.base.scss";
+
+
+.login-form {
+  .link {
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  ::ng-deep .form-text {
+    margin: 10px 0;
+    color: rgba($base-text-color, alpha($base-text-color) * 0.7);
+  }
+}
+
+.logo{
+  width:100%;
+  margin-bottom: 5%;
+}
+.error-message{
+  color:#ff3838;
+  text-align: center;
+}

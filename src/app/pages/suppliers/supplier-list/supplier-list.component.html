@@ -1,0 +1,27 @@
+
+<h3 class="content-block">Suppliers
+    <dx-button class="btn-new-supplier" type="default" text="New Supplier" (onClick)="openSupplier(0)">
+    </dx-button>
+</h3>
+
+<dx-data-grid class="dx-card wide-card" [dataSource]="suppliers" [remoteOperations]="true" [showBorders]="true" [focusedRowEnabled]="true"
+    [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true" keyExpr="Id"  (onRowClick)="openSupplier($event.data.Id)">
+
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+
+    <dxi-column dataField="BusinessRegistrationId" caption="BR">
+    </dxi-column>
+    <dxi-column dataField="SupplierName">
+    </dxi-column>
+    <dxi-column dataField="VatNumber">
+    </dxi-column>
+    <dxi-column dataField="Contact.Phone">
+    </dxi-column>
+    <dxi-column dataField="Contact.Email">
+    </dxi-column>
+    <dxi-column dataField="Contact.Mobile">
+    </dxi-column>
+
+</dx-data-grid>

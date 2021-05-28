@@ -1,16 +1,69 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { JwtModule } from '@auth0/angular-jwt';
+
+import {
+  FooterModule,
+  ResetPasswordFormModule,
+  CreateAccountFormModule,
+  ChangePasswordFormModule,
+  LoginFormModule
+} from './shared/components';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { SideNavOuterToolbarModule, SideNavInnerToolbarModule, SingleCardModule } from './layouts';
+import { AuthService, ScreenService, AppInfoService } from './shared/services';
+import { UnauthenticatedContentModule } from './unauthenticated-content';
+import { SupplierService } from './shared/services/supplier.service';
+import { WarehouseService } from './shared/services/warehouse.service';
+import { ProductService } from './shared/services/product.service';
+import { environment } from 'src/environments/environment';
+import { ACCESS_TOKEN_KEY } from './shared/constants/common';
+import { CityService } from './shared/services/city.service';
+import { LoaderHandler } from './shared/utilities/loader.handler';
+import { NotifyHandler } from './shared/utilities/notify.handler';
+
+export function tokenGetter() {
+  return localStorage.getItem(ACCESS_TOKEN_KEY);
+}
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    SideNavOuterToolbarModule,
+    SideNavInnerToolbarModule,
+    SingleCardModule,
+    FooterModule,
+    ResetPasswordFormModule,
+    CreateAccountFormModule,
+    ChangePasswordFormModule,
+    LoginFormModule,
+    UnauthenticatedContentModule,
+    AppRoutingModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+        allowedDomains: [environment.apiDomainName]
+      },
+    }),
   ],
-  providers: [],
+  providers: [
+    LoaderHandler,
+    NotifyHandler,
+    AuthService,
+    ScreenService,
+    AppInfoService,
+    SupplierService,
+    WarehouseService,
+    ProductService,
+    CityService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

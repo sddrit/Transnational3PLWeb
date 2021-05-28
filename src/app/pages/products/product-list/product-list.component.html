@@ -1,0 +1,31 @@
+<h3 class="content-block">Products
+    <dx-button class="btn-new-product" type="default" text="New Product" (onClick)="openProduct(0)">
+    </dx-button>
+</h3>
+
+<dx-data-grid class="dx-card wide-card" [dataSource]="products" [showBorders]="false" [focusedRowEnabled]="true"
+    [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true" keyExpr="id"
+    (onRowClick)="openProduct($event.data.id)">
+
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+
+    <dxi-column dataField="sku" caption="SKU">
+    </dxi-column>
+    <dxi-column dataField="name">
+    </dxi-column>
+    <dxi-column dataField="storingType">
+    </dxi-column>
+    <dxi-column dataField="unitPrice">
+    </dxi-column>
+    <dxi-column dataField="reorderLevel">
+    </dxi-column>
+    <dxi-column dataField="storageUnits">
+    </dxi-column>
+    <dxi-column dataField="weight">
+    </dxi-column>
+    <dxi-column dataField="massUnit">
+    </dxi-column>
+
+</dx-data-grid>

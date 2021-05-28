@@ -1,0 +1,19 @@
+
+<h3 class="content-block">Warehouses
+    <dx-button class="btn-new-warehouse" type="default" text="New Warehouse" (onClick)="openWarehouse('0')">
+    </dx-button>
+</h3>
+
+<dx-data-grid class="dx-card wide-card" [dataSource]="warehouses" [showBorders]="false" [focusedRowEnabled]="true"
+    [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true" keyExpr="id"  (onRowClick)="openWarehouse($event.data.id)">
+
+    <dxo-paging [pageSize]="10"></dxo-paging>
+    <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+
+    <dxi-column dataField="name">
+    </dxi-column>
+    <dxi-column dataField="location">
+    </dxi-column>
+
+</dx-data-grid>
