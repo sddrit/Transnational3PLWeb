@@ -4,17 +4,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import {
-  FooterModule,
-  ResetPasswordFormModule,
-  CreateAccountFormModule,
-  ChangePasswordFormModule,
-  LoginFormModule
+	ChangePasswordFormModule,
+	CreateAccountFormModule,
+	FooterModule,
+	LoginFormModule,
+	ResetPasswordFormModule
 } from './shared/components';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { SideNavOuterToolbarModule, SideNavInnerToolbarModule, SingleCardModule } from './layouts';
-import { AuthService, ScreenService, AppInfoService } from './shared/services';
+import { SideNavInnerToolbarModule, SideNavOuterToolbarModule, SingleCardModule } from './layouts';
+import { AppInfoService, AuthService, ScreenService } from './shared/services';
 import { UnauthenticatedContentModule } from './unauthenticated-content';
 import { SupplierService } from './shared/services/supplier.service';
 import { WarehouseService } from './shared/services/warehouse.service';
@@ -24,46 +24,50 @@ import { ACCESS_TOKEN_KEY } from './shared/constants/common';
 import { CityService } from './shared/services/city.service';
 import { LoaderHandler } from './shared/utilities/loader.handler';
 import { NotifyHandler } from './shared/utilities/notify.handler';
+import { DxPopupModule } from 'devextreme-angular';
 
 export function tokenGetter() {
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
+	return localStorage.getItem(ACCESS_TOKEN_KEY);
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    SideNavOuterToolbarModule,
-    SideNavInnerToolbarModule,
-    SingleCardModule,
-    FooterModule,
-    ResetPasswordFormModule,
-    CreateAccountFormModule,
-    ChangePasswordFormModule,
-    LoginFormModule,
-    UnauthenticatedContentModule,
-    AppRoutingModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter,
-        allowedDomains: [environment.apiDomainName]
-      },
-    }),
-  ],
-  providers: [
-    LoaderHandler,
-    NotifyHandler,
-    AuthService,
-    ScreenService,
-    AppInfoService,
-    SupplierService,
-    WarehouseService,
-    ProductService,
-    CityService
-  ],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent
+	],
+	imports: [
+		BrowserModule,
+		HttpClientModule,
+		SideNavOuterToolbarModule,
+		SideNavInnerToolbarModule,
+		SingleCardModule,
+		FooterModule,
+		ResetPasswordFormModule,
+		CreateAccountFormModule,
+		ChangePasswordFormModule,
+		LoginFormModule,
+		UnauthenticatedContentModule,
+		AppRoutingModule,
+		JwtModule.forRoot({
+			config: {
+				tokenGetter,
+				allowedDomains: [environment.apiDomainName]
+			},
+		}),
+		DxPopupModule,
+	],
+	providers: [
+		LoaderHandler,
+		NotifyHandler,
+		AuthService,
+		ScreenService,
+		AppInfoService,
+		SupplierService,
+		WarehouseService,
+		ProductService,
+		CityService
+	],
+	exports: [
+	],
+	bootstrap: [AppComponent]
 })
 export class AppModule { }

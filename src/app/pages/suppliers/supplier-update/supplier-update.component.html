@@ -15,14 +15,11 @@
                 <dx-check-box [(value)]="supplier.Active">
                 </dx-check-box>
             </dxi-item>
-
-
             <dxi-item dataField="BusinessRegistrationId"></dxi-item>
             <dxi-item dataField="VatNumber"></dxi-item>
 
             <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
             <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
-
             <dxi-item itemType="group" caption="Contact information">
                 <dxi-item itemType="tabbed">
                     <dxo-tab-panel-options>
@@ -57,7 +54,7 @@
 
                         <dxi-item *ngIf="supplier && supplier.Address">
                             <dxo-label text="City"> </dxo-label>
-                            <dx-select-box [dataSource]="cities" [(value)]="supplier.Address.CityId"
+                            <dx-select-box [dataSource]="cityStore" [(value)]="supplier.Address.CityId"
                                 displayExpr="CityName" valueExpr="Id" [searchMode]="'contains'"
                                 [searchExpr]="'CityName'" [searchTimeout]="200" [minSearchLength]="0"
                                 [searchEnabled]="true"></dx-select-box>
@@ -104,13 +101,13 @@
             <dxi-item itemType="group" cssClass="pickup-list-address-container dx-card responsive-paddings"
                 [colSpan]="2" *ngIf="supplier && supplier.PickupAddress">
                 <h3>Pickup Addresses
-                    <dx-button class="btn-back" text="Add" (onClick)="openAddPickupAddressUpdatePopup()">
+                    <dx-button class="btn-back" text="Add" (onClick)="addPickupAddress()">
                     </dx-button>
                 </h3>
                 <hr />
 
                 <dx-list id="list" [dataSource]="supplier.PickupAddress" [allowItemDeleting]="true"
-                    (onItemClick)="openUpdatePickupAddressUpdatePopup($event)">
+                    (onItemClick)="updatePickupAddress($event)">
                     <div *dxTemplate="let item of 'item'">
                         <div>
                             <div>{{getPickupAddressDisplayStrinng(item)}}</div>
@@ -126,40 +123,13 @@
                 [buttonOptions]="{ text:'Save supplier', useSubmitBehavior: true, type:'default'}">
             </dxi-item>
 
-
         </dx-form>
     </form>
+
 </div>
 
-
-<dx-popup [width]="500" [showTitle]="true" [dragEnabled]="false" [height]="450"
-    (onHidden)="closePickupAddressUpdatePopup()"
-    title="{{selectedPickupAddress && selectedPickupAddress.Id == 0 ? 'Add': 'Update' }} Pickup Address "
-    [closeOnOutsideClick]="true" [(visible)]="isShowPickupAddressUpdatePopup">
-
-    <div *dxTemplate="let data of 'content'">
-        <form (submit)="handlePickupAddressUpdateFormSubmit($event)">
-            <dx-form id="pickupAddressUpdateForm" #pickupAddressUpdateForm [(formData)]="selectedPickupAddress"
-                method="post" labelLocation="top" [colCount]="2">
-                <dxi-item dataField="FirstName"></dxi-item>
-                <dxi-item dataField="LastName"></dxi-item>
-                <dxi-item dataField="AddressLine1" [isRequired]="true"> </dxi-item>
-                <dxi-item dataField="AddressLine2"></dxi-item>
-                <dxi-item *ngIf="selectedPickupAddress">
-                    <dxo-label text="City"></dxo-label>
-                    <dx-select-box [dataSource]="cities" [(value)]="selectedPickupAddress.CityId" displayExpr="CityName"
-                        valueExpr="Id" [searchMode]="'contains'" [searchExpr]="'CityName'" [searchTimeout]="200"
-                        [minSearchLength]="0" [searchEnabled]="true"></dx-select-box>
-                </dxi-item>
-
-                <dxi-item dataField="PostalCode" [isRequired]="true"></dxi-item>
-
-                <dxi-item cssClass="btn-save-supplier" [colSpan]="2" itemType="button" type="default"
-                    [buttonOptions]="{ cssClass:'btn-save-supplier', text:'Save', useSubmitBehavior: true, type:'default'}">
-                </dxi-item>
-
-            </dx-form>
-        </form>
-    </div>
-
-</dx-popup>
+<supplier-pickup-address-modal
+	[pickupAddress]="currentSupplierPickupAddress"
+	(response)="supplierPickupAddressModelResponse($event)"
+	[visible]="displayPickupAddressModal">
+</supplier-pickup-address-modal>

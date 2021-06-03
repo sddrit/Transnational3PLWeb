@@ -1,35 +1,42 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import * as AspNetData from "devextreme-aspnet-data-nojquery";
+import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 
 import { BaseService } from './base.service';
 import { ACCESS_TOKEN_KEY } from '../constants/common';
 import { NotifyHandler } from '../utilities/notify.handler';
 import { Router } from '@angular/router';
-
+import DevExpress from 'devextreme';
+import CustomStore = DevExpress.data.CustomStore;
+import { ICity } from '../models/city';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class CityService extends BaseService {
 
-    constructor(
-        private http: HttpClient,
-        public notify: NotifyHandler,
-        public router: Router,
-    ) {
-        super(notify,router);
-    }
+	constructor(
+		private http: HttpClient,
+		public notify: NotifyHandler,
+		public router: Router,
+	) {
+		super(notify, router);
+	}
 
-    public getCities() {
-        let token = localStorage.getItem(ACCESS_TOKEN_KEY)
-        return AspNetData.createStore({
-            key: "Id",
-            loadUrl: this.apiUrl+ "/City",
-            onBeforeSend: function (method, ajaxOptions) {
-                ajaxOptions.headers = { "Authorization": 'Bearer ' + token };
-            }
-        });
-    }
+	public getCities(): CustomStore {
+		let token = localStorage.getItem(ACCESS_TOKEN_KEY)
+		return AspNetData.createStore({
+			key: "Id",
+			loadUrl: this.apiUrl + "/City",
+			onBeforeSend: function (method, ajaxOptions) {
+				ajaxOptions.headers = { "Authorization": 'Bearer ' + token };
+			}
+		});
+	}
+
+	public getCityById(id: number) {
+		return this.http.get<ICity>(this.apiUrl + `/city/get/${id}`)
+			.pipe(catchError(e => this.handleError(e, 'Getting City by Id')));
+	}
 
 }
 

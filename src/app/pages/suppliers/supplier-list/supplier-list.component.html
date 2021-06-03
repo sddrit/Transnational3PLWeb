@@ -1,27 +1,28 @@
-
 <h3 class="content-block">Suppliers
-    <dx-button class="btn-new-supplier" type="default" text="New Supplier" (onClick)="openSupplier(0)">
-    </dx-button>
+	<dx-button (onClick)="openSupplier(0)" class="btn-new-supplier" text="New Supplier" type="default">
+	</dx-button>
 </h3>
 
-<dx-data-grid class="dx-card wide-card" [dataSource]="suppliers" [remoteOperations]="true" [showBorders]="true" [focusedRowEnabled]="true"
-    [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true" keyExpr="Id"  (onRowClick)="openSupplier($event.data.Id)">
+<dx-data-grid (onRowClick)="openSupplier($event.data.Id)" [columnAutoWidth]="true" [columnHidingEnabled]="true" [dataSource]="suppliers"
+			  [focusedRowEnabled]="true"
+			  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
+			  keyExpr="Id">
 
-    <dxo-paging [pageSize]="10"></dxo-paging>
-    <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
-    <dxo-filter-row [visible]="true"></dxo-filter-row>
+	<dxo-paging [pageSize]="10"></dxo-paging>
+	<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
+	<dxo-filter-row [visible]="true"></dxo-filter-row>
 
-    <dxi-column dataField="BusinessRegistrationId" caption="BR">
-    </dxi-column>
-    <dxi-column dataField="SupplierName">
-    </dxi-column>
-    <dxi-column dataField="VatNumber">
-    </dxi-column>
-    <dxi-column dataField="Contact.Phone">
-    </dxi-column>
-    <dxi-column dataField="Contact.Email">
-    </dxi-column>
-    <dxi-column dataField="Contact.Mobile">
-    </dxi-column>
+	<dxi-column caption="BR" dataField="BusinessRegistrationId">
+	</dxi-column>
+	<dxi-column dataField="SupplierName">
+	</dxi-column>
+	<dxi-column dataField="VatNumber">
+	</dxi-column>
+	<dxi-column dataField="Contact.Phone">
+	</dxi-column>
+	<dxi-column dataField="Contact.Email">
+	</dxi-column>
+	<dxi-column dataField="Contact.Mobile">
+	</dxi-column>
 
 </dx-data-grid>
