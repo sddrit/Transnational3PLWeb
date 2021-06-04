@@ -1,0 +1,40 @@
+<dx-popup
+	class="pickup-address-modal"
+	id="pickupAddressModal"
+	#pickupAddressModal
+	[width]="500"
+	[height]="'auto'"
+	[showTitle]="true"
+	[title]="pickupAddress && pickupAddress.id === 0? 'New Pickup Address':'Edit Pickup Address'"
+	[dragEnabled]="false"
+	[closeOnOutsideClick]="false"
+	[showCloseButton]="false"
+	[(visible)]="visible">
+	<div *dxTemplate="let data of 'content'">
+		<form (submit)="onOk($event)">
+			<dx-form id="pickupAddressUpdateForm" #pickupAddressUpdateForm [(formData)]="pickupAddress"
+					 method="post" labelLocation="top" [colCount]="2">
+				<dxi-item dataField="firstName"
+						  [editorOptions]="{inputAttr: { autocomplete: 'first-name' }}"></dxi-item>
+				<dxi-item dataField="lastName" [editorOptions]="{inputAttr: { autocomplete: 'last-name' }}"></dxi-item>
+				<dxi-item dataField="addressLine1" [isRequired]="true"
+						  [editorOptions]="{inputAttr: { autocomplete: 'address-line-1' }}"></dxi-item>
+				<dxi-item dataField="addressLine2"
+						  [editorOptions]="{inputAttr: { autocomplete: 'address-line-2' }}"></dxi-item>
+				<dxi-item [label]="{text: 'City'}" editorType="dxSelectBox" dataField="cityId" [isRequired]="true"
+						  [editorOptions]="{ id:'fake-city', dataSource: cityStore, displayExpr: 'cityName', valueExpr: 'id',
+						  searchExpr: 'cityName', searchMode: 'contains', minSearchLength: 3, searchEnabled: true, inputAttr: { autocomplete: 'chrome-off' } }"></dxi-item>
+				<dxi-item dataField="postalCode" [isRequired]="true"
+						  [editorOptions]="{inputAttr: { autocomplete: 'postal-code' }}"></dxi-item>
+				<dxi-item class="pickup-address-modal-button-container" [colSpan]="2" itemType="group">
+					<dx-button class="save-button" type="success" text="Save Changes"
+							   [useSubmitBehavior]="true">
+					</dx-button>
+					<dx-button class="cancel-button" type="normal" text="Cancel"
+							   (onClick)="onCancel()">
+					</dx-button>
+				</dxi-item>
+			</dx-form>
+		</form>
+	</div>
+</dx-popup>
