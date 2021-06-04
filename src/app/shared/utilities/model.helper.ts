@@ -4,36 +4,36 @@ export class ModelHelper {
 
 	public static newSupplier(): ISupplier {
 		const newModel: ISupplier = {
-			Id: 0,
-			Active: true,
-			SupplierName: "",
-			BusinessRegistrationId: "",
-			VatNumber: "",
-			Address: {
-				FirstName: "",
-				LastName: "",
-				AddressLine1: "",
-				AddressLine2: "",
-				CityId: null,
-				City: null,
-				PostalCode: ""
+			id: 0,
+			active: true,
+			supplierName: "",
+			businessRegistrationId: "",
+			vatNumber: "",
+			address: {
+				firstName: "",
+				lastName: "",
+				addressLine1: "",
+				addressLine2: "",
+				cityId: null,
+				city: null,
+				postalCode: ""
 			},
-            Contact: {
-              ContactPerson: "",
-              Phone: "",
-              Mobile: "",
-              Email: ""
+            contact: {
+              contactPerson: "",
+              phone: "",
+              mobile: "",
+              email: ""
             },
-            InvoicePolicy: "",
-            ReturnPolicy: "",
-            SupplierCharges: {
-              AllocatedUnits: null,
-              StorageChargePerUnit: null,
-              AdditionalChargePerUnitPrice: null,
-              HandlingCharge: null
+            invoicePolicy: "",
+            returnPolicy: "",
+            supplierCharges: {
+              allocatedUnits: null,
+              storageChargePerUnit: null,
+              additionalChargePerUnitPrice: null,
+              handlingCharge: null
             },
-            PickupAddress: [],
-            Products: []
+            pickupAddress: [],
+            products: []
         };
         return newModel;
     }
@@ -41,14 +41,14 @@ export class ModelHelper {
 
     public static newSupplierPickupAddress(): ISupplierPickupAddress {
         const newModel: ISupplierPickupAddress = {
-			Id: 0,
-			FirstName: "",
-			LastName: "",
-			AddressLine1: "",
-			AddressLine2: "",
-			CityId: null,
-			PostalCode: "",
-			City: null
+			id: 0,
+			firstName: "",
+			lastName: "",
+			addressLine1: "",
+			addressLine2: "",
+			cityId: null,
+			postalCode: "",
+			city: null
 		};
         return newModel;
     }

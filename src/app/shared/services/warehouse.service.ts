@@ -4,77 +4,46 @@ import { BaseService } from './base.service';
 import { IWarehouse } from '../../shared/models/warehouse';
 import { Router } from '@angular/router';
 import { NotifyHandler } from '../utilities/notify.handler';
-
-//TODO: remove later
-const sampleWarehousesData: IWarehouse[] = [
-    {
-        id: 1,
-        name: 'Storage A',
-        location: '507 - 20th Ave. Main road, Sri Lanka',
- 
-    },
-    {
-        id: 2,
-        name: 'Storage B',
-        location: '507 - 20th Ave. Main road, Sri Lanka',
- 
-    },
-    {
-        id: 3,
-        name: 'Storage C',
-        location: '507 - 20th Ave. Main road, Sri Lanka',
- 
-    },
-    {
-        id: 4,
-        name: 'Storage D lower section ',
-        location: '507 - 20th Ave. Main road, Sri Lanka',
- 
-    },
- {
-        id: 5,
-        name: 'Storage D upper section',
-        location: '507 - 20th Ave. Main road, Sri Lanka',
- 
-    },
-    {
-        id: 6,
-        name: 'Storage A',
-        location: '507 - 20th Ave. Main road, Sri Lanka',
- 
-    },
-    {
-        id: 7,
-        name: 'Storage U',
-        location: '507 - 20th Ave. Main road, Sri Lanka',
- 
-    },
-    {
-        id: 8,
-        name: 'Storage building',
-        location: '507 - 20th Ave. Main road, Sri Lanka',
- 
-    }
-]
+import { ACCESS_TOKEN_KEY } from '../constants/common';
+import * as AspNetData from 'devextreme-aspnet-data-nojquery';
+import { catchError } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class WarehouseService extends BaseService {
 
-    constructor(
-        public notify: NotifyHandler,
-        public router: Router,
-    ) {
-        super(notify,router);
-    }
-
+	constructor(
+		public notify: NotifyHandler,
+		public router: Router,
+		private http: HttpClient,
+	) {
+		super(notify, router);
+	}
 
     public getWarehouses() {
-        return sampleWarehousesData;
-    }
+		const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+		return AspNetData.createStore({
+			key: 'id',
+			loadUrl: this.apiUrl + '/WareHouse',
+			onBeforeSend(method, ajaxOptions) {
+				ajaxOptions.headers = { Authorization: 'Bearer ' + token };
+			}
+		});
+	}
 
-    public getWarehouseById(id:number) {
-        return sampleWarehousesData.find(s=>s.id === id);
-    }
+    public getWarehouseById(id: number) {
+		return this.http.get<IWarehouse>(this.apiUrl + '/WareHouse/' + id)
+			.pipe(catchError(e => this.handleError(e, 'Getting Warehouse by Id')));
+	}
 
+	public addWarehouse(wareHouse: IWarehouse) {
+		return this.http.post<IWarehouse>(this.apiUrl + '/WareHouse/', wareHouse)
+			.pipe(catchError(e => this.handleError(e, 'Adding warehouse')));
+	}
+
+	public updateWarehouse(wareHouse: IWarehouse) {
+		return this.http.put<IWarehouse>(this.apiUrl + '/WareHouse/', wareHouse)
+			.pipe(catchError(e => this.handleError(e, 'Adding warehouse')));
+	}
 }
 

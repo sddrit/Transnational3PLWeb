@@ -24,7 +24,7 @@ export class SupplierService extends BaseService {
     public getSuppliers() {
         let token = localStorage.getItem(ACCESS_TOKEN_KEY)
         return AspNetData.createStore({
-            key: "Id",
+            key: "id",
             loadUrl: this.apiUrl+ "/Supplier",
             onBeforeSend: function (method, ajaxOptions) {
                 ajaxOptions.headers = { "Authorization": 'Bearer ' + token };

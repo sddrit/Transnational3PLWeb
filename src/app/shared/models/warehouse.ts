@@ -1,5 +1,8 @@
-export interface IWarehouse{
-    id:number;
-    name:string;
-    location:string;
+import { IAddress } from './address';
+
+export interface IWarehouse {
+	id: number;
+	name: string;
+	address: IAddress;
+	active: boolean;
 }

@@ -3,7 +3,7 @@
 	</dx-button>
 </h3>
 
-<dx-data-grid (onRowClick)="openSupplier($event.data.Id)" [columnAutoWidth]="true" [columnHidingEnabled]="true" [dataSource]="suppliers"
+<dx-data-grid (onRowClick)="openSupplier($event.data.id)" [columnAutoWidth]="true" [columnHidingEnabled]="true" [dataSource]="suppliers"
 			  [focusedRowEnabled]="true"
 			  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
 			  keyExpr="Id">
@@ -12,17 +12,17 @@
 	<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
 	<dxo-filter-row [visible]="true"></dxo-filter-row>
 
-	<dxi-column caption="BR" dataField="BusinessRegistrationId">
+	<dxi-column caption="BR" dataField="businessRegistrationId">
 	</dxi-column>
-	<dxi-column dataField="SupplierName">
+	<dxi-column dataField="supplierName">
 	</dxi-column>
-	<dxi-column dataField="VatNumber">
+	<dxi-column dataField="vatNumber">
 	</dxi-column>
-	<dxi-column dataField="Contact.Phone">
+	<dxi-column dataField="contact.phone">
 	</dxi-column>
-	<dxi-column dataField="Contact.Email">
+	<dxi-column dataField="contact.email">
 	</dxi-column>
-	<dxi-column dataField="Contact.Mobile">
+	<dxi-column dataField="contact.mobile">
 	</dxi-column>
 
 </dx-data-grid>

@@ -1,4 +1,4 @@
-import { Component, NgModule, Input } from '@angular/core';
+import { Component, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DxListModule } from 'devextreme-angular/ui/list';
@@ -6,31 +6,33 @@ import { DxContextMenuModule } from 'devextreme-angular/ui/context-menu';
 import { IUser } from '../../models/user';
 
 @Component({
-  selector: 'app-user-panel',
-  templateUrl: 'user-panel.component.html',
-  styleUrls: ['./user-panel.component.scss']
+	selector: 'app-user-panel',
+	templateUrl: 'user-panel.component.html',
+	styleUrls: ['./user-panel.component.scss']
 })
 
 export class UserPanelComponent {
-  @Input()
-  menuItems: any;
+	@Input()
+	menuItems: any;
 
-  @Input()
-  menuMode: string;
+	@Input()
+	menuMode: string;
 
-  @Input()
-  user: IUser;
+	@Input()
+	user: IUser;
 
-  constructor() {}
+	constructor() {
+	}
 }
 
 @NgModule({
-  imports: [
-    DxListModule,
-    DxContextMenuModule,
-    CommonModule
-  ],
-  declarations: [ UserPanelComponent ],
-  exports: [ UserPanelComponent ]
+	imports: [
+		DxListModule,
+		DxContextMenuModule,
+		CommonModule
+	],
+	declarations: [UserPanelComponent],
+	exports: [UserPanelComponent]
 })
-export class UserPanelModule { }
+export class UserPanelModule {
+}

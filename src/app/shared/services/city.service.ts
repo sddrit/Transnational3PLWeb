@@ -25,7 +25,7 @@ export class CityService extends BaseService {
 	public getCities(): CustomStore {
 		let token = localStorage.getItem(ACCESS_TOKEN_KEY)
 		return AspNetData.createStore({
-			key: "Id",
+			key: "id",
 			loadUrl: this.apiUrl + "/City",
 			onBeforeSend: function (method, ajaxOptions) {
 				ajaxOptions.headers = { "Authorization": 'Bearer ' + token };

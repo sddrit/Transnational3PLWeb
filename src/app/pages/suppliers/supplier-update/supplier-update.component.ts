@@ -48,9 +48,9 @@ export class SupplierUpdateComponent {
 	}
 
 	public getPickupAddressDisplayStrinng(pickupAddress: ISupplierPickupAddress) {
-		const text = pickupAddress.FirstName + ' ' + pickupAddress.LastName + ', ' +
-			pickupAddress.AddressLine1 + ' ' + pickupAddress.AddressLine2 + ' ' +
-			pickupAddress.City.CityName + ' ' + pickupAddress.PostalCode;
+		const text = pickupAddress.firstName + ' ' + pickupAddress.lastName + ', ' +
+			pickupAddress.addressLine1 + ' ' + pickupAddress.addressLine2 + ' ' +
+			pickupAddress.city.cityName + ' ' + pickupAddress.postalCode;
 		return text;
 	}
 
@@ -74,7 +74,7 @@ export class SupplierUpdateComponent {
 
 	public handleSubmit(e: any) {
 		e.preventDefault();
-		if ( this.supplier.Id === 0 ) {
+		if ( this.supplier.id === 0 ) {
 			this.addSupplier();
 		} else {
 			this.updateSupplier();
@@ -88,7 +88,7 @@ export class SupplierUpdateComponent {
 
 	public updatePickupAddress($event) {
 		this.currentEditSupplierPickupAddressIndex = $event.itemIndex;
-		this.showPickupAddressModel({...this.supplier.PickupAddress[$event.itemIndex]});
+		this.showPickupAddressModel({...this.supplier.pickupAddress[$event.itemIndex]});
 	}
 
 	public supplierPickupAddressModelResponse(response: IPickupAddressModalResponse) {
@@ -101,9 +101,9 @@ export class SupplierUpdateComponent {
 		if (response.status === 'success') {
 			this.displayPickupAddressModal = false;
 			if (this.currentEditSupplierPickupAddressIndex === null) {
-				this.supplier.PickupAddress.push(response.data);
+				this.supplier.pickupAddress.push(response.data);
 			} else {
-				this.supplier.PickupAddress[this.currentEditSupplierPickupAddressIndex] = response.data;
+				this.supplier.pickupAddress[this.currentEditSupplierPickupAddressIndex] = response.data;
 			}
 			this.currentEditSupplierPickupAddressIndex = null;
 			this.currentSupplierPickupAddress = null;
@@ -123,6 +123,7 @@ export class SupplierUpdateComponent {
 		if ( supplierId !== '0' ) {
 			this.supplierService.getSupplierById(+supplierId).subscribe((data: ISupplier) => {
 				this.supplier = data;
+				console.log(data);
 			});
 		}
 	}

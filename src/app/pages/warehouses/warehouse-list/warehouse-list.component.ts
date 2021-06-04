@@ -1,31 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { IWarehouse } from 'src/app/shared/models/warehouse';
 import { WarehouseService } from 'src/app/shared/services/warehouse.service';
+import DevExpress from 'devextreme';
+import CustomStore = DevExpress.data.CustomStore;
 
 
 @Component({
-  templateUrl: 'warehouse-list.component.html',
-  styleUrls: ['./warehouse-list.component.scss']
+	templateUrl: 'warehouse-list.component.html',
+	styleUrls: ['./warehouse-list.component.scss']
 })
 
 export class WarehouseListComponent implements OnInit {
-   warehouses: IWarehouse[] = [];
+	warehouses: CustomStore;
 
-  constructor(
-    private warehouseService: WarehouseService,
-    private router: Router,
-  ) { }
+	constructor(
+		private warehouseService: WarehouseService,
+		private router: Router,
+	) {
+	}
 
 
-  ngOnInit(): void {
-    this.warehouses = this.warehouseService.getWarehouses();
-  }
+	ngOnInit(): void {
+		this.warehouses = this.warehouseService.getWarehouses();
+	}
 
-  openWarehouse(id:string) {
-    this.router.navigate(['/warehouse/'+id]);
-}
+	openWarehouse(id: string) {
+		this.router.navigate(['/warehouse/' + id]);
+	}
 
 }
 

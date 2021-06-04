@@ -1,11 +1,11 @@
 export interface ILoginModel {
-    userName: string;
-    password: string;
+	userName: string;
+	password: string;
 }
 
 export interface ILoginResponseModel {
-    Token: string;
-    User: any;
-    ValidTo:Date;
-    Roles:string[]
+	token: string;
+	user: any;
+	validTo: Date;
+	roles: string[];
 }

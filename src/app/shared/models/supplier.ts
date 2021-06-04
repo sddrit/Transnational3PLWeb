@@ -2,34 +2,34 @@ import { IAddress } from "./address";
 import { IProduct } from "./product";
 
 export interface ISupplier {
-    Id: number;
-    Active: boolean;
-    SupplierName: string;
-    BusinessRegistrationId: string;
-    VatNumber: string;
-    Address: IAddress;
-    Contact: IContact;
-    InvoicePolicy: string;
-    ReturnPolicy: string;
-    SupplierCharges: ISupplierCharges;
-    PickupAddress: ISupplierPickupAddress[];
-    Products: IProduct[];
+	id: number;
+	active: boolean;
+	supplierName: string;
+	businessRegistrationId: string;
+	vatNumber: string;
+	address: IAddress;
+	contact: IContact;
+	invoicePolicy: string;
+	returnPolicy: string;
+	supplierCharges: ISupplierCharges;
+	pickupAddress: ISupplierPickupAddress[];
+	products: IProduct[];
 }
 
 export interface IContact {
-    ContactPerson: string;
-    Phone: string;
-    Mobile: string;
-    Email: string;
+	contactPerson: string;
+	phone: string;
+	mobile: string;
+	email: string;
 }
 
 export interface ISupplierCharges {
-    AllocatedUnits: number;
-    StorageChargePerUnit: number;
-    AdditionalChargePerUnitPrice: number;
-    HandlingCharge: number;
+	allocatedUnits: number;
+	storageChargePerUnit: number;
+	additionalChargePerUnitPrice: number;
+	handlingCharge: number;
 }
 
 export interface ISupplierPickupAddress extends IAddress {
-    Id: number;
+	id: number;
 }
