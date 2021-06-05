@@ -19,12 +19,14 @@ import { UnauthenticatedContentModule } from './unauthenticated-content';
 import { SupplierService } from './shared/services/supplier.service';
 import { WarehouseService } from './shared/services/warehouse.service';
 import { ProductService } from './shared/services/product.service';
+import { MetadataService } from './shared/services/metadata.service';
 import { environment } from 'src/environments/environment';
 import { ACCESS_TOKEN_KEY } from './shared/constants/common';
 import { CityService } from './shared/services/city.service';
 import { LoaderHandler } from './shared/utilities/loader.handler';
 import { NotifyHandler } from './shared/utilities/notify.handler';
 import { DxPopupModule } from 'devextreme-angular';
+import { MetadataResolver } from './shared/resolvers/metadata.resolver';
 
 export function tokenGetter() {
 	return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -64,7 +66,9 @@ export function tokenGetter() {
 		SupplierService,
 		WarehouseService,
 		ProductService,
-		CityService
+		CityService,
+		MetadataService,
+		MetadataResolver
 	],
 	exports: [
 	],

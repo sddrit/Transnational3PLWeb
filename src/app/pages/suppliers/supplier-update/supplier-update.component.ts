@@ -123,7 +123,6 @@ export class SupplierUpdateComponent {
 		if ( supplierId !== '0' ) {
 			this.supplierService.getSupplierById(+supplierId).subscribe((data: ISupplier) => {
 				this.supplier = data;
-				console.log(data);
 			});
 		}
 	}

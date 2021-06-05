@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import * as AspNetData from "devextreme-aspnet-data-nojquery";
+import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 
 import { BaseService } from './base.service';
 import { ISupplier } from '../../shared/models/supplier';
@@ -18,22 +18,22 @@ export class SupplierService extends BaseService {
         public notify: NotifyHandler,
         public router: Router,
     ) {
-        super(notify,router);
+        super(notify, router);
     }
 
     public getSuppliers() {
-        let token = localStorage.getItem(ACCESS_TOKEN_KEY)
+        const token = localStorage.getItem(ACCESS_TOKEN_KEY);
         return AspNetData.createStore({
-            key: "id",
-            loadUrl: this.apiUrl+ "/Supplier",
-            onBeforeSend: function (method, ajaxOptions) {
-                ajaxOptions.headers = { "Authorization": 'Bearer ' + token };
+            key: 'id',
+            loadUrl: this.apiUrl + '/Supplier',
+            onBeforeSend(method, ajaxOptions) {
+                ajaxOptions.headers = { Authorization: 'Bearer ' + token };
             }
         });
     }
 
     public getSupplierById(id: number) {
-        return this.http.get<ISupplier>(this.apiUrl + '/Supplier/' +id)
+        return this.http.get<ISupplier>(this.apiUrl + '/Supplier/' + id)
             .pipe(catchError(e => this.handleError(e, 'Getting Supplier by Id')));
     }
 

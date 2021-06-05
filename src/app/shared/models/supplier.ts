@@ -1,5 +1,5 @@
-import { IAddress } from "./address";
-import { IProduct } from "./product";
+import { IAddress } from './address';
+import { IProduct } from './product';
 
 export interface ISupplier {
 	id: number;

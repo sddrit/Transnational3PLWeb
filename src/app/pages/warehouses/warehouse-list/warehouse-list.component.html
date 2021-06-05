@@ -4,7 +4,7 @@
     </dx-button>
 </h3>
 
-<dx-data-grid class="dx-card wide-card" [dataSource]="warehouses" [showBorders]="false" [focusedRowEnabled]="true"
+<dx-data-grid class="dx-card wide-card" [dataSource]="warehouses" [remoteOperations]="true" [showBorders]="false" [focusedRowEnabled]="true"
     [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true" keyExpr="id"  (onRowClick)="openWarehouse($event.data.id)">
 
     <dxo-paging [pageSize]="10"></dxo-paging>

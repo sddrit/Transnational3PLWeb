@@ -13,16 +13,20 @@
 		<dx-form id="form" [formData]="warehouse" labelLocation="top" >
 			<dxi-item dataField="name" [isRequired]="true"></dxi-item>
 			<dxi-item dataField="active" editorType="dxCheckBox"></dxi-item>
-			<dxi-item itemType="group" [colCount]="2">
-				<dxi-item [label]="{text: 'Address Line 1'}" dataField="address.addressLine1" [isRequired]="true"
-						  [editorOptions]="{inputAttr: { autocomplete: 'address-line-1' }}"></dxi-item>
-				<dxi-item [label]="{text: 'Address Line 2'}" dataField="address.addressLine2"
-						  [editorOptions]="{inputAttr: { autocomplete: 'address-line-2' }}"></dxi-item>
-				<dxi-item [label]="{text: 'City'}" editorType="dxSelectBox" dataField="address.cityId" [isRequired]="true"
-						  [editorOptions]="{ id:'fake-city', dataSource: cityStore, displayExpr: 'cityName', valueExpr: 'id',
+			<dxi-item itemType="empty" [colSpan]="2"></dxi-item>
+			<dxi-item itemType="empty" [colSpan]="2"></dxi-item>
+			<dxi-item itemType="group" caption="Address Details">
+				<dxi-item itemType="group" [colCount]="2">
+					<dxi-item [label]="{text: 'Address Line 1'}" dataField="address.addressLine1" [isRequired]="true"
+							  [editorOptions]="{inputAttr: { autocomplete: 'address-line-1' }}"></dxi-item>
+					<dxi-item [label]="{text: 'Address Line 2'}" dataField="address.addressLine2"
+							  [editorOptions]="{inputAttr: { autocomplete: 'address-line-2' }}"></dxi-item>
+					<dxi-item [label]="{text: 'City'}" editorType="dxSelectBox" dataField="address.cityId" [isRequired]="true"
+							  [editorOptions]="{ id:'fake-city', dataSource: cityStore, displayExpr: 'cityName', valueExpr: 'id',
 						  searchExpr: 'cityName', searchMode: 'contains', minSearchLength: 3, searchEnabled: true, inputAttr: { autocomplete: 'chrome-off' } }"></dxi-item>
-				<dxi-item [label]="{text: 'Postal Code'}" dataField="address.postalCode" [isRequired]="true"
-						  [editorOptions]="{inputAttr: { autocomplete: 'postal-code' }}"></dxi-item>
+					<dxi-item [label]="{text: 'Postal Code'}" dataField="address.postalCode" [isRequired]="true"
+							  [editorOptions]="{inputAttr: { autocomplete: 'postal-code' }}"></dxi-item>
+				</dxi-item>
 			</dxi-item>
 			<dxi-item class="btn-save-warehouse" itemType="button" [buttonOptions]="{text: 'Save', useSubmitBehavior: true, type: 'default', class: 'btn-save-warehouse' }">
 			</dxi-item>

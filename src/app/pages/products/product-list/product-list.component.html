@@ -3,29 +3,45 @@
     </dx-button>
 </h3>
 
-<dx-data-grid class="dx-card wide-card" [dataSource]="products" [showBorders]="false" [focusedRowEnabled]="true"
+<dx-data-grid class="dx-card wide-card" [dataSource]="productStore" [remoteOperations]="true" [showBorders]="false" [focusedRowEnabled]="true"
     [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true" keyExpr="id"
     (onRowClick)="openProduct($event.data.id)">
 
     <dxo-paging [pageSize]="10"></dxo-paging>
     <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
     <dxo-filter-row [visible]="true"></dxo-filter-row>
-
-    <dxi-column dataField="sku" caption="SKU">
-    </dxi-column>
+	<dxi-column dataField="storingType">
+		<dxo-lookup
+			[dataSource]="metaData.storeTypes"
+			displayExpr="name"
+			valueExpr="id">
+		</dxo-lookup>
+	</dxi-column>
     <dxi-column dataField="name">
     </dxi-column>
-    <dxi-column dataField="storingType">
-    </dxi-column>
+	<dxi-column dataField="sku" caption="SKU">
+	</dxi-column>
+	<dxi-column dataField="supplierId">
+		<dxo-lookup
+			[dataSource]="supplierStore"
+			displayExpr="supplierName"
+			valueExpr="id">
+		</dxo-lookup>
+	</dxi-column>
     <dxi-column dataField="unitPrice">
     </dxi-column>
     <dxi-column dataField="reorderLevel">
     </dxi-column>
     <dxi-column dataField="storageUnits">
     </dxi-column>
+	<dxi-column dataField="massUnit">
+		<dxo-lookup
+			[dataSource]="metaData.massUnits"
+			displayExpr="name"
+			valueExpr="id">
+		</dxo-lookup>
+	</dxi-column>
     <dxi-column dataField="weight">
-    </dxi-column>
-    <dxi-column dataField="massUnit">
     </dxi-column>
 
 </dx-data-grid>

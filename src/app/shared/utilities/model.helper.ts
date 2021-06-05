@@ -27,10 +27,10 @@ export class ModelHelper {
             invoicePolicy: "",
             returnPolicy: "",
             supplierCharges: {
-              allocatedUnits: null,
-              storageChargePerUnit: null,
-              additionalChargePerUnitPrice: null,
-              handlingCharge: null
+              allocatedUnits: 0,
+              storageChargePerUnit: 0,
+              additionalChargePerUnitPrice: 0,
+              handlingCharge: 0
             },
             pickupAddress: [],
             products: []

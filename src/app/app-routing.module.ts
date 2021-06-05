@@ -34,6 +34,7 @@ import { ProductListComponent } from './pages/products/product-list/product-list
 import { ProductUpdateComponent } from './pages/products/product-update/product-update.component';
 
 import { SupplierPickupAddressModalComponent } from './pages/suppliers/supplier-update/supplier-pickup-address-modal/supplier-pickup-address-modal.component';
+import { MetadataResolver } from "./shared/resolvers/metadata.resolver";
 
 const routes: Routes = [
 	{
@@ -93,12 +94,18 @@ const routes: Routes = [
 	{
 		path: 'products',
 		component: ProductListComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		resolve : {
+			metadata: MetadataResolver
+		}
 	},
 	{
 		path: 'product/:id',
 		component: ProductUpdateComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		resolve : {
+			metadata: MetadataResolver
+		}
 	},
 	{
 		path: '**',
