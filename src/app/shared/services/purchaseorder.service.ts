@@ -7,11 +7,12 @@ import { HttpClient } from '@angular/common/http';
 import { ACCESS_TOKEN_KEY } from '../constants/common';
 import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { catchError } from 'rxjs/operators';
-import { IProduct } from '../models/product';
+import { IPurchaseOrder } from '../models/purchaseOrder';
+import { Observable } from 'rxjs';
 import { LoaderHandler } from '../utilities/loader.handler';
 
 @Injectable()
-export class ProductService extends BaseService {
+export class PurchaseOrderService extends BaseService {
 
 	constructor(
 		private http: HttpClient,
@@ -22,31 +23,30 @@ export class ProductService extends BaseService {
 		super(notify, loader, router);
 	}
 
-	public getProducts() {
+	public getPurchaseOrders() {
 		const token = localStorage.getItem(ACCESS_TOKEN_KEY);
 		return AspNetData.createStore({
 			key: 'id',
-			loadUrl: this.apiUrl + '/Product',
+			loadUrl: this.apiUrl + '/PurchaseOrder',
 			onBeforeSend(method, ajaxOptions) {
 				ajaxOptions.headers = { Authorization: 'Bearer ' + token };
 			}
 		});
 	}
 
-	public getProductById(id: number) {
-		return this.http.get<IProduct>(this.apiUrl + '/Product/' + id)
-			.pipe(catchError(e => this.handleError(e, 'Getting Product by Id')));
+	public getPurchaseOrderById(id: number): Observable<IPurchaseOrder> {
+		return this.http.get<IPurchaseOrder>(this.apiUrl + '/PurchaseOrder/get-by-id/' + id)
+			.pipe(catchError(e => this.handleError(e, 'Getting purchase order by Id')));
 	}
 
-	public createProduct(product: IProduct) {
-		return this.http.post<IProduct>(this.apiUrl + '/Product', product)
-			.pipe(catchError(e => this.handleError(e, 'Creating product')));
+	public addPurchaseOrder(purchaseOrder: IPurchaseOrder) {
+		return this.http.post(this.apiUrl + '/PurchaseOrder', purchaseOrder)
+			.pipe(catchError(e => this.handleError(e, 'Create purchase order')));
 	}
 
-	public updateProduct(product: IProduct) {
-		return this.http.put<IProduct>(this.apiUrl + '/Product', product)
-			.pipe(catchError(e => this.handleError(e, 'Update product')));
+	public updatePurchaseOrder(purchaseOrder: IPurchaseOrder) {
+		return this.http.put(this.apiUrl + '/PurchaseOrder', purchaseOrder)
+			.pipe(catchError(e => this.handleError(e, 'Update purchase order')));
 	}
-
 }
 

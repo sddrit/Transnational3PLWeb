@@ -32,9 +32,14 @@ import { SupplierUpdateComponent } from './pages/suppliers/supplier-update/suppl
 import { WarehouseUpdateComponent } from './pages/warehouses/warehouse-update/warehouse-update.component';
 import { ProductListComponent } from './pages/products/product-list/product-list.component';
 import { ProductUpdateComponent } from './pages/products/product-update/product-update.component';
-
+import { PurchaseOrderListComponent } from './pages/purchase-order/purchase-order-list/purchase-order-list.component';
+import { PurchaseOrderUpdateComponent } from './pages/purchase-order/purchase-order-update/purchase-order-update.component';
 import { SupplierPickupAddressModalComponent } from './pages/suppliers/supplier-update/supplier-pickup-address-modal/supplier-pickup-address-modal.component';
-import { MetadataResolver } from "./shared/resolvers/metadata.resolver";
+
+import { MetadataResolver } from './shared/resolvers/metadata.resolver';
+import { GrnEditorComponent } from './pages/grn/grn-editor/grn-editor.component';
+import { GrnListComponent } from './pages/grn/grn-list/grn-list.component';
+
 
 const routes: Routes = [
 	{
@@ -108,8 +113,28 @@ const routes: Routes = [
 		}
 	},
 	{
+		path: 'purchase-orders',
+		component: PurchaseOrderListComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 'purchase-order/:id',
+		component: PurchaseOrderUpdateComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 'grn/:id',
+		component: GrnEditorComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 'grn-list',
+		component: GrnListComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
 		path: '**',
-		redirectTo: 'home'
+		redirectTo: 'suppliers'
 	}
 ];
 
@@ -140,7 +165,11 @@ const routes: Routes = [
 		WarehouseUpdateComponent,
 		SupplierPickupAddressModalComponent,
 		ProductListComponent,
-		ProductUpdateComponent
+		ProductUpdateComponent,
+		PurchaseOrderListComponent,
+		PurchaseOrderUpdateComponent,
+		GrnEditorComponent,
+		GrnListComponent
 	]
 })
 export class AppRoutingModule {

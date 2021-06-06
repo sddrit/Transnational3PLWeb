@@ -1,4 +1,4 @@
-@import "../../../../themes/threepl-custom-theme/variables.base.scss";
+@import "../../../../themes/generated/variables.base.scss";
 
 .user-info {
   display: flex;
@@ -31,6 +31,10 @@
     color: $base-text-color;
     margin: 0 9px;
   }
+}
+
+.user-panel {
+	float: right;
 }
 
 .user-panel ::ng-deep {

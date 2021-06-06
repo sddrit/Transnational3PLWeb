@@ -3,6 +3,7 @@ import { IProduct } from './product';
 
 export interface ISupplier {
 	id: number;
+	code: string;
 	active: boolean;
 	supplierName: string;
 	businessRegistrationId: string;

@@ -1,6 +1,5 @@
 :host {
-  @import "../themes/threepl-custom-theme/variables.base.scss";
-  background-color: darken($base-bg, 5.00);
+  @import "../themes/generated/variables.base.scss";
   display: flex;
   height: 100%;
   width: 100%;

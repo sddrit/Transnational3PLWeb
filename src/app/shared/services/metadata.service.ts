@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { catchError } from 'rxjs/operators';
 import { IMetaData } from '../models/metadata';
+import { LoaderHandler } from '../utilities/loader.handler';
 
 @Injectable()
 export class MetadataService extends BaseService {
@@ -14,9 +15,10 @@ export class MetadataService extends BaseService {
 	constructor(
 		private http: HttpClient,
 		public notify: NotifyHandler,
+		public loader: LoaderHandler,
 		public router: Router,
 	) {
-		super(notify, router);
+		super(notify, loader, router);
 	}
 
 	public getMetadata(): Promise<IMetaData> {

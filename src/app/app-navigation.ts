@@ -1,22 +1,27 @@
 export const navigation = [
-  {
-    text: 'Home',
-    path: '/home',
-    icon: 'home'
-  },
-  {
-    text: 'Suppliers',
-    path: '/suppliers',
-    icon: 'group'
-  },
-  {
-    text: 'Warehouses',
-    path: '/warehouses',
-    icon: 'home'
-  },
-  {
-    text: 'Products',
-    path: '/products',
-    icon: 'cart'
-  }
+	{
+		text: 'Suppliers',
+		path: '/suppliers',
+		icon: 'group'
+	},
+	{
+		text: 'Warehouses',
+		path: '/warehouses',
+		icon: 'home'
+	},
+	{
+		text: 'Products',
+		path: '/products',
+		icon: 'box'
+	},
+	{
+		text: 'Purchase Orders',
+		path: '/purchase-orders',
+		icon: 'cart'
+	},
+	{
+		text: 'Good Received Notes',
+		path: '/grn-list',
+		icon: 'airplane'
+	}
 ];

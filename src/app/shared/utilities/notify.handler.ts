@@ -10,28 +10,29 @@ const TOAST_POSITION: any = { my: 'top right', at: 'top right', of: window, offs
 @Injectable()
 export class NotifyHandler {
 
-    constructor() { }
+	constructor() {
+	}
 
-    success(message: string) {
-        notify({
-            message: message,
-            type: "success",
-            displayTime: TOAST_DISPLAY_TIME,
-            height: TOAST_HEIGHT,
-            width: TOAST_WIDTH,
-            position: TOAST_POSITION
-        });
-    }
+	success(message: string) {
+		notify({
+			message: message,
+			type: 'success',
+			displayTime: TOAST_DISPLAY_TIME,
+			height: TOAST_HEIGHT,
+			width: TOAST_WIDTH,
+			position: TOAST_POSITION
+		});
+	}
 
-    error(message: string) {
-        notify({
-            message: message,
-            type: "error",
-            displayTime: TOAST_DISPLAY_TIME,
-            height: TOAST_HEIGHT,
-            width: TOAST_WIDTH,
-            position: TOAST_POSITION
-        });
-    }
+	error(message: string) {
+		notify({
+			message: message,
+			type: 'error',
+			displayTime: TOAST_DISPLAY_TIME,
+			height: TOAST_HEIGHT,
+			width: TOAST_WIDTH,
+			position: TOAST_POSITION
+		});
+	}
 
 }

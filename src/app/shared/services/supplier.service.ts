@@ -8,18 +8,20 @@ import { ISupplier } from '../../shared/models/supplier';
 import { ACCESS_TOKEN_KEY } from '../constants/common';
 import { NotifyHandler } from '../utilities/notify.handler';
 import { Router } from '@angular/router';
+import { LoaderHandler } from '../utilities/loader.handler';
 
 
 @Injectable()
 export class SupplierService extends BaseService {
 
-    constructor(
-        private http: HttpClient,
-        public notify: NotifyHandler,
-        public router: Router,
-    ) {
-        super(notify, router);
-    }
+	constructor(
+		private http: HttpClient,
+		public notify: NotifyHandler,
+		public loader: LoaderHandler,
+		public router: Router,
+	) {
+		super(notify, loader, router);
+	}
 
     public getSuppliers() {
         const token = localStorage.getItem(ACCESS_TOKEN_KEY);

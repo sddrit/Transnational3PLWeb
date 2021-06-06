@@ -1,33 +1,40 @@
+<div class="responsive-paddings">
+	<h2>Warehouses
+		<dx-button class="btn-new-warehouse" type="normal" text="New Warehouse" icon="add" (onClick)="openWarehouse('0')">
+		</dx-button>
+	</h2>
 
-<h3 class="content-block">Warehouses
-    <dx-button class="btn-new-warehouse" type="default" text="New Warehouse" (onClick)="openWarehouse('0')">
-    </dx-button>
-</h3>
+	<dx-data-grid class="dx-card wide-card" [dataSource]="warehouses" [remoteOperations]="true"
+				  [showBorders]="true"
+				  [focusedRowEnabled]="true"
+				  [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true" keyExpr="id"
+				  (onRowClick)="openWarehouse($event.data.id)">
 
-<dx-data-grid class="dx-card wide-card" [dataSource]="warehouses" [remoteOperations]="true" [showBorders]="false" [focusedRowEnabled]="true"
-    [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true" keyExpr="id"  (onRowClick)="openWarehouse($event.data.id)">
+		<dxo-paging [pageSize]="10"></dxo-paging>
+		<dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+		<dxo-filter-row [visible]="true"></dxo-filter-row>
 
-    <dxo-paging [pageSize]="10"></dxo-paging>
-    <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
-    <dxo-filter-row [visible]="true"></dxo-filter-row>
+		<dxi-column dataField="code">
+		</dxi-column>
 
-    <dxi-column dataField="name">
-    </dxi-column>
+		<dxi-column dataField="name">
+		</dxi-column>
 
-	<dxi-column dataField="active">
-	</dxi-column>
+		<dxi-column dataField="active">
+		</dxi-column>
 
-	<dxi-column caption="Address Line 1" dataField="address.addressLine1">
-	</dxi-column>
+		<dxi-column caption="Address Line 1" dataField="address.addressLine1">
+		</dxi-column>
 
-	<dxi-column caption="Address Line 2" dataField="address.addressLine2">
-	</dxi-column>
+		<dxi-column caption="Address Line 2" dataField="address.addressLine2">
+		</dxi-column>
 
-	<dxi-column caption="City" dataField="address.city.cityName">
-	</dxi-column>
+		<dxi-column caption="City" dataField="address.city.cityName">
+		</dxi-column>
 
-	<dxi-column caption="Postal Code" dataField="address.postalCode">
-	</dxi-column>
+		<dxi-column caption="Postal Code" dataField="address.postalCode">
+		</dxi-column>
 
-</dx-data-grid>
+	</dx-data-grid>
+</div>
 

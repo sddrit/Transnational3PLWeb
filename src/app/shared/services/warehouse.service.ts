@@ -8,16 +8,18 @@ import { ACCESS_TOKEN_KEY } from '../constants/common';
 import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { LoaderHandler } from '../utilities/loader.handler';
 
 @Injectable()
 export class WarehouseService extends BaseService {
 
 	constructor(
-		public notify: NotifyHandler,
-		public router: Router,
 		private http: HttpClient,
+		public notify: NotifyHandler,
+		public loader: LoaderHandler,
+		public router: Router,
 	) {
-		super(notify, router);
+		super(notify, loader, router);
 	}
 
     public getWarehouses() {

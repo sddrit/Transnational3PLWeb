@@ -1,44 +1,52 @@
-<h2 class="content-block">Update Product
+<div class="responsive-paddings">
+	<h2>
+		{{product.id == 0 ? 'Add' : 'Update' }} Product
+		<dx-button class="btn-back" type="back" (onClick)="backToList()">
+		</dx-button>
+	</h2>
 
-    <dx-button class="btn-back" type="back" (onClick)="backToList()">
-    </dx-button>
+	<div class="dx-card responsive-paddings">
+		<form (submit)="handleSubmit($event)">
+			<dx-form id="form" labelLocation="top" [formData]="product" [colCount]="4">
+				<dxi-item dataField="code" [isRequired]="true" [colSpan]="2"></dxi-item>
+				<dxi-item editorType="dxLookup" [colSpan]="2"
+						  [editorOptions]="{ dataSource: supplierStore, displayExpr: 'supplierName', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'supplierName'],
+					  fieldTemplate: 'supplierField', itemTemplate: 'supplierField'  }"
+						  [label]="{ text: 'Supplier' }" dataField="supplierId" [isRequired]="true">
+				</dxi-item>
+				<dxi-item editorType="dxSelectBox" [colSpan]="2"
+						  [editorOptions]="{ dataSource: metadata.storeTypes, displayExpr: 'name', valueExpr: 'id' }"
+						  [label]="{ text: 'Storing Type' }" dataField="storingType" [isRequired]="true">
+				</dxi-item>
+				<dxi-item dataField="name" [isRequired]="true" [colSpan]="2"></dxi-item>
+				<dxi-item itemType="dxTextArea" dataField="description" [editorOptions]="{ height: 120 }" [colSpan]="2"></dxi-item>
+				<dxi-item editorType="dxCheckBox" dataField="active" [colSpan]="4"></dxi-item>
 
-</h2>
+				<dxi-item itemType="empty" [colSpan]="4"></dxi-item>
+				<dxi-item itemType="empty" [colSpan]="4"></dxi-item>
 
+				<dxi-item itemType="group" caption="Inventory" [colSpan]="2">
+					<dxi-item dataField="sku" [isRequired]="true"></dxi-item>
+					<dxi-item dataField="unitPrice"></dxi-item>
+					<dxi-item [isRequired]="true" dataField="reorderLevel"></dxi-item>
+				</dxi-item>
 
-<div class="content-block dx-card responsive-paddings">
-	<form (submit)="handleSubmit($event)">
-		<dx-form id="form" [formData]="product" [colCount]="4" (submit)="handleSubmit($event)">
-			<dxi-item editorType="dxSelectBox" [colSpan]="2"
-					  [editorOptions]="{ dataSource: supplierStore, displayExpr: 'supplierName', valueExpr: 'id', searchEnabled: true, searchExpr: ['supplierName'] }"
-					  [label]="{ text: 'Supplier' }" dataField="supplierId" [isRequired]="true">
-			</dxi-item>
-			<dxi-item editorType="dxSelectBox" [colSpan]="2"
-					  [editorOptions]="{ dataSource: metadata.storeTypes, displayExpr: 'name', valueExpr: 'id' }"
-					  [label]="{ text: 'Storing Type' }" dataField="storingType" [isRequired]="true">
-			</dxi-item>
-			<dxi-item dataField="name" [isRequired]="true" [colSpan]="4"></dxi-item>
-			<dxi-item itemType="dxTextArea" dataField="description" [editorOptions]="{ height: 120 }" [colSpan]="4"></dxi-item>
-			<dxi-item editorType="dxCheckBox" dataField="active" [colSpan]="4"></dxi-item>
+				<dxi-item itemType="group" caption="Storage" [colSpan]="2">
+					<dxi-item [isRequired]="true" dataField="storageUnits"></dxi-item>
+					<dxi-item editorType="dxSelectBox" dataField="massUnit" [editorOptions]="{ items: metadata.massUnits, displayExpr: 'name', valueExpr: 'id' }"></dxi-item>
+					<dxi-item dataField="weight"></dxi-item>
+				</dxi-item>
 
-			<dxi-item itemType="empty" [colSpan]="4"></dxi-item>
-			<dxi-item itemType="empty" [colSpan]="4"></dxi-item>
+				<dxi-item class="btn-save-product" [colSpan]="4" itemType="button"
+						  [buttonOptions]="{ text: 'Save Changes',useSubmitBehavior: true, icon: 'save', type: 'success',class: 'btn-save-product' }">
+				</dxi-item>
 
-			<dxi-item itemType="group" caption="Inventory" [colSpan]="2">
-				<dxi-item dataField="sku" [isRequired]="true"></dxi-item>
-				<dxi-item dataField="unitPrice"></dxi-item>
-				<dxi-item [isRequired]="true" dataField="reorderLevel"></dxi-item>
-			</dxi-item>
+				<div *dxTemplate="let item of 'supplierField'">
+					<div>{{item?.code}} - {{item?.supplierName}}</div>
+				</div>
 
-			<dxi-item itemType="group" caption="Storage" [colSpan]="2">
-				<dxi-item [isRequired]="true" dataField="storageUnits"></dxi-item>
-				<dxi-item editorType="dxSelectBox" dataField="massUnit" [editorOptions]="{ items: metadata.massUnits, displayExpr: 'name', valueExpr: 'id' }"></dxi-item>
-				<dxi-item dataField="weight"></dxi-item>
-			</dxi-item>
+			</dx-form>
+		</form>
+	</div>
 
-			<dxi-item class="btn-save-product" [colSpan]="4" itemType="button" [buttonOptions]="{ text: 'Save',useSubmitBehavior: true,type: 'default',class: 'btn-save-product' }">
-			</dxi-item>
-
-		</dx-form>
-	</form>
 </div>

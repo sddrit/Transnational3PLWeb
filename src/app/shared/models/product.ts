@@ -2,6 +2,7 @@ import { ISupplier } from './supplier';
 
 export interface IProduct {
 	id: number;
+	code: string;
 	supplierId: number;
 	supplier: ISupplier;
 	name: string;

@@ -1,30 +1,35 @@
-<h3 class="content-block">Suppliers
-	<dx-button (onClick)="openSupplier(0)" class="btn-new-supplier" text="New Supplier" type="default">
-	</dx-button>
-</h3>
+<div class="responsive-paddings">
+	<h2>Suppliers
+		<dx-button (onClick)="openSupplier(0)" class="btn-new-supplier" icon="add" text="New Supplier" type="normal">
+		</dx-button>
+	</h2>
 
-<dx-data-grid (onRowClick)="openSupplier($event.data.id)" [columnAutoWidth]="true" [remoteOperations]="true" [columnHidingEnabled]="true" [dataSource]="suppliers"
-			  [focusedRowEnabled]="true"
-			  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
-			  keyExpr="Id">
+	<dx-data-grid (onRowClick)="openSupplier($event.data.id)" [columnAutoWidth]="true"
+				  [showBorders]="true"
+				  [columnHidingEnabled]="true" [dataSource]="suppliers"
+				  [focusedRowEnabled]="true"
+				  [focusedRowIndex]="0" [remoteOperations]="true" class="dx-card wide-card"
+				  keyExpr="Id">
 
-	<dxo-paging [pageSize]="10"></dxo-paging>
-	<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
-	<dxo-filter-row [visible]="true"></dxo-filter-row>
+		<dxo-paging [pageSize]="10"></dxo-paging>
+		<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
+		<dxo-filter-row [visible]="true"></dxo-filter-row>
+		<dxi-column caption="Supplier Code" dataField="code">
+		</dxi-column>
+		<dxi-column caption="BR" dataField="businessRegistrationId">
+		</dxi-column>
+		<dxi-column dataField="supplierName">
+		</dxi-column>
+		<dxi-column dataField="active">
+		</dxi-column>
+		<dxi-column dataField="vatNumber">
+		</dxi-column>
+		<dxi-column dataField="contact.phone">
+		</dxi-column>
+		<dxi-column dataField="contact.email">
+		</dxi-column>
+		<dxi-column dataField="contact.mobile">
+		</dxi-column>
 
-	<dxi-column caption="BR" dataField="businessRegistrationId">
-	</dxi-column>
-	<dxi-column dataField="supplierName">
-	</dxi-column>
-	<dxi-column dataField="active">
-	</dxi-column>
-	<dxi-column dataField="vatNumber">
-	</dxi-column>
-	<dxi-column dataField="contact.phone">
-	</dxi-column>
-	<dxi-column dataField="contact.email">
-	</dxi-column>
-	<dxi-column dataField="contact.mobile">
-	</dxi-column>
-
-</dx-data-grid>
+	</dx-data-grid>
+</div>

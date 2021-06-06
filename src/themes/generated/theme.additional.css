@@ -164,7 +164,7 @@
 }
 .dx-theme-material-typography .dx-swatch-additional a,
 .dx-theme-material-typography.dx-swatch-additional a {
-  color: #d2a66e;
+  color: #ff5722;
 }
 .dx-swatch-additional .dx-icon-add,
 .dx-swatch-additional .dx-icon-addcolumnleft,
@@ -1817,7 +1817,7 @@
   font-family: "dx.material.orange-dark";
 }
 .dx-swatch-additional .dx-theme-accent-as-text-color {
-  color: #d2a66e!important;
+  color: #ff5722!important;
 }
 .dx-swatch-additional .dx-theme-text-color {
   color: #fff!important;
@@ -1829,8 +1829,8 @@
   color: #515159!important;
 }
 .dx-swatch-additional .dx-theme-accent-as-background-color {
-  background-color: #d2a66e!important;
-  fill: #d2a66e!important;
+  background-color: #ff5722!important;
+  fill: #ff5722!important;
 }
 .dx-swatch-additional .dx-theme-text-color-as-background-color {
   background-color: #fff!important;
@@ -1845,7 +1845,7 @@
   fill: #515159!important;
 }
 .dx-swatch-additional .dx-theme-accent-as-border-color {
-  border-color: #d2a66e!important;
+  border-color: #ff5722!important;
 }
 .dx-swatch-additional .dx-theme-text-color-as-border-color {
   border-color: #fff!important;
@@ -2549,7 +2549,7 @@
 }
 .dx-swatch-additional .dx-button.dx-button-default {
   border-radius: 4px;
-  background-color: #d2a66e;
+  background-color: #ff5722;
   color: rgba(0,0,0,.87);
   -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.4);
   box-shadow: 0 1px 3px rgba(0,0,0,.4);
@@ -2763,12 +2763,12 @@
 }
 .dx-swatch-additional .dx-button-mode-text.dx-button-default {
   background-color: transparent;
-  color: #d2a66e;
+  color: #ff5722;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 .dx-swatch-additional .dx-button-mode-text.dx-button-default .dx-icon {
-  color: #d2a66e;
+  color: #ff5722;
 }
 .dx-swatch-additional .dx-button-mode-text.dx-button-default.dx-state-focused,
 .dx-swatch-additional .dx-button-mode-text.dx-button-default.dx-state-hover {
@@ -2900,13 +2900,13 @@
 }
 .dx-swatch-additional .dx-button-mode-outlined.dx-button-default {
   background-color: transparent;
-  color: #d2a66e;
+  color: #ff5722;
   -webkit-box-shadow: none;
   box-shadow: none;
-  border: 1px solid #d2a66e;
+  border: 1px solid #ff5722;
 }
 .dx-swatch-additional .dx-button-mode-outlined.dx-button-default .dx-icon {
-  color: #d2a66e;
+  color: #ff5722;
 }
 .dx-swatch-additional .dx-button-mode-outlined.dx-button-default.dx-state-focused,
 .dx-swatch-additional .dx-button-mode-outlined.dx-button-default.dx-state-hover {
@@ -3117,7 +3117,7 @@
 }
 .dx-swatch-additional .dx-checkbox-checked .dx-checkbox-icon {
   color: #363640;
-  background-color: #d2a66e;
+  background-color: #ff5722;
   border: none;
   font: 16px/16px DXIcons;
   text-align: center;
@@ -3133,7 +3133,7 @@
   margin-left: -8px;
 }
 .dx-swatch-additional .dx-checkbox-indeterminate .dx-checkbox-icon {
-  background-color: #d2a66e;
+  background-color: #ff5722;
   color: #363640;
   border: none;
   font: 20px/20px DXIcons;
@@ -3582,7 +3582,7 @@
   padding: 3px 9px;
   border-radius: 14px;
   line-height: 1;
-  background-color: #d2a66e;
+  background-color: #ff5722;
   color: rgba(0,0,0,.87);
   font-size: 12px;
   margin-left: 4px;
@@ -3686,7 +3686,7 @@
 }
 .dx-swatch-additional .dx-tab.dx-tab-selected,
 .dx-swatch-additional .dx-tab.dx-tab-selected .dx-icon {
-  color: #d2a66e;
+  color: #ff5722;
 }
 .dx-swatch-additional .dx-tab.dx-tab-selected::before {
   content: "";
@@ -3695,7 +3695,7 @@
   height: 2px;
   left: 0;
   right: 0;
-  background-color: #d2a66e;
+  background-color: #ff5722;
 }
 .dx-swatch-additional .dx-tab-content,
 .dx-swatch-additional .dx-tab-text {
@@ -4068,7 +4068,7 @@
 }
 .dx-swatch-additional .dx-texteditor.dx-state-active::before,
 .dx-swatch-additional .dx-texteditor.dx-state-focused::before {
-  border-bottom: 2px solid #d2a66e;
+  border-bottom: 2px solid #ff5722;
   -webkit-transform: scale(1);
   transform: scale(1);
   -webkit-transition: -webkit-transform .6s cubic-bezier(.4,0,.02,1);
@@ -4255,8 +4255,8 @@
   color: rgba(255,255,255,.5);
 }
 .dx-swatch-additional .dx-texteditor.dx-editor-outlined.dx-state-focused {
-  -webkit-box-shadow: inset 0 0 0 2px #d2a66e;
-  box-shadow: inset 0 0 0 2px #d2a66e;
+  -webkit-box-shadow: inset 0 0 0 2px #ff5722;
+  box-shadow: inset 0 0 0 2px #ff5722;
 }
 .dx-swatch-additional .dx-texteditor.dx-editor-outlined.dx-state-focused.dx-invalid {
   -webkit-box-shadow: inset 0 0 0 2px #f44336;
@@ -4713,7 +4713,7 @@
 .dx-swatch-additional .dx-loadindicator-segment-inner {
   position: relative;
   height: 100%;
-  border-color: #d2a66e #d2a66e transparent;
+  border-color: #ff5722 #ff5722 transparent;
   border-width: .12em;
   border-style: solid;
   -webkit-animation: none;

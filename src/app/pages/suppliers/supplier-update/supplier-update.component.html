@@ -1,24 +1,25 @@
-<h3 class="content-block">
-    {{supplier.id == 0 ? 'Add': 'Update' }} Supplier
-    <dx-button class="btn-back" type="back" (onClick)="backToSuppliers()">
-    </dx-button>
-</h3>
+<div class="responsive-paddings">
+	<h2>
+		{{supplier.id == 0 ? 'Add' : 'Update' }} Supplier
+		<dx-button class="btn-back" type="back" (onClick)="backToSuppliers()">
+		</dx-button>
+	</h2>
 
-<div class="content-block dx-card responsive-paddings">
+	<div class="dx-card responsive-paddings">
 
-    <form (submit)="handleSubmit($event)">
-        <dx-form id="form" [(formData)]="supplier" method="post" labelLocation="top" [colCount]="2">
+		<form (submit)="handleSubmit($event)">
+			<dx-form id="form" [(formData)]="supplier" labelLocation="top" [colCount]="2">
+				<dxi-item dataField="code" [isRequired]="true"></dxi-item>
+				<dxi-item dataField="supplierName" [isRequired]="true"></dxi-item>
+				<dxi-item>
+					<dxo-label text="Is Active"></dxo-label>
+					<dx-check-box [(value)]="supplier.active">
+					</dx-check-box>
+				</dxi-item>
+				<dxi-item dataField="businessRegistrationId"></dxi-item>
+				<dxi-item dataField="vatNumber"></dxi-item>
 
-            <dxi-item dataField="supplierName" [isRequired]="true"></dxi-item>
-            <dxi-item>
-                <dxo-label text="Is Active"> </dxo-label>
-                <dx-check-box [(value)]="supplier.active">
-                </dx-check-box>
-            </dxi-item>
-            <dxi-item dataField="businessRegistrationId"></dxi-item>
-            <dxi-item dataField="vatNumber"></dxi-item>
-
-            <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
+				<dxi-item itemType="empty" [colSpan]="2"></dxi-item>
             <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
             <dxi-item itemType="group" caption="Contact information">
                 <dxi-item itemType="tabbed">
@@ -117,15 +118,16 @@
             </dxi-item>
 
             <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
-            <dxi-item itemType="empty" [colSpan]="2"></dxi-item>
+				<dxi-item itemType="empty" [colSpan]="2"></dxi-item>
 
-            <dxi-item cssClass="btn-save-supplier" itemType="button" [colSpan]="2"
-                [buttonOptions]="{ text:'Save supplier', useSubmitBehavior: true, type:'default'}">
-            </dxi-item>
+				<dxi-item cssClass="btn-save-supplier" itemType="button" [colSpan]="2"
+						  [buttonOptions]="{ text:'Save Changes', useSubmitBehavior: true, icon: 'save', type:'success'}">
+				</dxi-item>
 
-        </dx-form>
-    </form>
+			</dx-form>
+		</form>
 
+	</div>
 </div>
 
 <supplier-pickup-address-modal

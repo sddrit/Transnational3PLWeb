@@ -27,6 +27,8 @@ import { LoaderHandler } from './shared/utilities/loader.handler';
 import { NotifyHandler } from './shared/utilities/notify.handler';
 import { DxPopupModule } from 'devextreme-angular';
 import { MetadataResolver } from './shared/resolvers/metadata.resolver';
+import { PurchaseOrderService } from './shared/services/purchaseorder.service';
+import { GrnService } from './shared/services/grn.service';
 
 export function tokenGetter() {
 	return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -34,7 +36,7 @@ export function tokenGetter() {
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -67,6 +69,8 @@ export function tokenGetter() {
 		WarehouseService,
 		ProductService,
 		CityService,
+		PurchaseOrderService,
+		GrnService,
 		MetadataService,
 		MetadataResolver
 	],

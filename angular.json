@@ -56,7 +56,7 @@
               "node_modules/devextreme/dist/css/dx.common.css",
               "src/themes/generated/theme.base.css",
               "src/themes/generated/theme.additional.css",
-              "src/themes/threepl-custom-theme/dx.generic.custom-threepl.css",
+              "src/themes/dx.generic.3pl-theme.css",
               "src/dx-styles.scss",
               "src/styles.scss"
             ],

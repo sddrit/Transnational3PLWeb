@@ -1,0 +1,92 @@
+<div class="dx-card responsive-paddings">
+
+	<dx-button class="btn-back" type="back" (onClick)="backToPurchaseOrders()">
+	</dx-button>
+
+	<h2>Purchase Order</h2>
+
+	<p *ngIf="purchaseOrder.id != 0"><b>Purchase Order Number :</b> {{purchaseOrder.poNumber}}</p>
+	<p *ngIf="purchaseOrder.id != 0"><b>Date :</b> {{purchaseOrder.created | date: 'yyyy-MM-dd'}}</p>
+
+	<br/>
+
+	<form (submit)="handleSubmit($event)">
+		<dx-form id="form" [formData]="purchaseOrder" labelLocation="top" [colCount]="4">
+			<dxi-item itemType="group" caption="General Details" [colSpan]="4" [colCount]="4">
+				<dxi-item editorType="dxLookup" [colSpan]="2"
+						  [editorOptions]="{ dataSource: warehouseStore, displayExpr: 'name', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'name'],
+					fieldTemplate: 'warehouseField', itemTemplate: 'warehouseField'}"
+						  [label]="{ text: 'Warehouse' }" dataField="wareHouseId" [isRequired]="false">
+				</dxi-item>
+
+				<dxi-item editorType="dxLookup" [colSpan]="2"
+						  [editorOptions]="{ dataSource: supplierStore, displayExpr: 'supplierName', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'supplierName'],
+					  fieldTemplate: 'supplierField', itemTemplate: 'supplierField'  }"
+						  [label]="{ text: 'Supplier' }" dataField="supplierId" [isRequired]="true">
+				</dxi-item>
+				<dxi-item itemType="dxTextArea" dataField="note" [editorOptions]="{ height: 120 }"
+						  [colSpan]="4"></dxi-item>
+			</dxi-item>
+
+			<div *dxTemplate="let item of 'supplierField'">
+				<div>{{item?.code}} - {{item?.supplierName}}</div>
+			</div>
+
+			<div *dxTemplate="let item of 'warehouseField'">
+				<div>{{item?.code}} - {{item?.name}}</div>
+			</div>
+
+			<dxi-item itemType="group" caption="Order Items" [colSpan]="4">
+				<dxi-item>
+					<dx-data-grid (onRowValidating)="onRowValidating($event)" id="dxDataGridPurchaseOrderItems"
+								  #dxDataGridPurchaseOrderItems [disabled]="purchaseOrder.supplierId == 0"
+								  class="" [dataSource]="purchaseOrder.purchaseOrderItems"
+								  [showBorders]="true"
+								  [rowAlternationEnabled]="true">
+						<dxo-editing
+							[allowUpdating]="true"
+							[allowAdding]="true"
+							[allowDeleting]="true"
+							mode="cell">
+						</dxo-editing>
+						<dxi-column caption="Product Name" dataField="productId">
+							<dxi-validation-rule type="required" message="Product is required"></dxi-validation-rule>
+							<dxo-lookup
+								[dataSource]="{ store: productStore, filter: [['supplierId', '=', purchaseOrder.supplierId], ['active', '=', true]] }"
+								displayExpr="name"
+								valueExpr="id">
+							</dxo-lookup>
+						</dxi-column>
+						<dxi-column dataType="number" [width]="200" dataField="quantity">
+							<dxi-validation-rule type="required" message="Quantity is required"></dxi-validation-rule>
+						</dxi-column>
+						<dxi-column dataType="number" [width]="200" dataField="unitCost">
+							<dxi-validation-rule type="required" message="Unit Cost is required"></dxi-validation-rule>
+						</dxi-column>
+						<dxi-column [allowEditing]="false" name="total" alignment="right" dataType="total" caption="Total" [width]="200" [calculateCellValue]='calcualteTotal'></dxi-column>
+						<dxo-summary>
+							<dxi-total-item
+								alignment="right"
+								displayFormat="Quantity Total : {0}"
+								column="quantity"
+								summaryType="sum">
+							</dxi-total-item>
+							<dxi-total-item
+								alignment="right"
+								displayFormat="Total : {0}"
+								column="total"
+								summaryType="sum">
+							</dxi-total-item>
+						</dxo-summary>
+					</dx-data-grid>
+				</dxi-item>
+			</dxi-item>
+
+			<dxi-item class="btn-save-product" [colSpan]="4" itemType="button"
+					  [buttonOptions]="{ text: 'Save Changes', useSubmitBehavior: true, icon: 'save', type: 'success',class: 'btn-save-product' }">
+			</dxi-item>
+		</dx-form>
+	</form>
+
+
+</div>

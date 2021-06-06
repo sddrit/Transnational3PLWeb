@@ -10,6 +10,7 @@ import DevExpress from 'devextreme';
 import CustomStore = DevExpress.data.CustomStore;
 import { ICity } from '../models/city';
 import { catchError } from 'rxjs/operators';
+import { LoaderHandler } from '../utilities/loader.handler';
 
 @Injectable()
 export class CityService extends BaseService {
@@ -17,9 +18,10 @@ export class CityService extends BaseService {
 	constructor(
 		private http: HttpClient,
 		public notify: NotifyHandler,
+		public loader: LoaderHandler,
 		public router: Router,
 	) {
-		super(notify, router);
+		super(notify, loader, router);
 	}
 
 	public getCities(): CustomStore {

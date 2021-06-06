@@ -1,0 +1,37 @@
+<div class="responsive-paddings">
+	<h2>Purchase Orders
+		<dx-button class="btn-new-purchase-order" type="normal" text="New Purchase Order" icon="add" (click)="openPurchaseOrder(0)">
+		</dx-button>
+	</h2>
+
+	<dx-data-grid class="dx-card wide-card" [dataSource]="purchaseOrderDataSource"
+				  [showBorders]="true"
+				  [remoteOperations]="true" [focusedRowEnabled]="true"
+				  [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true"
+				  keyExpr="id" (onRowClick)="openPurchaseOrder($event.data.id)">
+
+		<dxo-paging [pageSize]="10"></dxo-paging>
+		<dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+		<dxo-filter-row [visible]="true"></dxo-filter-row>
+		<dxi-column dataField="poNumber" caption="PO Number">
+		</dxi-column>
+		<dxi-column dataField="supplierId" caption="Supplier">
+			<dxo-lookup
+				[dataSource]="supplierDataSource"
+				displayExpr="supplierName"
+				valueExpr="id">
+			</dxo-lookup>
+		</dxi-column>
+		<dxi-column dataField="note" caption="Note">
+		</dxi-column>
+		<dxi-column dataField="wareHouseId" caption="Warehouse">
+			<dxo-lookup
+				[dataSource]="warehouseDataSource"
+				displayExpr="name"
+				valueExpr="id">
+			</dxo-lookup>
+		</dxi-column>
+
+	</dx-data-grid>
+</div>
+

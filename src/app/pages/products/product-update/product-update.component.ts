@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroupDirective } from '@angular/forms';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { IProduct } from 'src/app/shared/models/product';
@@ -21,7 +20,6 @@ export class ProductUpdateComponent implements OnInit {
 	product: IProduct;
 	metadata: IMetaData;
 	supplierStore: CustomStore;
-	@ViewChild('documentEditForm') documentEditForm: FormGroupDirective;
 
 	constructor(
 		private metadataService: MetadataService,

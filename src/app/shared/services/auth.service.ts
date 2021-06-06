@@ -7,6 +7,7 @@ import { ACCESS_TOKEN_KEY, CURRENT_USER_KEY } from '../constants/common';
 import { ILoginModel, ILoginResponseModel } from '../models/auth';
 import { NotifyHandler } from '../utilities/notify.handler';
 import { BaseService } from './base.service';
+import { LoaderHandler } from '../utilities/loader.handler';
 
 const defaultPath = '/';
 const defaultUser = {
@@ -31,9 +32,10 @@ export class AuthService extends BaseService {
 	constructor(
 		private http: HttpClient,
 		public notify: NotifyHandler,
+		public loader: LoaderHandler,
 		public router: Router,
 	) {
-		super(notify, router);
+		super(notify, loader, router);
 	}
 
 
@@ -69,7 +71,7 @@ export class AuthService extends BaseService {
 		} catch {
 			return {
 				isOk: false,
-				message: "Failed to create account"
+				message: 'Failed to create account'
 			};
 		}
 	}
@@ -85,8 +87,8 @@ export class AuthService extends BaseService {
 		} catch {
 			return {
 				isOk: false,
-				message: "Failed to change password"
-			}
+				message: 'Failed to change password'
+			};
 		}
 		;
 	}
@@ -102,7 +104,7 @@ export class AuthService extends BaseService {
 		} catch {
 			return {
 				isOk: false,
-				message: "Failed to reset password"
+				message: 'Failed to reset password'
 			};
 		}
 	}

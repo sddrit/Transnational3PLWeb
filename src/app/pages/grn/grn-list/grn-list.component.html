@@ -1,0 +1,43 @@
+<div class="responsive-paddings">
+	<h2>GRN List
+		<dx-button class="btn-new-grn" type="normal" text="New GRN" icon="add" (click)="openGrn(0)">
+		</dx-button>
+	</h2>
+
+	<dx-data-grid class="dx-card wide-card" [dataSource]="grnDataSource"
+				  [showBorders]="true"
+				  [remoteOperations]="true" [focusedRowEnabled]="true"
+				  [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true"
+				  keyExpr="id" (onRowClick)="openGrn($event.data.id)">
+
+		<dxo-paging [pageSize]="10"></dxo-paging>
+		<dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+		<dxo-filter-row [visible]="true"></dxo-filter-row>
+		<dxi-column dataField="grnNo" caption="GRN Number">
+		</dxi-column>
+		<dxi-column dataField="purchaseOrderId" caption="Purchase Order">
+			<dxo-lookup
+				[dataSource]="purchaseOrderDataSource"
+				displayExpr="poNumber"
+				valueExpr="id">
+			</dxo-lookup>
+		</dxi-column>
+		<dxi-column dataField="supplierId" caption="Supplier">
+			<dxo-lookup
+				[dataSource]="supplierDataSource"
+				displayExpr="supplierName"
+				valueExpr="id">
+			</dxo-lookup>
+		</dxi-column>
+		<dxi-column dataField="wareHouseId" caption="Warehouse">
+			<dxo-lookup
+				[dataSource]="warehouseDataSource"
+				displayExpr="name"
+				valueExpr="id">
+			</dxo-lookup>
+		</dxi-column>
+
+	</dx-data-grid>
+</div>
+
+
