@@ -36,7 +36,7 @@ export class SupplierPickupAddressModalComponent implements OnInit {
 
 	onOk(event: Event) {
 		event.preventDefault();
-		if (this.form.instance.validate().status === 'invalid') {
+		if ( this.form.instance.validate().status === 'invalid' ) {
 			return;
 		}
 		this.cityService.getCityById(this.pickupAddress.cityId).subscribe(city => {

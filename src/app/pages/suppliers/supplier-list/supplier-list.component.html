@@ -5,10 +5,10 @@
 	</h2>
 
 	<dx-data-grid (onRowClick)="openSupplier($event.data.id)" [columnAutoWidth]="true"
-				  [showBorders]="true"
-				  [columnHidingEnabled]="true" [dataSource]="suppliers"
-				  [focusedRowEnabled]="true"
-				  [focusedRowIndex]="0" [remoteOperations]="true" class="dx-card wide-card"
+				  [columnHidingEnabled]="true"
+				  [dataSource]="suppliers" [focusedRowEnabled]="true"
+				  [focusedRowIndex]="0"
+				  [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
 				  keyExpr="Id">
 
 		<dxo-paging [pageSize]="10"></dxo-paging>

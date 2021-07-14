@@ -29,7 +29,7 @@ export class BaseService {
 		} else {
 			// display error message
 			if ( ! hideToastr ) {
-				if (!error.error || !error.error.errors) {
+				if ( ! error.error || ! error.error.errors ) {
 					this.notify.error('Sorry an error occurred. ' + (operation ? operation + ' failed.' : ''));
 				} else {
 					error.error.errors.map(err => {

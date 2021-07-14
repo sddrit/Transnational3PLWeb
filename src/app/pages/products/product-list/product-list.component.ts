@@ -5,7 +5,6 @@ import DevExpress from 'devextreme';
 import { SupplierService } from '../../../shared/services/supplier.service';
 import { IMetaData } from '../../../shared/models/metadata';
 import { MetadataService } from '../../../shared/services/metadata.service';
-import { IProduct } from '../../../shared/models/product';
 import CustomStore = DevExpress.data.CustomStore;
 
 
@@ -40,6 +39,11 @@ export class ProductListComponent implements OnInit {
 
 	openProduct(id: number) {
 		this.router.navigate(['/product/' + id]);
+	}
+
+	openProductInventory(e: any, id: number) {
+		e.event.stopPropagation();
+		this.router.navigate(['/product-inventory/' + id]);
 	}
 
 }

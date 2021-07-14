@@ -3,8 +3,8 @@ import { PurchaseOrderService } from '../../../shared/services/purchaseorder.ser
 import DevExpress from 'devextreme';
 import { SupplierService } from '../../../shared/services/supplier.service';
 import { WarehouseService } from '../../../shared/services/warehouse.service';
-import CustomStore = DevExpress.data.CustomStore;
 import { ActivatedRoute, Router } from '@angular/router';
+import CustomStore = DevExpress.data.CustomStore;
 
 @Component({
 	selector: 'app-purchase-order-list',

@@ -1,0 +1,20 @@
+<div class="responsive-paddings">
+	<h2>
+		Product Inventory Details
+		<dx-button (onClick)="backToList()" class="btn-back" type="back">
+		</dx-button>
+	</h2>
+
+	<app-product-stocks
+		[productId]="productId"
+		[warehouseDataSource]="warehouseDataSource">
+	</app-product-stocks>
+
+	<br/><br/>
+
+	<app-product-stock-adjustments
+		[productId]="productId"
+		[stockAdjustmentTypes]="metaData.stockAdjustmentTypes"
+		[warehouseDataSource]="warehouseDataSource">
+	</app-product-stock-adjustments>
+</div>

@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
-  apiUrl: '',
-  apiDomainName: ''
+	production: true,
+	apiUrl: '',
+	apiDomainName: ''
 };

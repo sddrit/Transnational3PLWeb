@@ -1,4 +1,4 @@
-import { Component, NgModule, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, NgModule, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AuthService } from '../../services';
@@ -9,55 +9,57 @@ import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
 import { Router } from '@angular/router';
 import { CURRENT_USER_KEY } from '../../constants/common';
 import { IUser } from '../../models/user';
+
 @Component({
-  selector: 'app-header',
-  templateUrl: 'header.component.html',
-  styleUrls: ['./header.component.scss']
+	selector: 'app-header',
+	templateUrl: 'header.component.html',
+	styleUrls: ['./header.component.scss']
 })
 
 export class HeaderComponent {
-  @Output()
-  menuToggle = new EventEmitter<boolean>();
+	@Output()
+	menuToggle = new EventEmitter<boolean>();
 
-  @Input()
-  menuToggleEnabled = false;
+	@Input()
+	menuToggleEnabled = false;
 
-  @Input()
-  title: string;
+	@Input()
+	title: string;
 
-  user: IUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
+	user: IUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
 
-  userMenuItems = [{
-    text: 'Profile',
-    icon: 'user',
-    onClick: () => {
-      this.router.navigate(['/profile']);
-    }
-  },
-  {
-    text: 'Logout',
-    icon: 'runner',
-    onClick: () => {
-      this.authService.logOut();
-    }
-  }];
+	userMenuItems = [{
+		text: 'Profile',
+		icon: 'user',
+		onClick: () => {
+			this.router.navigate(['/profile']);
+		}
+	},
+		{
+			text: 'Logout',
+			icon: 'runner',
+			onClick: () => {
+				this.authService.logOut();
+			}
+		}];
 
-  constructor(private authService: AuthService, private router: Router) {
-  }
+	constructor(private authService: AuthService, private router: Router) {
+	}
 
-  toggleMenu = () => {
-    this.menuToggle.emit();
-  }
+	toggleMenu = () => {
+		this.menuToggle.emit();
+	};
 }
 
 @NgModule({
-  imports: [
-    CommonModule,
-    DxButtonModule,
-    UserPanelModule,
-    DxToolbarModule
-  ],
-  declarations: [HeaderComponent],
-  exports: [HeaderComponent]
+	imports: [
+		CommonModule,
+		DxButtonModule,
+		UserPanelModule,
+		DxToolbarModule
+	],
+	declarations: [HeaderComponent],
+	exports: [HeaderComponent]
 })
-export class HeaderModule { }
+export class HeaderModule {
+}

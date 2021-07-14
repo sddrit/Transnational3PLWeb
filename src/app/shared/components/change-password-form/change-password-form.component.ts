@@ -8,49 +8,52 @@ import { AuthService } from '../../services';
 
 
 @Component({
-  selector: 'app-change-passsword-form',
-  templateUrl: './change-password-form.component.html'
+	selector: 'app-change-passsword-form',
+	templateUrl: './change-password-form.component.html'
 })
 export class ChangePasswordFormComponent implements OnInit {
-  loading = false;
-  formData: any = {};
-  recoveryCode: string;
+	loading = false;
+	formData: any = {};
+	recoveryCode: string;
 
-  constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) { }
+	constructor(private authService: AuthService, private router: Router, private route: ActivatedRoute) {
+	}
 
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.recoveryCode = params.get('recoveryCode');
-    });
-  }
+	ngOnInit() {
+		this.route.paramMap.subscribe(params => {
+			this.recoveryCode = params.get('recoveryCode');
+		});
+	}
 
-  async onSubmit(e) {
-    e.preventDefault();
-    const { password } = this.formData;
-    this.loading = true;
+	async onSubmit(e) {
+		e.preventDefault();
+		const { password } = this.formData;
+		this.loading = true;
 
-    const result = await this.authService.changePassword(password, this.recoveryCode);
-    this.loading = false;
+		const result = await this.authService.changePassword(password, this.recoveryCode);
+		this.loading = false;
 
-    if (result.isOk) {
-      this.router.navigate(['/login-form']);
-    } else {
-      notify(result.message, 'error', 2000);
-    }
-  }
+		if ( result.isOk ) {
+			this.router.navigate(['/login-form']);
+		} else {
+			notify(result.message, 'error', 2000);
+		}
+	}
 
-  confirmPassword = (e: { value: string }) => {
-    return e.value === this.formData.password;
-  }
+	confirmPassword = (e: { value: string }) => {
+		return e.value === this.formData.password;
+	};
 }
+
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    DxFormModule,
-    DxLoadIndicatorModule
-  ],
-  declarations: [ ChangePasswordFormComponent ],
-  exports: [ ChangePasswordFormComponent ]
+	imports: [
+		CommonModule,
+		RouterModule,
+		DxFormModule,
+		DxLoadIndicatorModule
+	],
+	declarations: [ChangePasswordFormComponent],
+	exports: [ChangePasswordFormComponent]
 })
-export class ChangePasswordFormModule { }
+export class ChangePasswordFormModule {
+}

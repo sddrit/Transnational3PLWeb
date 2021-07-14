@@ -29,6 +29,7 @@ import { DxPopupModule } from 'devextreme-angular';
 import { MetadataResolver } from './shared/resolvers/metadata.resolver';
 import { PurchaseOrderService } from './shared/services/purchaseorder.service';
 import { GrnService } from './shared/services/grn.service';
+import { StockService } from './shared/services/stock.service';
 
 export function tokenGetter() {
 	return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -71,11 +72,12 @@ export function tokenGetter() {
 		CityService,
 		PurchaseOrderService,
 		GrnService,
+		StockService,
 		MetadataService,
 		MetadataResolver
 	],
-	exports: [
-	],
+	exports: [],
 	bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

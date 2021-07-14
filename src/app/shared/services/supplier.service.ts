@@ -23,31 +23,31 @@ export class SupplierService extends BaseService {
 		super(notify, loader, router);
 	}
 
-    public getSuppliers() {
-        const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-        return AspNetData.createStore({
-            key: 'id',
-            loadUrl: this.apiUrl + '/Supplier',
-            onBeforeSend(method, ajaxOptions) {
-                ajaxOptions.headers = { Authorization: 'Bearer ' + token };
-            }
-        });
-    }
+	public getSuppliers() {
+		const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+		return AspNetData.createStore({
+			key: 'id',
+			loadUrl: this.apiUrl + '/Supplier',
+			onBeforeSend(method, ajaxOptions) {
+				ajaxOptions.headers = { Authorization: 'Bearer ' + token };
+			}
+		});
+	}
 
-    public getSupplierById(id: number) {
-        return this.http.get<ISupplier>(this.apiUrl + '/Supplier/' + id)
-            .pipe(catchError(e => this.handleError(e, 'Getting Supplier by Id')));
-    }
+	public getSupplierById(id: number) {
+		return this.http.get<ISupplier>(this.apiUrl + '/Supplier/' + id)
+			.pipe(catchError(e => this.handleError(e, 'Getting Supplier by Id')));
+	}
 
-    public updateSupplier(supplier: ISupplier) {
-        return this.http.put<any>(this.apiUrl + '/Supplier/', supplier)
-            .pipe(catchError(e => this.handleError(e, 'Updating supplier')));
-    }
+	public updateSupplier(supplier: ISupplier) {
+		return this.http.put<any>(this.apiUrl + '/Supplier/', supplier)
+			.pipe(catchError(e => this.handleError(e, 'Updating supplier')));
+	}
 
-    public addSupplier(supplier: ISupplier) {
-        return this.http.post<any>(this.apiUrl + '/Supplier/', supplier)
-            .pipe(catchError(e => this.handleError(e, 'Adding supplier')));
-    }
+	public addSupplier(supplier: ISupplier) {
+		return this.http.post<any>(this.apiUrl + '/Supplier/', supplier)
+			.pipe(catchError(e => this.handleError(e, 'Adding supplier')));
+	}
 
 }
 

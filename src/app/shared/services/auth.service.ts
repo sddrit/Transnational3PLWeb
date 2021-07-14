@@ -19,16 +19,6 @@ const defaultUser = {
 export class AuthService extends BaseService {
 	private _user = defaultUser;
 
-	get loggedIn(): boolean {
-		const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
-		return (accessToken && accessToken !== '');
-	}
-
-	private _lastAuthenticatedPath: string = defaultPath;
-	set lastAuthenticatedPath(value: string) {
-		this._lastAuthenticatedPath = value;
-	}
-
 	constructor(
 		private http: HttpClient,
 		public notify: NotifyHandler,
@@ -38,6 +28,16 @@ export class AuthService extends BaseService {
 		super(notify, loader, router);
 	}
 
+	get loggedIn(): boolean {
+		const accessToken = localStorage.getItem(ACCESS_TOKEN_KEY);
+		return (accessToken && accessToken !== '');
+	}
+
+	private _lastAuthenticatedPath: string = defaultPath;
+
+	set lastAuthenticatedPath(value: string) {
+		this._lastAuthenticatedPath = value;
+	}
 
 	public login(loginModel: ILoginModel) {
 		return this.http.post<ILoginResponseModel>(this.apiUrl + '/Account', loginModel).pipe(catchError(this.extractError));

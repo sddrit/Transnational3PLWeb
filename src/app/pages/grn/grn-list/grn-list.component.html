@@ -1,35 +1,35 @@
 <div class="responsive-paddings">
 	<h2>GRN List
-		<dx-button class="btn-new-grn" type="normal" text="New GRN" icon="add" (click)="openGrn(0)">
+		<dx-button (click)="openGrn(0)" class="btn-new-grn" icon="add" text="New GRN" type="normal">
 		</dx-button>
 	</h2>
 
-	<dx-data-grid class="dx-card wide-card" [dataSource]="grnDataSource"
-				  [showBorders]="true"
-				  [remoteOperations]="true" [focusedRowEnabled]="true"
-				  [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true"
-				  keyExpr="id" (onRowClick)="openGrn($event.data.id)">
+	<dx-data-grid (onRowClick)="openGrn($event.data.id)" [columnAutoWidth]="true"
+				  [columnHidingEnabled]="true"
+				  [dataSource]="grnDataSource" [focusedRowEnabled]="true"
+				  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true"
+				  class="dx-card wide-card" keyExpr="id">
 
 		<dxo-paging [pageSize]="10"></dxo-paging>
-		<dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+		<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
 		<dxo-filter-row [visible]="true"></dxo-filter-row>
-		<dxi-column dataField="grnNo" caption="GRN Number">
+		<dxi-column caption="GRN Number" dataField="grnNo">
 		</dxi-column>
-		<dxi-column dataField="purchaseOrderId" caption="Purchase Order">
+		<dxi-column caption="Purchase Order" dataField="purchaseOrderId">
 			<dxo-lookup
 				[dataSource]="purchaseOrderDataSource"
 				displayExpr="poNumber"
 				valueExpr="id">
 			</dxo-lookup>
 		</dxi-column>
-		<dxi-column dataField="supplierId" caption="Supplier">
+		<dxi-column caption="Supplier" dataField="supplierId">
 			<dxo-lookup
 				[dataSource]="supplierDataSource"
 				displayExpr="supplierName"
 				valueExpr="id">
 			</dxo-lookup>
 		</dxi-column>
-		<dxi-column dataField="wareHouseId" caption="Warehouse">
+		<dxi-column caption="Warehouse" dataField="wareHouseId">
 			<dxo-lookup
 				[dataSource]="warehouseDataSource"
 				displayExpr="name"

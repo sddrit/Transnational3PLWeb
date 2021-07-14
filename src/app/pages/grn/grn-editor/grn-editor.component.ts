@@ -8,9 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderHandler } from '../../../shared/utilities/loader.handler';
 import { NotifyHandler } from '../../../shared/utilities/notify.handler';
 import DevExpress from 'devextreme';
-import CustomStore = DevExpress.data.CustomStore;
 import { GrnService } from '../../../shared/services/grn.service';
-import { IPurchaseOrder } from '../../../shared/models/purchaseOrder';
+import CustomStore = DevExpress.data.CustomStore;
 
 @Component({
 	selector: 'app-grn-editor',
@@ -50,24 +49,13 @@ export class GrnEditorComponent implements OnInit {
 		this.setGrn();
 	}
 
-	private setGrn() {
-		this.grn = this.getNewGrn();
-		const grnId = this.route.snapshot.paramMap.get('id');
-
-		if ( grnId !== '0' ) {
-			this.grnServie.getById(+grnId).subscribe((data: IGrn) => {
-				this.grn = data;
-			});
-		}
-	}
-
 	handleSubmit(e: Event) {
 		e.preventDefault();
-		if (!this.grnGridItemValid) {
+		if ( ! this.grnGridItemValid ) {
 			this.notify.error('Please check the grn items');
 			return;
 		}
-		if (this.grn.goodReceivedNoteItems == null || this.grn.goodReceivedNoteItems.length === 0) {
+		if ( this.grn.goodReceivedNoteItems == null || this.grn.goodReceivedNoteItems.length === 0 ) {
 			this.notify.error('GRN should have at lease one item');
 			return;
 		}
@@ -97,7 +85,7 @@ export class GrnEditorComponent implements OnInit {
 		this.loader.show(true);
 		const purchaseOrderId = e.value;
 		this.purchaseOrderService.getPurchaseOrderById(purchaseOrderId).subscribe(po => {
-			if (po.wareHouseId != null) {
+			if ( po.wareHouseId != null ) {
 				this.grn.wareHouseId = po.wareHouseId;
 			}
 			this.grn.supplierId = po.supplierId;
@@ -116,6 +104,17 @@ export class GrnEditorComponent implements OnInit {
 
 	public backToGrnList() {
 		this.router.navigate(['/grn-list']);
+	}
+
+	private setGrn() {
+		this.grn = this.getNewGrn();
+		const grnId = this.route.snapshot.paramMap.get('id');
+
+		if ( grnId !== '0' ) {
+			this.grnServie.getById(+grnId).subscribe((data: IGrn) => {
+				this.grn = data;
+			});
+		}
 	}
 
 	private getNewGrn() {

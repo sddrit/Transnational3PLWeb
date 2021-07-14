@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { IProduct } from 'src/app/shared/models/product';
@@ -6,10 +6,10 @@ import { ProductService } from 'src/app/shared/services/product.service';
 import { MetadataService } from '../../../shared/services/metadata.service';
 import { IMetaData } from '../../../shared/models/metadata';
 import DevExpress from 'devextreme';
-import CustomStore = DevExpress.data.CustomStore;
 import { SupplierService } from '../../../shared/services/supplier.service';
 import { LoaderHandler } from '../../../shared/utilities/loader.handler';
 import { NotifyHandler } from '../../../shared/utilities/notify.handler';
+import CustomStore = DevExpress.data.CustomStore;
 
 @Component({
 	templateUrl: 'product-update.component.html',
@@ -57,7 +57,7 @@ export class ProductUpdateComponent implements OnInit {
 
 	handleSubmit(e: Event) {
 		e.preventDefault();
-		if (this.product.id === 0) {
+		if ( this.product.id === 0 ) {
 			this.productService.createProduct(this.product).subscribe(product => {
 				this.loader.show(false);
 				this.notify.success('Product create successfully');

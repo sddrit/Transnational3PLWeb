@@ -1,8 +1,7 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import DevExpress from 'devextreme';
-import CustomStore = DevExpress.data.CustomStore;
 
 import { ISupplier, ISupplierPickupAddress } from 'src/app/shared/models/supplier';
 import { CityService } from 'src/app/shared/services/city.service';
@@ -11,6 +10,7 @@ import { LoaderHandler } from 'src/app/shared/utilities/loader.handler';
 import { ModelHelper } from 'src/app/shared/utilities/model.helper';
 import { NotifyHandler } from 'src/app/shared/utilities/notify.handler';
 import { IPickupAddressModalResponse } from './supplier-pickup-address-modal/supplier-pickup-address-modal.component';
+import CustomStore = DevExpress.data.CustomStore;
 
 @Component({
 	templateUrl: 'supplier-update.component.html',
@@ -24,7 +24,7 @@ export class SupplierUpdateComponent {
 
 	public displayPickupAddressModal = false;
 	public currentSupplierPickupAddress: ISupplierPickupAddress = null;
-	public currentEditSupplierPickupAddressIndex: number| null = null;
+	public currentEditSupplierPickupAddressIndex: number | null = null;
 
 	constructor(
 		private supplierService: SupplierService,
@@ -88,19 +88,19 @@ export class SupplierUpdateComponent {
 
 	public updatePickupAddress($event) {
 		this.currentEditSupplierPickupAddressIndex = $event.itemIndex;
-		this.showPickupAddressModel({...this.supplier.pickupAddress[$event.itemIndex]});
+		this.showPickupAddressModel({ ...this.supplier.pickupAddress[$event.itemIndex] });
 	}
 
 	public supplierPickupAddressModelResponse(response: IPickupAddressModalResponse) {
-		if (response.status === 'cancel') {
+		if ( response.status === 'cancel' ) {
 			this.displayPickupAddressModal = false;
 			this.currentSupplierPickupAddress = null;
 			this.currentEditSupplierPickupAddressIndex = null;
 			return;
 		}
-		if (response.status === 'success') {
+		if ( response.status === 'success' ) {
 			this.displayPickupAddressModal = false;
-			if (this.currentEditSupplierPickupAddressIndex === null) {
+			if ( this.currentEditSupplierPickupAddressIndex === null ) {
 				this.supplier.pickupAddress.push(response.data);
 			} else {
 				this.supplier.pickupAddress[this.currentEditSupplierPickupAddressIndex] = response.data;

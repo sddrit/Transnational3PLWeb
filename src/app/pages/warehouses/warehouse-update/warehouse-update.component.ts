@@ -4,11 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { IWarehouse } from 'src/app/shared/models/warehouse';
 import { WarehouseService } from 'src/app/shared/services/warehouse.service';
-import { CityService } from "../../../shared/services/city.service";
-import DevExpress from "devextreme";
+import { CityService } from '../../../shared/services/city.service';
+import DevExpress from 'devextreme';
+import { LoaderHandler } from '../../../shared/utilities/loader.handler';
+import { NotifyHandler } from '../../../shared/utilities/notify.handler';
 import CustomStore = DevExpress.data.CustomStore;
-import { LoaderHandler } from "../../../shared/utilities/loader.handler";
-import { NotifyHandler } from "../../../shared/utilities/notify.handler";
 
 
 @Component({
@@ -52,7 +52,7 @@ export class WarehouseUpdateComponent implements OnInit {
 	handleSubmit(e: Event) {
 		e.preventDefault();
 		this.loader.show(true);
-		if (this.warehouse.id === 0){
+		if ( this.warehouse.id === 0 ) {
 			this.warehouseService.addWarehouse(this.warehouse).subscribe(warehouse => {
 				this.loader.show(false);
 				this.notify.success('Warehouse create successfully');

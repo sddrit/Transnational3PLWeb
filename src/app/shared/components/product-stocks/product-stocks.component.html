@@ -1,0 +1,25 @@
+<h4>Product Stocks</h4>
+
+<dx-data-grid [columnAutoWidth]="true" [columnHidingEnabled]="true"
+			  [dataSource]="productStocksDataSource"
+			  [focusedRowEnabled]="true" [focusedRowIndex]="0"
+			  [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
+			  keyExpr="id">
+	<dxo-paging [pageSize]="10"></dxo-paging>
+	<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
+	<dxo-filter-row [visible]="true"></dxo-filter-row>
+
+	<dxi-column caption="Warehouse" dataField="wareHouseId">
+		<dxo-lookup
+			[dataSource]="warehouseDataSource"
+			displayExpr="name"
+			valueExpr="id">
+		</dxo-lookup>
+	</dxi-column>
+	<dxi-column [width]="200" dataField="quantity" dataType="number">
+	</dxi-column>
+
+
+</dx-data-grid>
+
+

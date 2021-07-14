@@ -22,7 +22,7 @@ export class WarehouseService extends BaseService {
 		super(notify, loader, router);
 	}
 
-    public getWarehouses() {
+	public getWarehouses() {
 		const token = localStorage.getItem(ACCESS_TOKEN_KEY);
 		return AspNetData.createStore({
 			key: 'id',
@@ -33,7 +33,7 @@ export class WarehouseService extends BaseService {
 		});
 	}
 
-    public getWarehouseById(id: number) {
+	public getWarehouseById(id: number) {
 		return this.http.get<IWarehouse>(this.apiUrl + '/WareHouse/' + id)
 			.pipe(catchError(e => this.handleError(e, 'Getting Warehouse by Id')));
 	}

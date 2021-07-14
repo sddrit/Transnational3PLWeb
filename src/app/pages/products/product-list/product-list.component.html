@@ -1,18 +1,18 @@
 <div class="responsive-paddings">
 	<h2>Products
-		<dx-button class="btn-new-product" type="normal" icon="add" text="New Product" (onClick)="openProduct(0)">
+		<dx-button (onClick)="openProduct(0)" class="btn-new-product" icon="add" text="New Product" type="normal">
 		</dx-button>
 	</h2>
 
-	<dx-data-grid class="dx-card wide-card" [dataSource]="productStore"
-				  [remoteOperations]="true"
-				  [showBorders]="true"
+	<dx-data-grid (onRowClick)="openProduct($event.data.id)" [columnAutoWidth]="true"
+				  [columnHidingEnabled]="true"
+				  [dataSource]="productStore"
 				  [focusedRowEnabled]="true"
-				  [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true" keyExpr="id"
-				  (onRowClick)="openProduct($event.data.id)">
+				  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
+				  keyExpr="id">
 
 		<dxo-paging [pageSize]="10"></dxo-paging>
-		<dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+		<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
 		<dxo-filter-row [visible]="true"></dxo-filter-row>
 		<dxi-column dataField="code">
 		</dxi-column>
@@ -25,7 +25,7 @@
 		</dxi-column>
 		<dxi-column dataField="name">
 		</dxi-column>
-		<dxi-column dataField="sku" caption="SKU">
+		<dxi-column caption="SKU" dataField="sku">
 		</dxi-column>
 		<dxi-column caption="Supplier" dataField="supplierId">
 			<dxo-lookup
@@ -53,6 +53,13 @@
 			</dxo-lookup>
 		</dxi-column>
 		<dxi-column dataField="weight">
+		</dxi-column>
+		<dxi-column>
+			<dxi-column cellTemplate="inventoryCellTemplate"></dxi-column>
+			<div *dxTemplate="let data of 'inventoryCellTemplate'">
+				<dx-button (onClick)="openProductInventory($event,data.data.id)" icon="chart">
+				</dx-button>
+			</div>
 		</dxi-column>
 
 	</dx-data-grid>

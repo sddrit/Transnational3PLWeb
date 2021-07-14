@@ -1,17 +1,18 @@
 <div class="responsive-paddings">
 	<h2>Warehouses
-		<dx-button class="btn-new-warehouse" type="normal" text="New Warehouse" icon="add" (onClick)="openWarehouse('0')">
+		<dx-button (onClick)="openWarehouse('0')" class="btn-new-warehouse" icon="add" text="New Warehouse"
+				   type="normal">
 		</dx-button>
 	</h2>
 
-	<dx-data-grid class="dx-card wide-card" [dataSource]="warehouses" [remoteOperations]="true"
-				  [showBorders]="true"
+	<dx-data-grid (onRowClick)="openWarehouse($event.data.id)" [columnAutoWidth]="true" [columnHidingEnabled]="true"
+				  [dataSource]="warehouses"
 				  [focusedRowEnabled]="true"
-				  [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true" keyExpr="id"
-				  (onRowClick)="openWarehouse($event.data.id)">
+				  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
+				  keyExpr="id">
 
 		<dxo-paging [pageSize]="10"></dxo-paging>
-		<dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+		<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
 		<dxo-filter-row [visible]="true"></dxo-filter-row>
 
 		<dxi-column dataField="code">

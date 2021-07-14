@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class LoaderHandler {
 
-    private isShowLoader: Subject<boolean> = new Subject<boolean>();
-    public displayLoader = this.isShowLoader.asObservable();
+	private isShowLoader: Subject<boolean> = new Subject<boolean>();
+	public displayLoader = this.isShowLoader.asObservable();
 
-    constructor() { }
+	constructor() {
+	}
 
-    show(isShow: boolean) {
-        this.isShowLoader.next(isShow);
-    }
+	show(isShow: boolean) {
+		this.isShowLoader.next(isShow);
+	}
 
 }

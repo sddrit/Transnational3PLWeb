@@ -8,43 +8,46 @@ import { AuthService } from '../../services';
 
 
 @Component({
-  selector: 'app-create-account-form',
-  templateUrl: './create-account-form.component.html',
-  styleUrls: ['./create-account-form.component.scss']
+	selector: 'app-create-account-form',
+	templateUrl: './create-account-form.component.html',
+	styleUrls: ['./create-account-form.component.scss']
 })
 export class CreateAccountFormComponent {
-  loading = false;
-  formData: any = {};
+	loading = false;
+	formData: any = {};
 
-  constructor(private authService: AuthService, private router: Router) { }
+	constructor(private authService: AuthService, private router: Router) {
+	}
 
-  async onSubmit(e) {
-    e.preventDefault();
-    const { email, password } = this.formData;
-    this.loading = true;
+	async onSubmit(e) {
+		e.preventDefault();
+		const { email, password } = this.formData;
+		this.loading = true;
 
-    const result = await this.authService.createAccount(email, password);
-    this.loading = false;
+		const result = await this.authService.createAccount(email, password);
+		this.loading = false;
 
-    if (result.isOk) {
-      this.router.navigate(['/login-form']);
-    } else {
-      notify(result.message, 'error', 2000);
-    }
-  }
+		if ( result.isOk ) {
+			this.router.navigate(['/login-form']);
+		} else {
+			notify(result.message, 'error', 2000);
+		}
+	}
 
-  confirmPassword = (e: { value: string }) => {
-    return e.value === this.formData.password;
-  }
+	confirmPassword = (e: { value: string }) => {
+		return e.value === this.formData.password;
+	};
 }
+
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    DxFormModule,
-    DxLoadIndicatorModule
-  ],
-  declarations: [ CreateAccountFormComponent ],
-  exports: [ CreateAccountFormComponent ]
+	imports: [
+		CommonModule,
+		RouterModule,
+		DxFormModule,
+		DxLoadIndicatorModule
+	],
+	declarations: [CreateAccountFormComponent],
+	exports: [CreateAccountFormComponent]
 })
-export class CreateAccountFormModule { }
+export class CreateAccountFormModule {
+}

@@ -7,10 +7,10 @@ import { ACCESS_TOKEN_KEY } from '../constants/common';
 import { NotifyHandler } from '../utilities/notify.handler';
 import { Router } from '@angular/router';
 import DevExpress from 'devextreme';
-import CustomStore = DevExpress.data.CustomStore;
 import { ICity } from '../models/city';
 import { catchError } from 'rxjs/operators';
 import { LoaderHandler } from '../utilities/loader.handler';
+import CustomStore = DevExpress.data.CustomStore;
 
 @Injectable()
 export class CityService extends BaseService {
@@ -25,12 +25,12 @@ export class CityService extends BaseService {
 	}
 
 	public getCities(): CustomStore {
-		let token = localStorage.getItem(ACCESS_TOKEN_KEY)
+		let token = localStorage.getItem(ACCESS_TOKEN_KEY);
 		return AspNetData.createStore({
-			key: "id",
-			loadUrl: this.apiUrl + "/City",
+			key: 'id',
+			loadUrl: this.apiUrl + '/City',
 			onBeforeSend: function (method, ajaxOptions) {
-				ajaxOptions.headers = { "Authorization": 'Bearer ' + token };
+				ajaxOptions.headers = { 'Authorization': 'Bearer ' + token };
 			}
 		});
 	}

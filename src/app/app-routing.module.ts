@@ -39,6 +39,9 @@ import { SupplierPickupAddressModalComponent } from './pages/suppliers/supplier-
 import { MetadataResolver } from './shared/resolvers/metadata.resolver';
 import { GrnEditorComponent } from './pages/grn/grn-editor/grn-editor.component';
 import { GrnListComponent } from './pages/grn/grn-list/grn-list.component';
+import { ProductInventoryComponent } from './pages/products/product-inventory/product-inventory.component';
+import { ProductStocksComponent } from './shared/components/product-stocks/product-stocks.component';
+import { ProductStockAdjustmentsComponent } from './shared/components/product-stock-adjustments/product-stock-adjustments.component';
 
 
 const routes: Routes = [
@@ -100,7 +103,7 @@ const routes: Routes = [
 		path: 'products',
 		component: ProductListComponent,
 		canActivate: [AuthGuardService],
-		resolve : {
+		resolve: {
 			metadata: MetadataResolver
 		}
 	},
@@ -108,7 +111,15 @@ const routes: Routes = [
 		path: 'product/:id',
 		component: ProductUpdateComponent,
 		canActivate: [AuthGuardService],
-		resolve : {
+		resolve: {
+			metadata: MetadataResolver
+		}
+	},
+	{
+		path: 'product-inventory/:id',
+		component: ProductInventoryComponent,
+		canActivate: [AuthGuardService],
+		resolve: {
 			metadata: MetadataResolver
 		}
 	},
@@ -166,10 +177,13 @@ const routes: Routes = [
 		SupplierPickupAddressModalComponent,
 		ProductListComponent,
 		ProductUpdateComponent,
+		ProductInventoryComponent,
 		PurchaseOrderListComponent,
 		PurchaseOrderUpdateComponent,
 		GrnEditorComponent,
-		GrnListComponent
+		GrnListComponent,
+		ProductStocksComponent,
+		ProductStockAdjustmentsComponent
 	]
 })
 export class AppRoutingModule {

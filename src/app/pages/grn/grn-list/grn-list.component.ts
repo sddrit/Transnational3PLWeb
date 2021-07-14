@@ -4,8 +4,8 @@ import { SupplierService } from '../../../shared/services/supplier.service';
 import { WarehouseService } from '../../../shared/services/warehouse.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import DevExpress from 'devextreme';
-import CustomStore = DevExpress.data.CustomStore;
 import { GrnService } from '../../../shared/services/grn.service';
+import CustomStore = DevExpress.data.CustomStore;
 
 @Component({
 	selector: 'app-grn-list',

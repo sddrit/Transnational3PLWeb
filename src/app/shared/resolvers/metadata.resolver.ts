@@ -7,7 +7,8 @@ import { IMetaData } from '../models/metadata';
 	providedIn: 'root'
 })
 export class MetadataResolver implements Resolve<IMetaData> {
-	constructor(private metaDataService: MetadataService) { }
+	constructor(private metaDataService: MetadataService) {
+	}
 
 	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<IMetaData> {
 		return this.metaDataService.getMetadata();

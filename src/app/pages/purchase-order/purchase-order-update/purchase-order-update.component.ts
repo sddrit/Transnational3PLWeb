@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import DevExpress from 'devextreme';
-import CustomStore = DevExpress.data.CustomStore;
 
 import { DxDataGridComponent } from 'devextreme-angular';
 
@@ -12,6 +11,7 @@ import { NotifyHandler } from '../../../shared/utilities/notify.handler';
 import { PurchaseOrderService } from '../../../shared/services/purchaseorder.service';
 import { WarehouseService } from '../../../shared/services/warehouse.service';
 import { ProductService } from '../../../shared/services/product.service';
+import CustomStore = DevExpress.data.CustomStore;
 
 @Component({
 	selector: 'app-purchase-order-update',
@@ -51,22 +51,22 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 
 	handleSubmit(e: Event) {
 		e.preventDefault();
-		if (!this.purchaseOrderItemGridValid) {
+		if ( ! this.purchaseOrderItemGridValid ) {
 			this.notify.error('Please check the purchase order items');
 			return;
 		}
-		if (this.purchaseOrder.purchaseOrderItems == null || this.purchaseOrder.purchaseOrderItems.length == 0) {
+		if ( this.purchaseOrder.purchaseOrderItems == null || this.purchaseOrder.purchaseOrderItems.length == 0 ) {
 			this.notify.error('Purchase order should have at lease one purchase order item');
 			return;
 		}
 		this.loader.show(true);
-		if (this.purchaseOrder.id === 0) {
+		if ( this.purchaseOrder.id === 0 ) {
 			this.purchaseOrderService.addPurchaseOrder(this.purchaseOrder).subscribe(data => {
 				this.notify.success('Successfully created purchase order');
 				this.loader.show(false);
 				this.router.navigate(['/purchase-orders']);
 			});
-		}else {
+		} else {
 			this.purchaseOrderService.updatePurchaseOrder(this.purchaseOrder).subscribe(data => {
 				this.notify.success('Successfully updated purchase order');
 				this.loader.show(false);
@@ -79,14 +79,18 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 		this.purchaseOrderItemGridValid = e.isValid;
 	}
 
-	calcualteTotal(rowData){
-		if (rowData == null) {
+	calcualteTotal(rowData) {
+		if ( rowData == null ) {
 			return 0;
 		}
-		if (!(rowData.unitCost) || !(rowData.quantity)) {
+		if ( ! (rowData.unitCost) || ! (rowData.quantity) ) {
 			return 0;
 		}
 		return rowData.unitCost * rowData.quantity;
+	}
+
+	public backToPurchaseOrders() {
+		this.router.navigate(['/purchase-orders']);
 	}
 
 	private setPurchaseOrder() {
@@ -98,10 +102,6 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 				this.purchaseOrder = data;
 			});
 		}
-	}
-
-	public backToPurchaseOrders() {
-		this.router.navigate(['/purchase-orders']);
 	}
 
 	private getNewPurchaseOrder() {

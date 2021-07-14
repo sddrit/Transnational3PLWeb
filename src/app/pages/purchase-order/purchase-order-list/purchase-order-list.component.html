@@ -1,30 +1,31 @@
 <div class="responsive-paddings">
 	<h2>Purchase Orders
-		<dx-button class="btn-new-purchase-order" type="normal" text="New Purchase Order" icon="add" (click)="openPurchaseOrder(0)">
+		<dx-button (click)="openPurchaseOrder(0)" class="btn-new-purchase-order" icon="add" text="New Purchase Order"
+				   type="normal">
 		</dx-button>
 	</h2>
 
-	<dx-data-grid class="dx-card wide-card" [dataSource]="purchaseOrderDataSource"
-				  [showBorders]="true"
-				  [remoteOperations]="true" [focusedRowEnabled]="true"
-				  [focusedRowIndex]="0" [columnAutoWidth]="true" [columnHidingEnabled]="true"
-				  keyExpr="id" (onRowClick)="openPurchaseOrder($event.data.id)">
+	<dx-data-grid (onRowClick)="openPurchaseOrder($event.data.id)" [columnAutoWidth]="true"
+				  [columnHidingEnabled]="true"
+				  [dataSource]="purchaseOrderDataSource" [focusedRowEnabled]="true"
+				  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true"
+				  class="dx-card wide-card" keyExpr="id">
 
 		<dxo-paging [pageSize]="10"></dxo-paging>
-		<dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+		<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
 		<dxo-filter-row [visible]="true"></dxo-filter-row>
-		<dxi-column dataField="poNumber" caption="PO Number">
+		<dxi-column caption="PO Number" dataField="poNumber">
 		</dxi-column>
-		<dxi-column dataField="supplierId" caption="Supplier">
+		<dxi-column caption="Supplier" dataField="supplierId">
 			<dxo-lookup
 				[dataSource]="supplierDataSource"
 				displayExpr="supplierName"
 				valueExpr="id">
 			</dxo-lookup>
 		</dxi-column>
-		<dxi-column dataField="note" caption="Note">
+		<dxi-column caption="Note" dataField="note">
 		</dxi-column>
-		<dxi-column dataField="wareHouseId" caption="Warehouse">
+		<dxi-column caption="Warehouse" dataField="wareHouseId">
 			<dxo-lookup
 				[dataSource]="warehouseDataSource"
 				displayExpr="name"
