@@ -10,6 +10,7 @@ import { NotifyHandler } from '../../../shared/utilities/notify.handler';
 import DevExpress from 'devextreme';
 import { GrnService } from '../../../shared/services/grn.service';
 import CustomStore = DevExpress.data.CustomStore;
+import { IMetaData } from '../../../shared/models/metadata';
 
 @Component({
 	selector: 'app-grn-editor',
@@ -17,6 +18,8 @@ import CustomStore = DevExpress.data.CustomStore;
 	styleUrls: ['./grn-editor.component.scss']
 })
 export class GrnEditorComponent implements OnInit {
+
+	metadata: IMetaData;
 
 	grn: IGrn;
 	supplierStore: CustomStore;
@@ -42,6 +45,9 @@ export class GrnEditorComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.route.data.subscribe(data => {
+			this.metadata = data.metadata;
+		});
 		this.productStore = this.productService.getProducts();
 		this.supplierStore = this.supplierService.getSuppliers();
 		this.warehouseStore = this.warehouseService.getWarehouses();

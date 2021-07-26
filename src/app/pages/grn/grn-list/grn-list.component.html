@@ -15,6 +15,13 @@
 		<dxo-filter-row [visible]="true"></dxo-filter-row>
 		<dxi-column caption="GRN Number" dataField="grnNo">
 		</dxi-column>
+		<dxi-column caption="Type" dataField="type">
+			<dxo-lookup
+				[dataSource]="metaData.grnTypes"
+				displayExpr="name"
+				valueExpr="id">
+			</dxo-lookup>
+		</dxi-column>
 		<dxi-column caption="Purchase Order" dataField="purchaseOrderId">
 			<dxo-lookup
 				[dataSource]="purchaseOrderDataSource"

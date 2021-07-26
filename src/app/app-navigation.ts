@@ -23,5 +23,15 @@ export const navigation = [
 		text: 'Good Received Notes',
 		path: '/grn-list',
 		icon: 'airplane'
+	},
+	{
+		text: 'Stock Transfers',
+		path: '/stock-transfers',
+		icon: 'refresh'
+	},
+	{
+		text: 'Deliveries',
+		path: '/deliveries',
+		icon: 'runner'
 	}
 ];

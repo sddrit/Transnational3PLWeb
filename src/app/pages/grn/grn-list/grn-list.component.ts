@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import DevExpress from 'devextreme';
 import { GrnService } from '../../../shared/services/grn.service';
 import CustomStore = DevExpress.data.CustomStore;
+import { IMetaData } from '../../../shared/models/metadata';
 
 @Component({
 	selector: 'app-grn-list',
@@ -13,6 +14,8 @@ import CustomStore = DevExpress.data.CustomStore;
 	styleUrls: ['./grn-list.component.scss']
 })
 export class GrnListComponent implements OnInit {
+
+	metaData: IMetaData;
 
 	purchaseOrderDataSource: CustomStore;
 	supplierDataSource: CustomStore;
@@ -28,6 +31,9 @@ export class GrnListComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+		this.activatedRoute.data.subscribe(data => {
+			this.metaData = data.metadata;
+		});
 		this.grnDataSource = this.grnService.getGrns();
 		this.warehouseDataSource = this.warehouseService.getWarehouses();
 		this.supplierDataSource = this.supplierService.getSuppliers();

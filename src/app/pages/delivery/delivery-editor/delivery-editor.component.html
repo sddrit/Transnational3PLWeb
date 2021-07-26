@@ -1,0 +1,133 @@
+<div class="dx-card responsive-paddings">
+
+	<dx-button (onClick)="backToDelivery()" class="btn-back" type="back">
+	</dx-button>
+
+	<h2>Delivery</h2>
+
+	<p *ngIf="delivery.id != 0"><b>Delivery Number :</b> {{delivery.deliveryNo}}</p>
+	<p *ngIf="delivery.id != 0"><b>Date :</b> {{delivery.created | date: 'yyyy-MM-dd'}}</p>
+	<div *ngIf="delivery.trackingNumbers != null && delivery.trackingNumbers.length != 0">
+		<p><b>Tracking Numbers</b></p>
+		<p *ngFor="let trackingNumber of delivery.trackingNumbers; let i = index">
+			{{trackingNumber}}
+		</p>
+	</div>
+
+	<br/>
+
+	<form (submit)="handleSubmit($event)">
+		<dx-form [formData]="delivery" [readOnly]="delivery.id != 0" id="form" labelLocation="top">
+
+			<dxi-item itemType="group" [colCount]="2">
+				<dxi-item [colCount]="2" [colSpan]="4" caption="General Details" itemType="group">
+					<dxi-item [colSpan]="2"
+							  [editorOptions]="{ dataSource: supplierStore, displayExpr: 'supplierName', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'supplierName'],
+				  fieldTemplate: 'supplierField', itemTemplate: 'supplierField'  }"
+							  [isRequired]="true"
+							  [label]="{ text: 'Supplier' }" dataField="supplierId" editorType="dxLookup">
+					</dxi-item>
+					<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: metaData.deliveryTypes, displayExpr: 'name', valueExpr: 'id' }"
+							  [isRequired]="true"
+							  [label]="{ text: 'Type' }" dataField="type" editorType="dxSelectBox">
+					</dxi-item>
+					<dxi-item [colSpan]="2"
+							  [isRequired]="true"
+							  [label]="{ text: 'Delivery Date' }" dataField="deliveryDate" editorType="dxDateBox">
+					</dxi-item>
+				</dxi-item>
+				<dxi-item [colCount]="2" [colSpan]="4" caption="Delivery Customer Details" itemType="group">
+					<dxi-item dataField="deliveryCustomer.firstName">
+						<dxo-label text="First Name"></dxo-label>
+					</dxi-item>
+					<dxi-item dataField="deliveryCustomer.lastName">
+						<dxo-label text="Last Name"></dxo-label>
+					</dxi-item>
+					<dxi-item [isRequired]="true" dataField="deliveryCustomer.addressLine1">
+						<dxo-label text="Address Line 1"></dxo-label>
+					</dxi-item>
+					<dxi-item dataField="deliveryCustomer.addressLine2">
+						<dxo-label text="Address Line 2"></dxo-label>
+					</dxi-item>
+
+					<dxi-item *ngIf="delivery && delivery.deliveryCustomer">
+						<dxo-label text="City"></dxo-label>
+						<dx-select-box [(value)]="delivery.deliveryCustomer.cityId" [dataSource]="cityStore"
+									   [minSearchLength]="0" [searchEnabled]="true" [searchExpr]="'cityName'"
+									   [searchMode]="'contains'" [searchTimeout]="200" displayExpr="cityName"
+									   valueExpr="id"></dx-select-box>
+					</dxi-item>
+
+					<dxi-item [isRequired]="true" dataField="deliveryCustomer.postalCode">
+						<dxo-label text="Postal Code"></dxo-label>
+					</dxi-item>
+
+					<dxi-item dataField="deliveryCustomer.mobile">
+						<dxo-label text="Mobile"></dxo-label>
+					</dxi-item>
+
+					<dxi-item dataField="deliveryCustomer.phone">
+						<dxo-label text="Phone"></dxo-label>
+					</dxi-item>
+				</dxi-item>
+			</dxi-item>
+
+			<div *dxTemplate="let item of 'supplierField'">
+				<div>{{item?.code}} - {{item?.supplierName}}</div>
+			</div>
+
+			<dxi-item [colSpan]="4" caption="Delivery Items" itemType="group">
+				<dxi-item>
+					<dx-data-grid #dxDataGridDeliveryItems (onRowValidating)="onRowValidating($event)"
+								  [dataSource]="delivery.deliveryItems" [disabled]="delivery.supplierId == 0"
+								  [rowAlternationEnabled]="true" [showBorders]="true"
+								  class=""
+								  id="dxDataGridDeliveryItems">
+						<dxo-editing
+							[allowAdding]="delivery.id == 0"
+							[allowDeleting]="delivery.id == 0"
+							[allowUpdating]="delivery.id == 0"
+							mode="cell">
+						</dxo-editing>
+						<dxi-column caption="Product Name" dataField="productId">
+							<dxi-validation-rule message="Product is required" type="required"></dxi-validation-rule>
+							<dxo-lookup
+								[dataSource]="{ store: productStore, filter: [['supplierId', '=', delivery.supplierId], ['active', '=', true]] }"
+								displayExpr="name"
+								valueExpr="id">
+							</dxo-lookup>
+						</dxi-column>
+						<dxi-column [width]="200" dataField="quantity" dataType="number">
+							<dxi-validation-rule message="Quantity is required" type="required"></dxi-validation-rule>
+						</dxi-column>
+						<dxi-column [width]="200" dataField="unitCost" dataType="number">
+							<dxi-validation-rule message="Unit Cost is required" type="required"></dxi-validation-rule>
+						</dxi-column>
+						<dxi-column [allowEditing]="false" [calculateCellValue]='calcualteTotal' [width]="200" alignment="right"
+									caption="Total" dataType="total" name="total"></dxi-column>
+						<dxo-summary>
+							<dxi-total-item
+								alignment="right"
+								column="quantity"
+								displayFormat="Quantity Total : {0}"
+								summaryType="sum">
+							</dxi-total-item>
+							<dxi-total-item
+								alignment="right"
+								column="total"
+								displayFormat="Total : {0}"
+								summaryType="sum">
+							</dxi-total-item>
+						</dxo-summary>
+					</dx-data-grid>
+				</dxi-item>
+			</dxi-item>
+
+			<dxi-item [buttonOptions]="{ text: 'Save Changes', useSubmitBehavior: true, icon: 'save', type: 'success',class: 'btn-save-product', visible: delivery.id == 0 }" [colSpan]="4" class="btn-save-product"
+					  itemType="button">
+			</dxi-item>
+		</dx-form>
+	</form>
+
+
+</div>

@@ -15,6 +15,11 @@
 		<dx-form [(formData)]="grn" [colCount]="4" [readOnly]="grn.id != 0" id="form" labelLocation="top" method="post">
 			<dxi-item [colCount]="6" [colSpan]="4" caption="General Details" itemType="group">
 
+				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: metadata.grnTypes, displayExpr: 'name', valueExpr: 'id' }"
+						  [isRequired]="true"
+						  [label]="{ text: 'Grn Type' }" dataField="type" editorType="dxSelectBox">
+				</dxi-item>
+
 				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: purchaseOrderStore, displayExpr: 'poNumber', valueExpr: 'id', searchEnabled: true, searchExpr: ['poNumber'],
 						  						onValueChanged: onPurchaseOrderChange }"
 						  [isRequired]="false"

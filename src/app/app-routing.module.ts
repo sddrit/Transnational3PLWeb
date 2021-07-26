@@ -42,6 +42,10 @@ import { GrnListComponent } from './pages/grn/grn-list/grn-list.component';
 import { ProductInventoryComponent } from './pages/products/product-inventory/product-inventory.component';
 import { ProductStocksComponent } from './shared/components/product-stocks/product-stocks.component';
 import { ProductStockAdjustmentsComponent } from './shared/components/product-stock-adjustments/product-stock-adjustments.component';
+import { StockTransferListComponent } from './pages/stock-transfer/stock-transfer-list/stock-transfer-list.component';
+import { StockTransferEditorComponent } from './pages/stock-transfer/stock-transfer-editor/stock-transfer-editor.component';
+import { DeliveryListComponent } from './pages/delivery/delivery-list/delivery-list.component';
+import { DeliveryEditorComponent } from './pages/delivery/delivery-editor/delivery-editor.component';
 
 
 const routes: Routes = [
@@ -136,12 +140,50 @@ const routes: Routes = [
 	{
 		path: 'grn/:id',
 		component: GrnEditorComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
 	},
 	{
 		path: 'grn-list',
 		component: GrnListComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
+	},
+	{
+		path: 'stock-transfers',
+		component: StockTransferListComponent,
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
+	},
+	{
+		path: 'stock-transfer/:id',
+		component: StockTransferEditorComponent,
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
+	},
+	{
+		path: 'deliveries',
+		component: DeliveryListComponent,
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
+	},
+	{
+		path: 'delivery/:id',
+		component: DeliveryEditorComponent,
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
 	},
 	{
 		path: '**',
@@ -183,7 +225,11 @@ const routes: Routes = [
 		GrnEditorComponent,
 		GrnListComponent,
 		ProductStocksComponent,
-		ProductStockAdjustmentsComponent
+		ProductStockAdjustmentsComponent,
+		StockTransferListComponent,
+		StockTransferEditorComponent,
+		DeliveryListComponent,
+		DeliveryEditorComponent
 	]
 })
 export class AppRoutingModule {

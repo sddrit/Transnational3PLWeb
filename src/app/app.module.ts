@@ -30,6 +30,8 @@ import { MetadataResolver } from './shared/resolvers/metadata.resolver';
 import { PurchaseOrderService } from './shared/services/purchaseorder.service';
 import { GrnService } from './shared/services/grn.service';
 import { StockService } from './shared/services/stock.service';
+import { StockTransferService } from './shared/services/stocktransfer.service';
+import { DeliveryService } from './shared/services/delivery.service';
 
 export function tokenGetter() {
 	return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -73,8 +75,10 @@ export function tokenGetter() {
 		PurchaseOrderService,
 		GrnService,
 		StockService,
+		StockTransferService,
 		MetadataService,
-		MetadataResolver
+		MetadataResolver,
+		DeliveryService
 	],
 	exports: [],
 	bootstrap: [AppComponent]

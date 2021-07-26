@@ -18,9 +18,27 @@ export interface IStockAdjustmentType {
 	name: string;
 }
 
+export interface IGrnType {
+	id: number;
+	name: string;
+}
+
+export interface IDeliveryStatus {
+	id: number;
+	name: string;
+}
+
+export interface IDeliveryType {
+	id: number;
+	name: string;
+}
+
 export interface IMetaData {
 	storeTypes: IStoreType[];
 	massUnits: IMassUnit[];
 	distanceUnits: IDistanceUnit[];
 	stockAdjustmentTypes: IStockAdjustmentType[];
+	grnTypes: IGrnType[];
+	deliveryStatus: IDeliveryStatus[];
+	deliveryTypes: IDeliveryType[];
 }

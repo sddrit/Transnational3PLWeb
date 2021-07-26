@@ -1,5 +1,6 @@
 export interface IGrn {
 	id: number;
+	type: number;
 	grnNo: string;
 	purchaseOrderId?: number;
 	created: Date;
