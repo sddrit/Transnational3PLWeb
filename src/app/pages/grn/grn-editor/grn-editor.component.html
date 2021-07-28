@@ -5,15 +5,16 @@
 
 	<h2>Good Received Note</h2>
 
-	<p *ngIf="grn.id != 0"><b>GRN : </b> {{grn.grnNo}}</p>
-	<p *ngIf="grn.id != 0"><b>Date : </b> {{grn.created | date: 'yyyy-MM-dd'}}</p>
-
 	<br/>
 
 	<form (submit)="handleSubmit($event)">
 
 		<dx-form [(formData)]="grn" [colCount]="4" [readOnly]="grn.id != 0" id="form" labelLocation="top" method="post">
 			<dxi-item [colCount]="6" [colSpan]="4" caption="General Details" itemType="group">
+
+				<dxi-item [colSpan]="2" dataField="grnNo" [visible]="grn.id !=0"></dxi-item>
+				<dxi-item [colSpan]="2" dataField="created" editorType="dxDateBox" [editorOptions]="{ dataType:'date', format: 'shortDateShortTime' }"
+						  [visible]="grn.id !=0"></dxi-item>
 
 				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: metadata.grnTypes, displayExpr: 'name', valueExpr: 'id' }"
 						  [isRequired]="true"

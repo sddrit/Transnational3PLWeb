@@ -11,7 +11,7 @@ import {
 	DxLoadIndicatorModule,
 	DxPopupModule,
 	DxSelectBoxModule,
-	DxTextAreaModule,
+	DxTextAreaModule, DxTextBoxModule,
 	DxToastModule
 } from 'devextreme-angular';
 
@@ -204,7 +204,8 @@ const routes: Routes = [
 		DxListModule,
 		DxPopupModule,
 		DxSelectBoxModule,
-		DxCheckBoxModule
+		DxCheckBoxModule,
+		DxTextBoxModule
 	],
 	providers: [AuthGuardService],
 	exports: [RouterModule, SupplierPickupAddressModalComponent],

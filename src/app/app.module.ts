@@ -59,8 +59,7 @@ export function tokenGetter() {
 				tokenGetter,
 				allowedDomains: [environment.apiDomainName]
 			},
-		}),
-		DxPopupModule,
+		})
 	],
 	providers: [
 		LoaderHandler,

@@ -5,14 +5,15 @@
 
 	<h2>Stock Transfer</h2>
 
-	<p *ngIf="stockTransfer.id != 0"><b>Stock Transfer Id :</b> {{stockTransfer.stockTransferNumber}}</p>
-	<p *ngIf="stockTransfer.id != 0"><b>Date :</b> {{stockTransfer.created | date: 'yyyy-MM-dd'}}</p>
-
 	<br/>
 
 	<form (submit)="handleSubmit($event)">
 		<dx-form [colCount]="4" [formData]="stockTransfer" [readOnly]="stockTransfer.id != 0" id="form" labelLocation="top">
 			<dxi-item [colCount]="4" [colSpan]="4" caption="General Details" itemType="group">
+
+				<dxi-item [colSpan]="2" dataField="stockTransferNumber" [visible]="stockTransfer.id !=0"></dxi-item>
+				<dxi-item [colSpan]="2" dataField="created" editorType="dxDateBox" [editorOptions]="{ dataType:'date', format: 'shortDateShortTime' }"
+						  [visible]="stockTransfer.id !=0"></dxi-item>
 
 				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: warehouseStore, displayExpr: 'name', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'name'],
 					fieldTemplate: 'warehouseField', itemTemplate: 'warehouseField'}"

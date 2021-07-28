@@ -5,14 +5,16 @@
 
 	<h2>Purchase Order</h2>
 
-	<p *ngIf="purchaseOrder.id != 0"><b>Purchase Order Number :</b> {{purchaseOrder.poNumber}}</p>
-	<p *ngIf="purchaseOrder.id != 0"><b>Date :</b> {{purchaseOrder.created | date: 'yyyy-MM-dd'}}</p>
-
 	<br/>
 
 	<form (submit)="handleSubmit($event)">
 		<dx-form [colCount]="4" [formData]="purchaseOrder" id="form" labelLocation="top">
 			<dxi-item [colCount]="4" [colSpan]="4" caption="General Details" itemType="group">
+
+				<dxi-item [colSpan]="2" disabled="disabled" dataField="poNumber" [visible]="purchaseOrder.id !=0"></dxi-item>
+				<dxi-item [colSpan]="2" disabled="disabled" dataField="created" editorType="dxDateBox" [editorOptions]="{ dataType:'date', format: 'shortDateShortTime' }"
+						  [visible]="purchaseOrder.id !=0"></dxi-item>
+
 				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: warehouseStore, displayExpr: 'name', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'name'],
 					fieldTemplate: 'warehouseField', itemTemplate: 'warehouseField'}"
 						  [isRequired]="false"
