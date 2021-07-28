@@ -5,15 +5,6 @@
 
 	<h2>Delivery</h2>
 
-	<p *ngIf="delivery.id != 0"><b>Delivery Number :</b> {{delivery.deliveryNo}}</p>
-	<p *ngIf="delivery.id != 0"><b>Date :</b> {{delivery.created | date: 'yyyy-MM-dd'}}</p>
-	<div *ngIf="delivery.trackingNumbers != null && delivery.trackingNumbers.length != 0">
-		<p><b>Tracking Numbers</b></p>
-		<p *ngFor="let trackingNumber of delivery.trackingNumbers; let i = index">
-			{{trackingNumber}}
-		</p>
-	</div>
-
 	<br/>
 
 	<form (submit)="handleSubmit($event)">
@@ -21,13 +12,21 @@
 
 			<dxi-item itemType="group" [colCount]="2">
 				<dxi-item [colCount]="2" [colSpan]="4" caption="General Details" itemType="group">
+
+					<dxi-item [colSpan]="2" dataField="deliveryNo"
+							  [visible]="delivery.id !=0"></dxi-item>
+					<dxi-item [colSpan]="2" dataField="created" editorType="dxDateBox"
+							  [editorOptions]="{ dataType:'date', format: 'shortDateShortTime' }"
+							  [visible]="delivery.id !=0"></dxi-item>
+
 					<dxi-item [colSpan]="2"
 							  [editorOptions]="{ dataSource: supplierStore, displayExpr: 'supplierName', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'supplierName'],
 				  fieldTemplate: 'supplierField', itemTemplate: 'supplierField'  }"
 							  [isRequired]="true"
 							  [label]="{ text: 'Supplier' }" dataField="supplierId" editorType="dxLookup">
 					</dxi-item>
-					<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: metaData.deliveryTypes, displayExpr: 'name', valueExpr: 'id' }"
+					<dxi-item [colSpan]="2"
+							  [editorOptions]="{ dataSource: metaData.deliveryTypes, displayExpr: 'name', valueExpr: 'id' }"
 							  [isRequired]="true"
 							  [label]="{ text: 'Type' }" dataField="type" editorType="dxSelectBox">
 					</dxi-item>
@@ -121,6 +120,14 @@
 						</dxo-summary>
 					</dx-data-grid>
 				</dxi-item>
+			</dxi-item>
+
+			<dxi-item [colCount]="2" [colSpan]="2"  caption="Tracking Numbers" itemType="group">
+				<dx-list>
+					<dxi-item *ngFor="let trackingNumber of delivery.trackingNumbers">
+						{{trackingNumber}}
+					</dxi-item>
+				</dx-list>
 			</dxi-item>
 
 			<dxi-item [buttonOptions]="{ text: 'Save Changes', useSubmitBehavior: true, icon: 'save', type: 'success',class: 'btn-save-product', visible: delivery.id == 0 }" [colSpan]="4" class="btn-save-product"
