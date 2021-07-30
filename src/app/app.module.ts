@@ -25,7 +25,6 @@ import { ACCESS_TOKEN_KEY } from './shared/constants/common';
 import { CityService } from './shared/services/city.service';
 import { LoaderHandler } from './shared/utilities/loader.handler';
 import { NotifyHandler } from './shared/utilities/notify.handler';
-import { DxPopupModule } from 'devextreme-angular';
 import { MetadataResolver } from './shared/resolvers/metadata.resolver';
 import { PurchaseOrderService } from './shared/services/purchaseorder.service';
 import { GrnService } from './shared/services/grn.service';

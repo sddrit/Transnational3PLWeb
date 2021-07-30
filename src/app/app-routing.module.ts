@@ -14,6 +14,7 @@ import {
 	DxTextAreaModule, DxTextBoxModule,
 	DxToastModule
 } from 'devextreme-angular';
+import { DxReportViewerModule } from 'devexpress-reporting-angular';
 
 import {
 	ChangePasswordFormComponent,
@@ -46,6 +47,7 @@ import { StockTransferListComponent } from './pages/stock-transfer/stock-transfe
 import { StockTransferEditorComponent } from './pages/stock-transfer/stock-transfer-editor/stock-transfer-editor.component';
 import { DeliveryListComponent } from './pages/delivery/delivery-list/delivery-list.component';
 import { DeliveryEditorComponent } from './pages/delivery/delivery-editor/delivery-editor.component';
+import { StockBalanceReportComponent } from './pages/report/stock-balance-report/stock-balance-report.component';
 
 
 const routes: Routes = [
@@ -186,6 +188,11 @@ const routes: Routes = [
 		}
 	},
 	{
+		path: 'report/stock-balanace',
+		component: StockBalanceReportComponent,
+		canActivate: [AuthGuardService],
+	},
+	{
 		path: '**',
 		redirectTo: 'suppliers'
 	}
@@ -205,7 +212,8 @@ const routes: Routes = [
 		DxPopupModule,
 		DxSelectBoxModule,
 		DxCheckBoxModule,
-		DxTextBoxModule
+		DxTextBoxModule,
+		DxReportViewerModule
 	],
 	providers: [AuthGuardService],
 	exports: [RouterModule, SupplierPickupAddressModalComponent],
@@ -230,7 +238,8 @@ const routes: Routes = [
 		StockTransferListComponent,
 		StockTransferEditorComponent,
 		DeliveryListComponent,
-		DeliveryEditorComponent
+		DeliveryEditorComponent,
+		StockBalanceReportComponent
 	]
 })
 export class AppRoutingModule {
