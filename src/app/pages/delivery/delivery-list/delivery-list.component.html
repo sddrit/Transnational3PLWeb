@@ -5,7 +5,8 @@
 		</dx-button>
 	</h2>
 
-	<dx-data-grid (onRowClick)="openDelivery($event.data.id)" [columnAutoWidth]="true"
+	<dx-data-grid (onRowClick)="openDelivery($event.data.id)"
+				  [columnAutoWidth]="true"
 				  [columnHidingEnabled]="true"
 				  [dataSource]="deliveryDataSource" [focusedRowEnabled]="true"
 				  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true"
@@ -47,9 +48,33 @@
 		<dxi-column type="buttons">
 			<dxi-button
 				icon="fieldchooser"
-				[visible]="isMarkAsProcessingVisible"
-				[onClick]="startProcessing"
+				[visible]="canMarkAsProcessing"
+				[onClick]="processing"
 				text="Mark As Process">
+			</dxi-button>
+			<dxi-button
+				icon="car"
+				[visible]="canMarkAsDispatch"
+				[onClick]="dispatch"
+				text="Dispatch">
+			</dxi-button>
+			<dxi-button
+				icon="todo"
+				[visible]="canMarkAsComplete"
+				[onClick]="markAsComplete"
+				text="Complete">
+			</dxi-button>
+			<dxi-button
+				icon="revert"
+				[visible]="canMarkAsReturn"
+				[onClick]="return"
+				text="Return">
+			</dxi-button>
+			<dxi-button
+				icon="card"
+				[visible]="canMarkAsCustomerReturn"
+				[onClick]="customerReturn"
+				text="Customer Return">
 			</dxi-button>
 		</dxi-column>
 	</dx-data-grid>
@@ -65,13 +90,17 @@
 		[(visible)]="processingPopupVisible">
 		<div *dxTemplate="let data of 'content'">
 			<p>
-				<b>Delivery Number :</b>
+				<b>Delivery Number : </b>
 				<span> {{currentDelivery.deliveryNo}}</span>
 			</p>
 			<form (submit)="handleProcessingForm($event)">
-				<dx-form [formData]="processingFormData" labelLocation="top">
-					<dxi-item [isRequired]="true" dataField="requiredNumberOfTrackingNumber">
-						<dxi-validation-rule type="numeric">
+				<dx-form [showColonAfterLabel]="true" [formData]="processingFormData" labelLocation="top">
+					<dxi-item dataField="requiredNumberOfTrackingNumber">
+						<dxi-validation-rule type="required"
+											 message="Required Number of tracking numbers is required">
+						</dxi-validation-rule>
+						<dxi-validation-rule type="numeric"
+											 message="Required number of tracking numbers should be numeric">
 						</dxi-validation-rule>
 					</dxi-item>
 					<dxi-item
@@ -80,7 +109,113 @@
 					</dxi-item>
 					<dxi-item
 						itemType="button"
-						[buttonOptions]="{ text: 'Mark As Processing', useSubmitBehavior: true }">
+						[buttonOptions]="{ text: 'Processing', useSubmitBehavior: true }">
+					</dxi-item>
+				</dx-form>
+			</form>
+		</div>
+	</dx-popup>
+
+	<dx-popup
+		[width]="500"
+		[height]="'auto'"
+		[showTitle]="true"
+		title="Dispatch"
+		[dragEnabled]="false"
+		[closeOnOutsideClick]="false"
+		[showCloseButton]="true"
+		[(visible)]="dispatchPopupVisible">
+		<div *dxTemplate="let data of 'content'">
+			<p>
+				<b>Delivery Number : </b>
+				<span>{{currentDelivery.deliveryNo}}</span>
+			</p>
+			<form (submit)="handleDispatchForm($event)">
+				<dx-form [formData]="dispatchFormData" labelLocation="top">
+					<dxi-item [colSpan]="2"
+							  [editorOptions]="{ dataSource: warehouseDataSource, displayExpr: 'name', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'name'],
+							fieldTemplate: 'warehouseField', itemTemplate: 'warehouseField'}"
+							  [isRequired]="true"
+							  [label]="{ text: 'Warehouse' }" dataField="wareHouseId" editorType="dxLookup">
+					</dxi-item>
+					<dxi-item
+						itemType="empty"
+						[colSpan]="2">
+					</dxi-item>
+					<dxi-item
+						itemType="button"
+						[buttonOptions]="{ text: 'Dispatch', useSubmitBehavior: true }">
+					</dxi-item>
+					<div *dxTemplate="let item of 'warehouseField'">
+						<div>{{item?.code}} - {{item?.name}}</div>
+					</div>
+				</dx-form>
+			</form>
+		</div>
+	</dx-popup>
+
+	<dx-popup
+		[width]="500"
+		[height]="'auto'"
+		[showTitle]="true"
+		title="Return"
+		[dragEnabled]="false"
+		[closeOnOutsideClick]="false"
+		[showCloseButton]="true"
+		[(visible)]="returnPopupVisible">
+		<div *dxTemplate="let data of 'content'">
+			<p>
+				<b>Delivery Number : </b>
+				<span> {{currentDelivery.deliveryNo}}</span>
+			</p>
+			<form (submit)="handleReturnForm($event)">
+				<dx-form [showColonAfterLabel]="true" [formData]="returnFormData" labelLocation="top">
+					<dxi-item dataField="note">
+						<dxi-validation-rule type="required"
+											 message="Note is required">
+						</dxi-validation-rule>
+					</dxi-item>
+					<dxi-item
+						itemType="empty"
+						[colSpan]="2">
+					</dxi-item>
+					<dxi-item
+						itemType="button"
+						[buttonOptions]="{ text: 'Return', useSubmitBehavior: true }">
+					</dxi-item>
+				</dx-form>
+			</form>
+		</div>
+	</dx-popup>
+
+	<dx-popup
+		[width]="500"
+		[height]="'auto'"
+		[showTitle]="true"
+		title="Customer Return"
+		[dragEnabled]="false"
+		[closeOnOutsideClick]="false"
+		[showCloseButton]="true"
+		[(visible)]="customerReturnPopupVisible">
+		<div *dxTemplate="let data of 'content'">
+			<p>
+				<b>Delivery Number : </b>
+				<span> {{currentDelivery.deliveryNo}}</span>
+			</p>
+			<form (submit)="handleCustomerReturnForm($event)">
+				<dx-form [showColonAfterLabel]="true" [formData]="customerReturnFormData" labelLocation="top">
+					<dxi-item dataField="note">
+						<dxi-validation-rule type="required"
+											 message="Note is required">
+						</dxi-validation-rule>
+					</dxi-item>
+					<dxi-item
+						itemType="empty"
+						[colSpan]="2">
+					</dxi-item>
+					<dxi-item
+						itemType="button"
+						[buttonOptions]="{ text: 'Customer Return', useSubmitBehavior: true }">
 					</dxi-item>
 				</dx-form>
 			</form>
