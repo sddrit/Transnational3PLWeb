@@ -36,6 +36,7 @@ import { ProductUpdateComponent } from './pages/products/product-update/product-
 import { PurchaseOrderListComponent } from './pages/purchase-order/purchase-order-list/purchase-order-list.component';
 import { PurchaseOrderUpdateComponent } from './pages/purchase-order/purchase-order-update/purchase-order-update.component';
 import { SupplierPickupAddressModalComponent } from './pages/suppliers/supplier-update/supplier-pickup-address-modal/supplier-pickup-address-modal.component';
+import { InvoiceListComponent } from './pages/invoice/invoice-list/invoice-list.component';
 
 import { MetadataResolver } from './shared/resolvers/metadata.resolver';
 import { GrnEditorComponent } from './pages/grn/grn-editor/grn-editor.component';
@@ -48,6 +49,12 @@ import { StockTransferEditorComponent } from './pages/stock-transfer/stock-trans
 import { DeliveryListComponent } from './pages/delivery/delivery-list/delivery-list.component';
 import { DeliveryEditorComponent } from './pages/delivery/delivery-editor/delivery-editor.component';
 import { StockBalanceReportComponent } from './pages/report/stock-balance-report/stock-balance-report.component';
+import { InvoiceDetailsComponent } from './pages/invoice/invoice-details/invoice-details.component';
+import { UserListComponent } from './pages/user/user-list/user-list.component';
+import { UserUpdateComponent } from './pages/user/user-update/user-update.component';
+import { WaybillComponent } from './pages/delivery/waybill/waybill.component';
+import { GrnViewComponent } from './pages/grn/grn-view/grn-view.component';
+import { CreateAccountComponent } from './pages/suppliers/create-account/create-account.component';
 
 
 const routes: Routes = [
@@ -93,6 +100,11 @@ const routes: Routes = [
 	{
 		path: 'supplier/:id',
 		component: SupplierUpdateComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
+		path: 'supplier/create-account/:id',
+		component: CreateAccountComponent,
 		canActivate: [AuthGuardService]
 	},
 	{
@@ -156,6 +168,14 @@ const routes: Routes = [
 		}
 	},
 	{
+		path: 'grn-view/:id',
+		component: GrnViewComponent,
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
+	},
+	{
 		path: 'stock-transfers',
 		component: StockTransferListComponent,
 		canActivate: [AuthGuardService],
@@ -188,8 +208,36 @@ const routes: Routes = [
 		}
 	},
 	{
+		path: 'waybill/:id',
+		component: WaybillComponent,
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
+	},
+	{
 		path: 'report/stock-balanace',
 		component: StockBalanceReportComponent,
+		canActivate: [AuthGuardService],
+	},
+	{
+		path: 'invoices',
+		component: InvoiceListComponent,
+		canActivate: [AuthGuardService],
+	},
+	{
+		path: 'invoice/:id',
+		component: InvoiceDetailsComponent,
+		canActivate: [AuthGuardService],
+	},
+	{
+		path: 'users',
+		component: UserListComponent,
+		canActivate: [AuthGuardService],
+	},
+	{
+		path: 'user/:id',
+		component: UserUpdateComponent,
 		canActivate: [AuthGuardService],
 	},
 	{
@@ -239,7 +287,14 @@ const routes: Routes = [
 		StockTransferEditorComponent,
 		DeliveryListComponent,
 		DeliveryEditorComponent,
-		StockBalanceReportComponent
+		StockBalanceReportComponent,
+		InvoiceListComponent,
+		InvoiceDetailsComponent,
+		UserListComponent,
+		UserUpdateComponent,
+		WaybillComponent,
+		GrnViewComponent,
+		CreateAccountComponent
 	]
 })
 export class AppRoutingModule {

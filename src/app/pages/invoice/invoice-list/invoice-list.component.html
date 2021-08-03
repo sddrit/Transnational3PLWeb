@@ -1,0 +1,43 @@
+<div class="responsive-paddings">
+	<h2 class="page-header"><i class="dx-icon-verticalaligncenter"></i>
+		Invoices
+	</h2>
+
+	<dx-data-grid #grid [columnAutoWidth]="true"
+				  [columnHidingEnabled]="true"
+				  [dataSource]="invoiceStore"
+				  [focusedRowEnabled]="true"
+				  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
+				  keyExpr="id">
+
+		<dxo-paging [pageSize]="10"></dxo-paging>
+		<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
+		<dxo-filter-row [visible]="true"></dxo-filter-row>
+		<dxi-column dataField="invoiceNo">
+		</dxi-column>
+		<dxi-column caption="Supplier" dataField="supplierId">
+			<dxo-lookup
+				[dataSource]="supplierStore"
+				displayExpr="supplierName"
+				fieldTemplate="field"
+				valueExpr="id">
+				<dxo-drop-down-options title="Select Supplier"></dxo-drop-down-options>
+				<div *dxTemplate="let item of 'field'">
+					<div>{{item?.code}} - {{item?.supplierName}}</div>
+				</div>
+			</dxo-lookup>
+		</dxi-column>
+		<dxi-column dataField="from" dataType="date">
+		</dxi-column>
+		<dxi-column dataField="to" dataType="date" sortOrder="desc">
+		</dxi-column>
+		<dxi-column dataField="paid">
+		</dxi-column>
+		<dxi-column type="buttons">
+			<dxi-button text="Mark as Paid" [visible]="canMarkAsPaid" [onClick]="markAsPaid" icon="check">
+			</dxi-button>
+			<dxi-button  text="View Invoice" icon="print" [onClick]="viewInvoice">
+			</dxi-button>
+		</dxi-column>
+	</dx-data-grid>
+</div>

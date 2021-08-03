@@ -1,0 +1,26 @@
+<div class="responsive-paddings">
+	<h2 class="page-header"><i class="dx-icon-user"></i>
+		Users
+		<dx-button (onClick)="openUser(0)" class="btn-new-user" icon="add" text="New User" type="normal">
+		</dx-button>
+	</h2>
+
+	<dx-data-grid (onRowClick)="openUser($event.data.id)" [columnAutoWidth]="true"
+				  [columnHidingEnabled]="true"
+				  [dataSource]="userStore" [focusedRowEnabled]="true"
+				  [focusedRowIndex]="0"
+				  [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
+				  keyExpr="Id">
+
+		<dxo-paging [pageSize]="10"></dxo-paging>
+		<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
+		<dxo-filter-row [visible]="true"></dxo-filter-row>
+		<dxi-column caption="User Name" dataField="userName">
+		</dxi-column>
+		<dxi-column caption="Email" dataField="email">
+		</dxi-column>
+		<dxi-column dataField="active">
+		</dxi-column>
+
+	</dx-data-grid>
+</div>

@@ -3,11 +3,14 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ACCESS_TOKEN_KEY, CURRENT_USER_KEY } from '../constants/common';
-import { ILoginModel, ILoginResponseModel } from '../models/auth';
+import { ACCESS_TOKEN_KEY, CURRENT_USER_KEY, ROLE_KEY } from '../constants/common';
+import { ILoginModel, ILoginResponseModel, IUser } from '../models/auth';
 import { NotifyHandler } from '../utilities/notify.handler';
 import { BaseService } from './base.service';
 import { LoaderHandler } from '../utilities/loader.handler';
+import * as AspNetData from 'devextreme-aspnet-data-nojquery';
+import CustomStore from 'devextreme/data/custom_store';
+import { IInvoice } from '../models/invoice';
 
 const defaultPath = '/';
 const defaultUser = {
@@ -33,6 +36,18 @@ export class AuthService extends BaseService {
 		return (accessToken && accessToken !== '');
 	}
 
+	get role(): string {
+		return localStorage.getItem(ROLE_KEY);
+	}
+
+	get isAdmin(): boolean {
+		return this.role === 'Admin';
+	}
+
+	get isSupplier(): boolean {
+		return this.role === 'Supplier';
+	}
+
 	private _lastAuthenticatedPath: string = defaultPath;
 
 	set lastAuthenticatedPath(value: string) {
@@ -42,7 +57,6 @@ export class AuthService extends BaseService {
 	public login(loginModel: ILoginModel) {
 		return this.http.post<ILoginResponseModel>(this.apiUrl + '/Account', loginModel).pipe(catchError(this.extractError));
 	}
-
 
 	async getUser() {
 		try {
@@ -57,6 +71,33 @@ export class AuthService extends BaseService {
 				isOk: false
 			};
 		}
+	}
+
+	public getUsers(): CustomStore {
+		let token = localStorage.getItem(ACCESS_TOKEN_KEY);
+		return AspNetData.createStore({
+			key: 'id',
+			loadUrl: this.apiUrl + '/Account',
+			onBeforeSend: function (method, ajaxOptions) {
+				ajaxOptions.headers = { 'Authorization': 'Bearer ' + token };
+			}
+		});
+	}
+
+	public getUserById(id: number) {
+		return this.http.get<IUser>(this.apiUrl + '/Account/get-user/' + id)
+			.pipe(catchError(e => this.handleError(e, 'Getting user by Id')));
+	}
+
+	public createUser(user: IUser, password: string) {
+		return this.http.post<IUser>(this.apiUrl + '/Account/create-user',
+			{ ...user, password, confirmationPassword: password })
+			.pipe(catchError(e => this.handleError(e, 'Create user')));
+	}
+
+	public updateUser(user: IUser) {
+		return this.http.post<IUser>(this.apiUrl + '/Account/update-user', user)
+			.pipe(catchError(e => this.handleError(e, 'Update user')));
 	}
 
 	async createAccount(email, password) {
@@ -115,7 +156,6 @@ export class AuthService extends BaseService {
 		this._user = null;
 		this.router.navigate(['/login-form']);
 	}
-
 
 	private extractError(errorData: HttpErrorResponse) {
 		let errorMessage = '';

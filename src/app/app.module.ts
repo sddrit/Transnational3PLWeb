@@ -31,6 +31,7 @@ import { GrnService } from './shared/services/grn.service';
 import { StockService } from './shared/services/stock.service';
 import { StockTransferService } from './shared/services/stocktransfer.service';
 import { DeliveryService } from './shared/services/delivery.service';
+import { InvoiceService } from './shared/services/invoice.service';
 
 export function tokenGetter() {
 	return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -76,7 +77,8 @@ export function tokenGetter() {
 		StockTransferService,
 		MetadataService,
 		MetadataResolver,
-		DeliveryService
+		DeliveryService,
+		InvoiceService
 	],
 	exports: [],
 	bootstrap: [AppComponent]

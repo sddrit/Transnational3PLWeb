@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DxFormModule } from 'devextreme-angular/ui/form';
 import { DxLoadIndicatorModule } from 'devextreme-angular/ui/load-indicator';
 
-import { ACCESS_TOKEN_KEY, CURRENT_USER_KEY } from '../../constants/common';
+import { ACCESS_TOKEN_KEY, CURRENT_USER_KEY, ROLE_KEY } from '../../constants/common';
 import { ILoginModel, ILoginResponseModel } from '../../models/auth';
 import { AuthService } from '../../services';
 
@@ -45,6 +45,11 @@ export class LoginFormComponent implements OnInit {
 		this.authService.login(this.loginModel).subscribe((data: ILoginResponseModel) => {
 				localStorage.setItem(ACCESS_TOKEN_KEY, data.token);
 				localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(data.user));
+				localStorage.setItem(ROLE_KEY, data.roles[0]);
+				if (this.authService.isSupplier) {
+					this.router.navigate(['/products']);
+					return;
+				}
 				this.router.navigate([this.returnUrl]);
 			},
 			(errorText: string) => {

@@ -1,6 +1,8 @@
 <div class="responsive-paddings">
-	<h2>Products
-		<dx-button (onClick)="openProduct(0)" class="btn-new-product" icon="add" text="New Product" type="normal">
+
+	<h2 class="page-header"><i class="dx-icon-box"></i>
+		Products
+		<dx-button [visible]="!isSupplier()" (onClick)="openProduct(0)" class="btn-new-product" icon="add" text="New Product" type="normal">
 		</dx-button>
 	</h2>
 
@@ -27,7 +29,7 @@
 		</dxi-column>
 		<dxi-column caption="SKU" dataField="sku">
 		</dxi-column>
-		<dxi-column caption="Supplier" dataField="supplierId">
+		<dxi-column [visible]="!isSupplier()" caption="Supplier" dataField="supplierId">
 			<dxo-lookup
 				[dataSource]="supplierStore"
 				displayExpr="supplierName"

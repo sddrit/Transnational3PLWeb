@@ -34,3 +34,12 @@ export interface ISupplierCharges {
 export interface ISupplierPickupAddress extends IAddress {
 	id: number;
 }
+
+export interface ICreateAccount {
+	supplierId: number;
+	username: string;
+	email: string;
+	active: boolean;
+	password: string;
+	confirmPassword: string;
+}

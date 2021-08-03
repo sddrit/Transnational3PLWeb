@@ -1,5 +1,7 @@
 <div class="responsive-paddings">
-	<h2>Suppliers
+
+	<h2 class="page-header"><i class="dx-icon-group"></i>
+		Suppliers
 		<dx-button (onClick)="openSupplier(0)" class="btn-new-supplier" icon="add" text="New Supplier" type="normal">
 		</dx-button>
 	</h2>
@@ -30,6 +32,12 @@
 		</dxi-column>
 		<dxi-column dataField="contact.mobile">
 		</dxi-column>
-
+		<dxi-column>
+			<dxi-column cellTemplate="inventoryCellTemplate"></dxi-column>
+			<div *dxTemplate="let data of 'inventoryCellTemplate'">
+				<dx-button (onClick)="createAccount($event,data.data.id)" hint="Create an account" icon="user">
+				</dx-button>
+			</div>
+		</dxi-column>
 	</dx-data-grid>
 </div>

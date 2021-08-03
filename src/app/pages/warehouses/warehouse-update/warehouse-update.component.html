@@ -1,11 +1,12 @@
 <div class="responsive-paddings">
-	<h2>
+
+	<h2 class="page-header"><i class="dx-icon-home"></i>
 		{{warehouse.id === 0 ? 'New Warehouse' : 'Edit Warehouse'}}
 		<dx-button (onClick)="backToList()" class="btn-back" type="back">
 		</dx-button>
 	</h2>
 
-	<div class="dx-card responsive-paddings">
+	<div>
 		<form (submit)="handleSubmit($event)">
 			<dx-form [formData]="warehouse" id="form" labelLocation="top">
 				<dxi-item [colCount]="2" caption="General Details" itemType="group">

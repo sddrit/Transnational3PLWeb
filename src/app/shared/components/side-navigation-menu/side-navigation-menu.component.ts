@@ -10,9 +10,10 @@ import {
 	ViewChild
 } from '@angular/core';
 import { DxTreeViewComponent, DxTreeViewModule } from 'devextreme-angular/ui/tree-view';
-import { navigation } from '../../../app-navigation';
+import { adminNavigation, supplierNavigation } from '../../../app-navigation';
 
 import * as events from 'devextreme/events';
+import { AuthService } from '../../services';
 
 @Component({
 	selector: 'app-side-navigation-menu',
@@ -29,7 +30,8 @@ export class SideNavigationMenuComponent implements AfterViewInit, OnDestroy {
 	@Output()
 	openMenu = new EventEmitter<any>();
 
-	constructor(private elementRef: ElementRef) {
+	constructor(private elementRef: ElementRef,
+				private authService: AuthService) {
 	}
 
 	private _selectedItem: String;
@@ -48,6 +50,7 @@ export class SideNavigationMenuComponent implements AfterViewInit, OnDestroy {
 
 	get items() {
 		if ( ! this._items ) {
+			const navigation = this.authService.role === 'Admin' ? adminNavigation : supplierNavigation;
 			this._items = navigation.map((item) => {
 				if ( item.path && ! (/^\//.test(item.path)) ) {
 					item.path = `/${item.path}`;

@@ -27,5 +27,10 @@ export class SupplierListComponent implements OnInit {
 		this.router.navigate(['/supplier/' + id]);
 	}
 
+	createAccount(e: any, id: number) {
+		e.event.stopPropagation();
+		this.router.navigate(['/supplier/create-account/' + id]);
+	}
+
 }
 

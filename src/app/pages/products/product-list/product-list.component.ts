@@ -6,6 +6,7 @@ import { SupplierService } from '../../../shared/services/supplier.service';
 import { IMetaData } from '../../../shared/models/metadata';
 import { MetadataService } from '../../../shared/services/metadata.service';
 import CustomStore = DevExpress.data.CustomStore;
+import { AuthService } from '../../../shared/services';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class ProductListComponent implements OnInit {
 
 	constructor(
 		private productService: ProductService,
+		private authService: AuthService,
 		private metadataService: MetadataService,
 		private supplierService: SupplierService,
 		private router: Router,
@@ -33,8 +35,12 @@ export class ProductListComponent implements OnInit {
 		this.activatedRoute.data.subscribe(data => {
 			this.metaData = data.metadata;
 		});
+
 		this.productStore = this.productService.getProducts();
-		this.supplierStore = this.supplierService.getSuppliers();
+
+		if (!this.isSupplier()) {
+			this.supplierStore = this.supplierService.getSuppliers();
+		}
 	}
 
 	openProduct(id: number) {
@@ -44,6 +50,10 @@ export class ProductListComponent implements OnInit {
 	openProductInventory(e: any, id: number) {
 		e.event.stopPropagation();
 		this.router.navigate(['/product-inventory/' + id]);
+	}
+
+	isSupplier() {
+		return this.authService.isSupplier;
 	}
 
 }

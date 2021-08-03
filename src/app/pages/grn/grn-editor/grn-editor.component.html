@@ -3,9 +3,22 @@
 	<dx-button (onClick)="backToGrnList()" class="btn-back" type="back">
 	</dx-button>
 
-	<h2>Good Received Note</h2>
+	<h2 class="page-header"><i class="dx-icon-airplane"></i>
+		Good Received Note
+	</h2>
 
 	<br/>
+
+	<dx-button
+		[visible]="grn.id != 0"
+		icon="print"
+		stylingMode="outlined"
+		type="default"
+		(onClick)="grnView()"
+		text="Print Good Received Note">
+	</dx-button>
+
+	<br/><br/>
 
 	<form (submit)="handleSubmit($event)">
 

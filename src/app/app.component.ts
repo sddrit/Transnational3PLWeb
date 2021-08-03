@@ -1,10 +1,11 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, ViewEncapsulation } from '@angular/core';
 import { AppInfoService, AuthService, ScreenService } from './shared/services';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss']
+	styleUrls: ['./app.component.scss'],
+	encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
 	constructor(private authService: AuthService, private screen: ScreenService, public appInfo: AppInfoService) {

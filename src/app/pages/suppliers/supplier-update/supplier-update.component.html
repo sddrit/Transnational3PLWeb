@@ -1,11 +1,12 @@
 <div class="responsive-paddings">
-	<h2>
+
+	<h2 class="page-header"><i class="dx-icon-group"></i>
 		{{supplier.id == 0 ? 'Add' : 'Update' }} Supplier
 		<dx-button (onClick)="backToSuppliers()" class="btn-back" type="back">
 		</dx-button>
 	</h2>
 
-	<div class="dx-card responsive-paddings">
+	<div>
 
 		<form (submit)="handleSubmit($event)">
 			<dx-form [(formData)]="supplier" [colCount]="2" id="form" labelLocation="top">

@@ -3,9 +3,71 @@
 	<dx-button (onClick)="backToDelivery()" class="btn-back" type="back">
 	</dx-button>
 
-	<h2>Delivery</h2>
+	<h2 class="page-header"><i class="dx-icon-runner"></i>
+		Delivery
+	</h2>
 
 	<br/>
+
+	<div class="buttons-wrapper">
+		<dx-button
+			icon="fieldchooser"
+			stylingMode="outlined"
+			type="normal"
+			[visible]="!isSupplier()"
+			[disabled]="!canMarkAsProcessing()"
+			(onClick)="processing($event)"
+			text="Mark As Process">
+		</dx-button>
+		<dx-button
+			icon="car"
+			stylingMode="outlined"
+			type="default"
+			[visible]="!isSupplier()"
+			[disabled]="!canMarkAsDispatch()"
+			(onClick)="dispatch($event)"
+			text="Dispatch">
+		</dx-button>
+		<dx-button
+			icon="todo"
+			stylingMode="outlined"
+			type="success"
+			[visible]="!isSupplier()"
+			[disabled]="!canMarkAsComplete()"
+			(onClick)="markAsComplete($event)"
+			text="Complete">
+		</dx-button>
+		<dx-button
+			icon="revert"
+			stylingMode="outlined"
+			type="danger"
+			[visible]="!isSupplier()"
+			[disabled]="!canMarkAsReturn()"
+			(onClick)="return($event)"
+			text="Return">
+		</dx-button>
+		<dx-button
+			icon="card"
+			stylingMode="outlined"
+			type="danger"
+			[visible]="!isSupplier()"
+			[disabled]="!canMarkAsCustomerReturn()"
+			(onClick)="customerReturn($event)"
+			text="Customer Return">
+		</dx-button>
+		<dx-button
+			class="waybill-action"
+			icon="print"
+			stylingMode="outlined"
+			type="default"
+			[visible]="!isSupplier()"
+			[disabled]="canMarkAsProcessing()"
+			(onClick)="wayBill($event)"
+			text="Way Bill">
+		</dx-button>
+	</div>
+
+	<br/><br/>
 
 	<form (submit)="handleSubmit($event)">
 		<dx-form [formData]="delivery" [readOnly]="delivery.id != 0" id="form" labelLocation="top">
@@ -136,5 +198,147 @@
 		</dx-form>
 	</form>
 
+	<dx-popup
+		[width]="500"
+		[height]="'auto'"
+		[showTitle]="true"
+		title="Delivery Processing"
+		[dragEnabled]="false"
+		[closeOnOutsideClick]="false"
+		[showCloseButton]="true"
+		[(visible)]="processingPopupVisible">
+		<div *dxTemplate="let data of 'content'">
+			<p>
+				<b>Delivery Number : </b>
+				<span> {{delivery.deliveryNo}}</span>
+			</p>
+			<form (submit)="handleProcessingForm($event)">
+				<dx-form [showColonAfterLabel]="true" [formData]="processingFormData" labelLocation="top">
+					<dxi-item dataField="requiredNumberOfTrackingNumber">
+						<dxi-validation-rule type="required"
+											 message="Required Number of tracking numbers is required">
+						</dxi-validation-rule>
+						<dxi-validation-rule type="numeric"
+											 message="Required number of tracking numbers should be numeric">
+						</dxi-validation-rule>
+					</dxi-item>
+					<dxi-item
+						itemType="empty"
+						[colSpan]="2">
+					</dxi-item>
+					<dxi-item
+						itemType="button"
+						[buttonOptions]="{ text: 'Processing', useSubmitBehavior: true }">
+					</dxi-item>
+				</dx-form>
+			</form>
+		</div>
+	</dx-popup>
+
+	<dx-popup
+		[width]="500"
+		[height]="'auto'"
+		[showTitle]="true"
+		title="Dispatch"
+		[dragEnabled]="false"
+		[closeOnOutsideClick]="false"
+		[showCloseButton]="true"
+		[(visible)]="dispatchPopupVisible">
+		<div *dxTemplate="let data of 'content'">
+			<p>
+				<b>Delivery Number : </b>
+				<span> {{delivery.deliveryNo}}</span>
+			</p>
+			<form (submit)="handleDispatchForm($event)">
+				<dx-form [formData]="dispatchFormData" labelLocation="top">
+					<dxi-item [colSpan]="2"
+							  [editorOptions]="{ dataSource: warehouseStore, displayExpr: 'name', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'name'],
+							fieldTemplate: 'warehouseField', itemTemplate: 'warehouseField'}"
+							  [isRequired]="true"
+							  [label]="{ text: 'Warehouse' }" dataField="wareHouseId" editorType="dxLookup">
+					</dxi-item>
+					<dxi-item
+						itemType="empty"
+						[colSpan]="2">
+					</dxi-item>
+					<dxi-item
+						itemType="button"
+						[buttonOptions]="{ text: 'Dispatch', useSubmitBehavior: true }">
+					</dxi-item>
+					<div *dxTemplate="let item of 'warehouseField'">
+						<div>{{item?.code}} - {{item?.name}}</div>
+					</div>
+				</dx-form>
+			</form>
+		</div>
+	</dx-popup>
+
+	<dx-popup
+		[width]="500"
+		[height]="'auto'"
+		[showTitle]="true"
+		title="Return"
+		[dragEnabled]="false"
+		[closeOnOutsideClick]="false"
+		[showCloseButton]="true"
+		[(visible)]="returnPopupVisible">
+		<div *dxTemplate="let data of 'content'">
+			<p>
+				<b>Delivery Number : </b>
+				<span> {{delivery.deliveryNo}}</span>
+			</p>
+			<form (submit)="handleReturnForm($event)">
+				<dx-form [showColonAfterLabel]="true" [formData]="returnFormData" labelLocation="top">
+					<dxi-item dataField="note">
+						<dxi-validation-rule type="required"
+											 message="Note is required">
+						</dxi-validation-rule>
+					</dxi-item>
+					<dxi-item
+						itemType="empty"
+						[colSpan]="2">
+					</dxi-item>
+					<dxi-item
+						itemType="button"
+						[buttonOptions]="{ text: 'Return', useSubmitBehavior: true }">
+					</dxi-item>
+				</dx-form>
+			</form>
+		</div>
+	</dx-popup>
+
+	<dx-popup
+		[width]="500"
+		[height]="'auto'"
+		[showTitle]="true"
+		title="Customer Return"
+		[dragEnabled]="false"
+		[closeOnOutsideClick]="false"
+		[showCloseButton]="true"
+		[(visible)]="customerReturnPopupVisible">
+		<div *dxTemplate="let data of 'content'">
+			<p>
+				<b>Delivery Number : </b>
+				<span> {{delivery.deliveryNo}}</span>
+			</p>
+			<form (submit)="handleCustomerReturnForm($event)">
+				<dx-form [showColonAfterLabel]="true" [formData]="customerReturnFormData" labelLocation="top">
+					<dxi-item dataField="note">
+						<dxi-validation-rule type="required"
+											 message="Note is required">
+						</dxi-validation-rule>
+					</dxi-item>
+					<dxi-item
+						itemType="empty"
+						[colSpan]="2">
+					</dxi-item>
+					<dxi-item
+						itemType="button"
+						[buttonOptions]="{ text: 'Customer Return', useSubmitBehavior: true }">
+					</dxi-item>
+				</dx-form>
+			</form>
+		</div>
+	</dx-popup>
 
 </div>

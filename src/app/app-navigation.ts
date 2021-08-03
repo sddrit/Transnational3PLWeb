@@ -1,4 +1,4 @@
-export const navigation = [
+export const adminNavigation = [
 	{
 		text: 'Suppliers',
 		path: '/suppliers',
@@ -33,5 +33,31 @@ export const navigation = [
 		text: 'Deliveries',
 		path: '/deliveries',
 		icon: 'runner'
+	},
+	{
+		text: 'Invoices',
+		path: '/invoices',
+		icon: 'verticalaligncenter'
+	},
+	{
+		text: 'Users',
+		path: '/users',
+		icon: 'user'
 	}
 ];
+
+export const supplierNavigation = [
+	{
+		text: 'Products',
+		path: '/products',
+		icon: 'box'
+	},
+	{
+		text: 'Deliveries',
+		path: '/deliveries',
+		icon: 'runner'
+	}
+];
+
+
+

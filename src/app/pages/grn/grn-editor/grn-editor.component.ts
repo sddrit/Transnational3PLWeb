@@ -69,7 +69,7 @@ export class GrnEditorComponent implements OnInit {
 		this.grnServie.addGrn(this.grn).subscribe(data => {
 			this.notify.success('Successfully created grn');
 			this.loader.show(false);
-			this.router.navigate(['/home']);
+			this.router.navigate(['/grn-list']);
 		});
 	}
 
@@ -110,6 +110,10 @@ export class GrnEditorComponent implements OnInit {
 
 	public backToGrnList() {
 		this.router.navigate(['/grn-list']);
+	}
+
+	public grnView() {
+		this.router.navigate([`grn-view/${this.grn.id}`]);
 	}
 
 	private setGrn() {
