@@ -13,7 +13,7 @@ export class GrnViewComponent implements OnInit {
 
 	title = 'WayBill';
 	reportUrl = '';
-	hostUrl = `https://${environment.apiDomainName}/`;
+	hostUrl = `http://${environment.apiDomainName}/`;
 	invokeAction = 'DXXRDV';
 
 	constructor(private route: ActivatedRoute,
