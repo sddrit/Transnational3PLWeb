@@ -78,12 +78,9 @@ export class SideNavOuterToolbarComponent implements OnInit {
 		const pointerEvent = event.event;
 
 		if ( path && this.menuOpened ) {
-			if ( event.node.selected ) {
-				pointerEvent.preventDefault();
-			} else {
-				this.router.navigate([path]);
-				this.scrollView.instance.scrollTo(0);
-			}
+
+			this.router.navigate([path]);
+			this.scrollView.instance.scrollTo(0);
 
 			if ( this.hideMenuAfterNavigation ) {
 				this.temporaryMenuOpened = false;
