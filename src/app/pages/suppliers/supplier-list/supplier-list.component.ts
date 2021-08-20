@@ -16,6 +16,8 @@ export class SupplierListComponent implements OnInit {
 		private supplierService: SupplierService,
 		private router: Router,
 	) {
+		this.editSupplier = this.editSupplier.bind(this);
+		this.viewSupplier = this.viewSupplier.bind(this);
 	}
 
 
@@ -27,10 +29,12 @@ export class SupplierListComponent implements OnInit {
 		this.router.navigate(['/supplier/' + id]);
 	}
 
-	createAccount(e: any, id: number) {
-		e.event.stopPropagation();
-		this.router.navigate(['/supplier/create-account/' + id]);
+	editSupplier(e) {
+		this.router.navigate(['/supplier/' + e.row.data.id]);
 	}
 
+	viewSupplier(e) {
+		this.router.navigate(['/supplier/view/' + e.row.data.id]);
+	}
 }
 

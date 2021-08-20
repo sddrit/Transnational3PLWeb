@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import {
+	DevExtremeModule,
 	DxButtonModule,
 	DxCheckBoxModule,
 	DxDataGridModule,
@@ -28,6 +29,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { TasksComponent } from './pages/tasks/tasks.component';
 import { SupplierListComponent } from './pages/suppliers/supplier-list/supplier-list.component';
+import {
+	CreateAccountPopupComponent
+} from './pages/suppliers/components/create-account-popup/create-account-popup.component';
+import { SupplierDetailsComponent } from './pages/suppliers/supplier-details/supplier-details.component';
 import { WarehouseListComponent } from './pages/warehouses/warehouse-list/warehouse-list.component';
 import { SupplierUpdateComponent } from './pages/suppliers/supplier-update/supplier-update.component';
 import { WarehouseUpdateComponent } from './pages/warehouses/warehouse-update/warehouse-update.component';
@@ -54,7 +59,6 @@ import { UserListComponent } from './pages/user/user-list/user-list.component';
 import { UserUpdateComponent } from './pages/user/user-update/user-update.component';
 import { WaybillComponent } from './pages/delivery/waybill/waybill.component';
 import { GrnViewComponent } from './pages/grn/grn-view/grn-view.component';
-import { CreateAccountComponent } from './pages/suppliers/create-account/create-account.component';
 
 
 const routes: Routes = [
@@ -83,7 +87,7 @@ const routes: Routes = [
 		canActivate: [AuthGuardService]
 	},
 	{
-		path: 'create-account',
+		path: 'create-account-popup',
 		component: CreateAccountFormComponent,
 		canActivate: [AuthGuardService]
 	},
@@ -103,8 +107,8 @@ const routes: Routes = [
 		canActivate: [AuthGuardService]
 	},
 	{
-		path: 'supplier/create-account/:id',
-		component: CreateAccountComponent,
+		path: 'supplier/view/:id',
+		component: SupplierDetailsComponent,
 		canActivate: [AuthGuardService]
 	},
 	{
@@ -261,7 +265,8 @@ const routes: Routes = [
 		DxSelectBoxModule,
 		DxCheckBoxModule,
 		DxTextBoxModule,
-		DxReportViewerModule
+		DxReportViewerModule,
+		DevExtremeModule
 	],
 	providers: [AuthGuardService],
 	exports: [RouterModule, SupplierPickupAddressModalComponent],
@@ -294,7 +299,8 @@ const routes: Routes = [
 		UserUpdateComponent,
 		WaybillComponent,
 		GrnViewComponent,
-		CreateAccountComponent
+		CreateAccountPopupComponent,
+		SupplierDetailsComponent
 	]
 })
 export class AppRoutingModule {

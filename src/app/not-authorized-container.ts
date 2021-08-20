@@ -29,7 +29,7 @@ export class NotAuthorizedContainerComponent {
 				return '';
 			case 'reset-password':
 				return 'Reset Password';
-			case 'create-account':
+			case 'create-account-popup':
 				return 'Sign Up';
 			case 'change-password':
 				return 'Change Password';

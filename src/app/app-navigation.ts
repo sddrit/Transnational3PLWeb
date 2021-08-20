@@ -2,47 +2,47 @@ export const adminNavigation = [
 	{
 		text: 'Suppliers',
 		path: '/suppliers',
-		icon: 'group'
+		icon: 'icon ion-md-people'
 	},
 	{
 		text: 'Warehouses',
 		path: '/warehouses',
-		icon: 'home'
+		icon: 'icon ion-md-home'
 	},
 	{
 		text: 'Products',
 		path: '/products',
-		icon: 'box'
+		icon: 'icon ion-md-cube'
 	},
 	{
 		text: 'Purchase Orders',
 		path: '/purchase-orders',
-		icon: 'cart'
+		icon: 'icon ion-md-cart'
 	},
 	{
 		text: 'Good Received Notes',
 		path: '/grn-list',
-		icon: 'airplane'
+		icon: 'icon ion-md-airplane'
 	},
 	{
 		text: 'Stock Transfers',
 		path: '/stock-transfers',
-		icon: 'refresh'
+		icon: 'icon ion-md-git-compare'
 	},
 	{
 		text: 'Deliveries',
 		path: '/deliveries',
-		icon: 'runner'
+		icon: 'icon ion-md-walk'
 	},
 	{
 		text: 'Invoices',
 		path: '/invoices',
-		icon: 'verticalaligncenter'
+		icon: 'icon ion-md-paper'
 	},
 	{
 		text: 'Users',
 		path: '/users',
-		icon: 'user'
+		icon: 'icon ion-md-person'
 	}
 ];
 

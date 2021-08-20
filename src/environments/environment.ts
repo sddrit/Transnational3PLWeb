@@ -4,8 +4,8 @@
 
 export const environment = {
 	production: false,
-	apiUrl: 'http://192.168.52.101:8101/api',
-	apiDomainName: '192.168.52.101:8101'
+	apiUrl: 'https://localhost:44361/api',
+	apiDomainName: 'localhost:44361'
 };
 
 /*

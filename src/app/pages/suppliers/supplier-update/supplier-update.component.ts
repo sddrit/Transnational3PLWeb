@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import DevExpress from 'devextreme';
@@ -13,6 +13,7 @@ import { IPickupAddressModalResponse } from './supplier-pickup-address-modal/sup
 import CustomStore = DevExpress.data.CustomStore;
 
 @Component({
+	encapsulation: ViewEncapsulation.None,
 	templateUrl: 'supplier-update.component.html',
 	styleUrls: ['./supplier-update.component.scss']
 })
@@ -37,10 +38,6 @@ export class SupplierUpdateComponent {
 	) {
 		this.cityStore = this.cityService.getCities();
 		this.setSupplier();
-	}
-
-	ngAfterViewInit() {
-		this.cdr.detectChanges();
 	}
 
 	public backToSuppliers() {

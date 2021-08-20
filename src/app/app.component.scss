@@ -6,10 +6,34 @@
 }
 
 .page-header {
-	color: #6d6d71 !important;
-	font-size: 24px !important;
-	i {
-		font-size: 24px;
-		margin-right: 2px;
+	margin-top: 0px;
+	margin-bottom: 20px;
+	h2 {
+		color: #3a3a3a;
+		font-weight: 400;
+		font-size: 32px;
+		margin-bottom: 5px;
+		margin-top: 0px;
 	}
+	h5 {
+		margin-top: 5px;
+		margin-bottom: 15px;
+		color: #8a8a8a;
+		font-weight: 300;
+		font-size: 16px;
+	}
+}
+
+//Button Style
+
+.default-button {
+	color: #444242 !important;
+}
+
+.danger-button {
+	color: #d05252 !important;
+}
+
+.info-button {
+	color: #6565b9 !important;
 }

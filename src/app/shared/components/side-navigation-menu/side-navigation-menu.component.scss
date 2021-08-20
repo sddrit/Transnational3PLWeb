@@ -18,6 +18,8 @@
 			white-space: nowrap;
 			// ##
 
+			background-color: #696561;
+
 			// ## Icon width customization
 			.dx-treeview-item {
 				padding-left: 0;
@@ -52,7 +54,6 @@
 			.dx-treeview-node {
 				&[aria-level='1'] {
 					font-weight: bold;
-					border-bottom: 1px solid #6d6d6d;
 				}
 
 				&[aria-level='2'] .dx-treeview-item-content {
@@ -73,7 +74,11 @@
 					}
 
 					&.dx-state-selected > .dx-treeview-item * {
-						color: $base-accent;
+						color: $base-text-color;
+					}
+
+					&.dx-state-selected {
+						background-color: #eaeaea;
 					}
 
 					&:not(.dx-state-focused) > .dx-treeview-item.dx-state-hover {

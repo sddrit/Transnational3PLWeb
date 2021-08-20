@@ -14,17 +14,17 @@
 		<form (submit)="onOk($event)">
 			<dx-form #pickupAddressUpdateForm [(formData)]="pickupAddress" [colCount]="2"
 					 id="pickupAddressUpdateForm" labelLocation="top" method="post">
-				<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'first-name' }}"
+				<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'first-name-field' }}"
 						  dataField="firstName"></dxi-item>
-				<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'last-name' }}" dataField="lastName"></dxi-item>
-				<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'address-line-1' }}" [isRequired]="true"
+				<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'last-name-field' }}" dataField="lastName"></dxi-item>
+				<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'address-line-1-field' }}" [isRequired]="true"
 						  dataField="addressLine1"></dxi-item>
-				<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'address-line-2' }}"
+				<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'address-line-2-field' }}"
 						  dataField="addressLine2"></dxi-item>
 				<dxi-item [editorOptions]="{ id:'fake-city', dataSource: cityStore, displayExpr: 'cityName', valueExpr: 'id',
 						  searchExpr: 'cityName', searchMode: 'contains', minSearchLength: 3, searchEnabled: true, inputAttr: { autocomplete: 'chrome-off' } }" [isRequired]="true" [label]="{text: 'City'}" dataField="cityId"
 						  editorType="dxSelectBox"></dxi-item>
-				<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'postal-code' }}" [isRequired]="true"
+				<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'postal-code-field' }}" [isRequired]="true"
 						  dataField="postalCode"></dxi-item>
 				<dxi-item [colSpan]="2" class="pickup-address-modal-button-container" itemType="group">
 					<dx-button [useSubmitBehavior]="true" class="save-button" text="Save Changes"

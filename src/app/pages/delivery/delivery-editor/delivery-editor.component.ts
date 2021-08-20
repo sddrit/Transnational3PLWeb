@@ -152,7 +152,6 @@ export class DeliveryEditorComponent implements OnInit {
 		e.event.preventDefault();
 		const result = confirm("<i>Are you sure you want to complete this delivery?</i>", "Complete Delivery");
 		result.then((dialogResult) => {
-			console.log(dialogResult);
 			if (dialogResult) {
 				this.loader.show(true);
 				this.deliveryService.markAsComplete(this.delivery.id).subscribe(() => {

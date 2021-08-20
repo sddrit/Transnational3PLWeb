@@ -11,6 +11,7 @@ import { LoaderHandler } from '../utilities/loader.handler';
 import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import CustomStore from 'devextreme/data/custom_store';
 import { IInvoice } from '../models/invoice';
+import DataSource from 'devextreme/data/data_source';
 
 const defaultPath = '/';
 const defaultUser = {
@@ -84,6 +85,21 @@ export class AuthService extends BaseService {
 		});
 	}
 
+	public getSupplierUsers(supplierId: number): DataSource {
+		let token = localStorage.getItem(ACCESS_TOKEN_KEY);
+		var store = AspNetData.createStore({
+			key: 'id',
+			loadUrl: this.apiUrl + '/Account',
+			onBeforeSend: function (method, ajaxOptions) {
+				ajaxOptions.headers = { 'Authorization': 'Bearer ' + token };
+			}
+		});
+		return new DataSource({
+			store,
+			filter: ['supplierId', '=', supplierId]
+		});
+	}
+
 	public getUserById(id: number) {
 		return this.http.get<IUser>(this.apiUrl + '/Account/get-user/' + id)
 			.pipe(catchError(e => this.handleError(e, 'Getting user by Id')));
@@ -100,12 +116,22 @@ export class AuthService extends BaseService {
 			.pipe(catchError(e => this.handleError(e, 'Update user')));
 	}
 
+	public deleteUser(id: number) {
+		return this.http.delete(this.apiUrl + '/Account/' + id)
+			.pipe(catchError(e => this.handleError(e, 'Delete user')));
+	}
+
+	public setStatus(id: number, status: boolean) {
+		return this.http.post(this.apiUrl + '/Account/set-status', { id, status })
+			.pipe(catchError(e => this.handleError(e, 'Set user status')));
+	}
+
 	async createAccount(email, password) {
 		try {
 			// Send request
 			console.log(email, password);
 
-			this.router.navigate(['/create-account']);
+			this.router.navigate(['/create-account-popup']);
 			return {
 				isOk: true
 			};
@@ -191,7 +217,7 @@ export class AuthGuardService implements CanActivate {
 		// const isAuthForm = [
 		//   'login-form',
 		//   'reset-password',
-		//   'create-account',
+		//   'create-account-popup',
 		//   'change-password/:recoveryCode'
 		// ].includes(route.routeConfig.path);
 

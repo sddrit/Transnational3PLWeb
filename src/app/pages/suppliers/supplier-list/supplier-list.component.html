@@ -1,15 +1,15 @@
 <div class="responsive-paddings">
 
-	<h2 class="page-header"><i class="dx-icon-group"></i>
-		Suppliers
-		<dx-button (onClick)="openSupplier(0)" class="btn-new-supplier" icon="add" text="New Supplier" type="normal">
+	<div class="page-header">
+		<h2>Suppliers</h2>
+		<h5>List of suppliers</h5>
+		<dx-button (onClick)="openSupplier(0)" class="btn-new-supplier" icon="icon ion-md-add" text="New Supplier" type="normal">
 		</dx-button>
-	</h2>
+	</div>
 
-	<dx-data-grid (onRowClick)="openSupplier($event.data.id)" [columnAutoWidth]="true"
+	<dx-data-grid [columnAutoWidth]="true"
 				  [columnHidingEnabled]="true"
-				  [dataSource]="suppliers" [focusedRowEnabled]="true"
-				  [focusedRowIndex]="0"
+				  [dataSource]="suppliers"
 				  [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
 				  keyExpr="Id">
 
@@ -22,22 +22,19 @@
 		</dxi-column>
 		<dxi-column dataField="supplierName">
 		</dxi-column>
-		<dxi-column dataField="active">
+		<dxi-column dataField="active" trueText="Active" falseText="Inactive">
 		</dxi-column>
 		<dxi-column dataField="vatNumber">
 		</dxi-column>
-		<dxi-column dataField="contact.phone">
-		</dxi-column>
-		<dxi-column dataField="contact.email">
-		</dxi-column>
-		<dxi-column dataField="contact.mobile">
-		</dxi-column>
-		<dxi-column>
-			<dxi-column cellTemplate="inventoryCellTemplate"></dxi-column>
-			<div *dxTemplate="let data of 'inventoryCellTemplate'">
-				<dx-button (onClick)="createAccount($event,data.data.id)" hint="Create an account" icon="user">
-				</dx-button>
-			</div>
+		<dxi-column [width]="110" type="buttons">
+			<dxi-button visible="true" hint="Edit Supplier"
+						cssClass="default-button"
+						icon="icon ion-md-create"
+						[onClick]="editSupplier"></dxi-button>
+			<dxi-button visible="true" hint="View Supplier"
+						cssClass="info-button"
+						icon="icon ion-md-information-circle"
+						[onClick]="viewSupplier"></dxi-button>
 		</dxi-column>
 	</dx-data-grid>
 </div>
