@@ -4,7 +4,7 @@ import { catchError } from 'rxjs/operators';
 import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 
 import { BaseService } from './base.service';
-import { ICreateAccount, ISupplier } from '../../shared/models/supplier';
+import { ICreateAccount, ISupplier, ISupplierStorage } from '../../shared/models/supplier';
 import { ACCESS_TOKEN_KEY } from '../constants/common';
 import { NotifyHandler } from '../utilities/notify.handler';
 import { Router } from '@angular/router';
@@ -52,6 +52,11 @@ export class SupplierService extends BaseService {
 	public createAccount(account: ICreateAccount) {
 		return this.http.post<any>(this.apiUrl + '/Supplier/create-account', account)
 			.pipe(catchError(e => this.handleError(e, 'Create account')));
+	}
+
+	public getSupplierStorageDetails(id: number) {
+		return this.http.get<ISupplierStorage>(this.apiUrl + `/Supplier/storage-details/${id}`)
+			.pipe(catchError(e => this.handleError(e, 'Supplier storage details')));
 	}
 
 }

@@ -16,10 +16,11 @@ export interface IDelivery {
 	deliveryStatus: number;
 	deliveryDate: Date;
 	deliveryItems: IDeliveryItem[];
-	trackingNumbers: string[];
+	deliveryTrackings: IDeliveryTracking[];
 }
 
 export interface IDeliveryItem {
+	id: number;
 	productId: number;
 	product: IProduct;
 	quantity: number;
@@ -36,4 +37,18 @@ export interface IDeliveryCustomer {
 	postalCode: string;
 	mobile: string;
 	phone: string;
+}
+
+export interface IDeliveryTracking {
+	id: number;
+	trackingNumber: string;
+	status: number;
+	deliveryTrackingItems: IDeliveryTrackingItem[];
+}
+
+export interface IDeliveryTrackingItem {
+	id: number;
+	productId: number;
+	quantity: number;
+	unitCost: number;
 }

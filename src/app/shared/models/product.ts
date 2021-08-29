@@ -15,4 +15,13 @@ export interface IProduct {
 	weight?: number;
 	massUnit?: number;
 	active: boolean;
+	unitOfMeasureId: number;
+}
+
+export interface IProductStock {
+	id: number;
+	wareHouseId: number;
+	quantity: number;
+	returnQuantity: number;
+	productId: number;
 }

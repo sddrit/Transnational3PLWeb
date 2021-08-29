@@ -24,6 +24,17 @@ export class NotifyHandler {
 		});
 	}
 
+	warning(message: string) {
+		notify({
+			message: message,
+			type: 'warning',
+			displayTime: TOAST_DISPLAY_TIME,
+			height: TOAST_HEIGHT,
+			width: TOAST_WIDTH,
+			position: TOAST_POSITION
+		});
+	}
+
 	error(message: string) {
 		notify({
 			message: message,

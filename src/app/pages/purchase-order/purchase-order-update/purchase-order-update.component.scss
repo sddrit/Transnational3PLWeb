@@ -1,3 +1,21 @@
-.btn-back {
-	float: right;
+.storage-summery {
+	background-color: #f5f5f5;
+	width: auto;
+	margin-top: 10px;
+	font-size: 15px;
+	box-shadow: 2px 2px 10px #eaeaea;
+	border-radius: 3px;
+	padding: 7px;
+	tr td {
+		padding: 5px;
+		font-weight: 600;
+		text-align: right;
+	}
+	tr td:first-child {
+		padding-right: 30px;
+	}
+	tr td:nth-child(1) {
+		text-align: left;
+		font-weight: 300;
+	}
 }

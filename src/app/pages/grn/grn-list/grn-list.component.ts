@@ -28,6 +28,7 @@ export class GrnListComponent implements OnInit {
 				private warehouseService: WarehouseService,
 				private router: Router,
 				private activatedRoute: ActivatedRoute) {
+		this.viewGrn = this.viewGrn.bind(this);
 	}
 
 	ngOnInit(): void {
@@ -42,6 +43,10 @@ export class GrnListComponent implements OnInit {
 
 	openGrn(id: number) {
 		this.router.navigate(['/grn/' + id]);
+	}
+
+	viewGrn(e) {
+		this.router.navigate(['/grn/' + e.row.data.id]);
 	}
 
 }

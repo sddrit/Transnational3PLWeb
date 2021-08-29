@@ -17,6 +17,7 @@ export class WarehouseListComponent implements OnInit {
 		private warehouseService: WarehouseService,
 		private router: Router,
 	) {
+		this.editWarehouse = this.editWarehouse.bind(this);
 	}
 
 
@@ -24,8 +25,12 @@ export class WarehouseListComponent implements OnInit {
 		this.warehouses = this.warehouseService.getWarehouses();
 	}
 
-	openWarehouse(id: string) {
+	openWarehouse(id: number) {
 		this.router.navigate(['/warehouse/' + id]);
+	}
+
+	editWarehouse(e) {
+		this.router.navigate(['/warehouse/' + e.row.data.id]);
 	}
 
 }

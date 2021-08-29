@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { ISupplier, ISupplierPickupAddress } from '../../../shared/models/supplier';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ISupplier, ISupplierPickupAddress, ISupplierStorage } from '../../../shared/models/supplier';
 import { SupplierService } from '../../../shared/services/supplier.service';
 import { CityService } from '../../../shared/services/city.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +12,7 @@ import DataSource from 'devextreme/data/data_source';
 import { confirm } from 'devextreme/ui/dialog';
 
 @Component({
+	encapsulation: ViewEncapsulation.None,
 	selector: 'app-supplier-details',
 	templateUrl: './supplier-details.component.html',
 	styleUrls: ['./supplier-details.component.scss']
@@ -19,6 +20,7 @@ import { confirm } from 'devextreme/ui/dialog';
 export class SupplierDetailsComponent implements OnInit {
 
 	public supplier: ISupplier;
+	public supplierStorageDetails: ISupplierStorage;
 	public cityStore: CustomStore;
 	public userDataSource: DataSource;
 
@@ -116,6 +118,14 @@ export class SupplierDetailsComponent implements OnInit {
 
 	}
 
+	customizeLabelStorageByWareHouse(arg) {
+		return arg.percentText;
+	}
+
+	customizeTextForGauge(arg) {
+		return arg.valueText + ' %';
+	}
+
 	private setSupplier() {
 		this.supplier = ModelHelper.newSupplier();
 		const supplierId = this.route.snapshot.paramMap.get('id');
@@ -126,9 +136,14 @@ export class SupplierDetailsComponent implements OnInit {
 			this.supplierService.getSupplierById(+supplierId).subscribe((data: ISupplier) => {
 				this.supplier = data;
 				this.userDataSource = this.authService.getSupplierUsers(this.supplier.id);
-				this.loader.show(false);
+				this.supplierService.getSupplierStorageDetails(+supplierId).subscribe((supplierStorage: ISupplierStorage) => {
+					this.supplierStorageDetails = supplierStorage;
+					this.loader.show(false);
+				});
 			});
 		}
 	}
+
+
 
 }

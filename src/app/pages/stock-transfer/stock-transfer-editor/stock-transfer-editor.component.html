@@ -1,13 +1,11 @@
 <div class="dx-card responsive-paddings">
 
-	<dx-button (onClick)="backToStockTransfers()" class="btn-back" type="back">
-	</dx-button>
-
-	<h2 class="page-header"><i class="dx-icon-refresh"></i>
-		Stock Transfer
-	</h2>
-
-	<br/>
+	<div class="page-header">
+		<h2>Stock Transfer</h2>
+		<h5>Stock Transfer Details</h5>
+		<dx-button (onClick)="backToStockTransfers()" class="btn-back" type="back">
+		</dx-button>
+	</div>
 
 	<form (submit)="handleSubmit($event)">
 		<dx-form [colCount]="4" [formData]="stockTransfer" [readOnly]="stockTransfer.id != 0" id="form" labelLocation="top">

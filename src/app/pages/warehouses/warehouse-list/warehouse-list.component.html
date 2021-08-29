@@ -1,16 +1,15 @@
 <div class="responsive-paddings">
 
-	<h2 class="page-header"><i class="dx-icon-home"></i>
-		Warehouses
-		<dx-button (onClick)="openWarehouse('0')" class="btn-new-warehouse" icon="add" text="New Warehouse"
-				   type="normal">
+	<div class="page-header">
+		<h2>Warehouses</h2>
+		<h5>List of warehouses</h5>
+		<dx-button (onClick)="openWarehouse(0)" class="btn-new-warehouse" icon="icon ion-md-add" text="New Warehouse" type="normal">
 		</dx-button>
-	</h2>
+	</div>
 
-	<dx-data-grid (onRowClick)="openWarehouse($event.data.id)" [columnAutoWidth]="true" [columnHidingEnabled]="true"
+	<dx-data-grid [columnAutoWidth]="true" [columnHidingEnabled]="true"
 				  [dataSource]="warehouses"
-				  [focusedRowEnabled]="true"
-				  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
+				  [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
 				  keyExpr="id">
 
 		<dxo-paging [pageSize]="10"></dxo-paging>
@@ -26,17 +25,16 @@
 		<dxi-column dataField="active">
 		</dxi-column>
 
-		<dxi-column caption="Address Line 1" dataField="address.addressLine1">
-		</dxi-column>
-
-		<dxi-column caption="Address Line 2" dataField="address.addressLine2">
-		</dxi-column>
-
 		<dxi-column caption="City" dataField="address.city.cityName">
 		</dxi-column>
 
-		<dxi-column caption="Postal Code" dataField="address.postalCode">
+		<dxi-column [width]="110" type="buttons">
+			<dxi-button visible="true" hint="Edit Warehouse"
+						cssClass="default-button"
+						icon="icon ion-md-create"
+						[onClick]="editWarehouse"></dxi-button>
 		</dxi-column>
+
 
 	</dx-data-grid>
 </div>

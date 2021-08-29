@@ -1,13 +1,11 @@
-<div class="dx-card responsive-paddings">
+<div class="dx-card responsive-paddings" (keyup)="keyUp($event)">
 
-	<dx-button (onClick)="backToGrnList()" class="btn-back" type="back">
-	</dx-button>
-
-	<h2 class="page-header"><i class="dx-icon-airplane"></i>
-		Good Received Note
-	</h2>
-
-	<br/>
+	<div class="page-header">
+		<h2>Good Received Note</h2>
+		<h5>Details of Good Received Note</h5>
+		<dx-button (onClick)="backToGrnList()" class="btn-back" type="back">
+		</dx-button>
+	</div>
 
 	<dx-button
 		[visible]="grn.id != 0"
@@ -21,37 +19,36 @@
 	<br/><br/>
 
 	<form (submit)="handleSubmit($event)">
-
 		<dx-form [(formData)]="grn" [colCount]="4" [readOnly]="grn.id != 0" id="form" labelLocation="top" method="post">
 			<dxi-item [colCount]="6" [colSpan]="4" caption="General Details" itemType="group">
-
 				<dxi-item [colSpan]="2" dataField="grnNo" [visible]="grn.id !=0"></dxi-item>
 				<dxi-item [colSpan]="2" dataField="created" editorType="dxDateBox" [editorOptions]="{ dataType:'date', format: 'shortDateShortTime' }"
 						  [visible]="grn.id !=0"></dxi-item>
-
-				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: metadata.grnTypes, displayExpr: 'name', valueExpr: 'id' }"
+				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: metadata.grnTypes, displayExpr: 'name', valueExpr: 'id', onValueChanged: onGrnTypeChange }"
 						  [isRequired]="true"
 						  [label]="{ text: 'Grn Type' }" dataField="type" editorType="dxSelectBox">
 				</dxi-item>
-
-				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: purchaseOrderStore, displayExpr: 'poNumber', valueExpr: 'id', searchEnabled: true, searchExpr: ['poNumber'],
-						  						onValueChanged: onPurchaseOrderChange }"
+				<dxi-item [visible]="grn.type == 0" [colSpan]="2" [editorOptions]="{ dataSource: purchaseOrderStore,
+												displayExpr: 'poNumber', valueExpr: 'id', onValueChanged: onPurchaseOrderChange, visible: grn.type == 0 }"
 						  [isRequired]="false"
 						  [label]="{ text: 'PO Number' }" dataField="purchaseOrderId" editorType="dxSelectBox">
 				</dxi-item>
-
+				<dxi-item [visible]="grn.type == 1" [colSpan]="2" [editorOptions]="{ dataSource: grnStore,
+												displayExpr: 'grnNo', valueExpr: 'id', onValueChanged: onGrnChange, visible: grn.type == 1 }"
+						  [isRequired]="false"
+						  [label]="{ text: 'Grn Received Number' }" dataField="returnGoodReceivedNoteId" editorType="dxSelectBox">
+				</dxi-item>
 				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: warehouseStore, displayExpr: 'name', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'name'],
 					fieldTemplate: 'warehouseField', itemTemplate: 'warehouseField'}"
 						  [isRequired]="true"
 						  [label]="{ text: 'Warehouse' }" dataField="wareHouseId" editorType="dxLookup">
 				</dxi-item>
-
-				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: supplierStore, displayExpr: 'supplierName', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'supplierName'],
+				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: supplierStore, displayExpr: 'supplierName',
+					valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'supplierName'],
 					  fieldTemplate: 'supplierField', itemTemplate: 'supplierField'  }"
 						  [isRequired]="true"
 						  [label]="{ text: 'Supplier' }" dataField="supplierId" editorType="dxLookup">
 				</dxi-item>
-
 			</dxi-item>
 
 			<div *dxTemplate="let item of 'supplierField'">
@@ -68,6 +65,7 @@
 								  [dataSource]="grn.goodReceivedNoteItems"
 								  [disabled]="grn.supplierId == 0"
 								  [rowAlternationEnabled]="true"
+								  (onEditorPreparing)="onEditorPreparing($event)"
 								  [showBorders]="true">
 						<dxo-editing
 							[allowAdding]="grn.id == 0"
@@ -111,7 +109,9 @@
 				</dxi-item>
 			</dxi-item>
 
-			<dxi-item [buttonOptions]="{ text: 'Save Changes', useSubmitBehavior: true, type: 'success', icon: 'save', class: 'btn-save-product', visible: grn.id == 0 }" [colSpan]="4" class="btn-save-product"
+			<dxi-item [buttonOptions]="{ text: 'Save Changes', useSubmitBehavior: true,
+										type: 'success', icon: 'save', class: 'btn-save-product',
+										visible: grn.id == 0 }" [colSpan]="4" class="btn-save-product"
 					  itemType="button">
 			</dxi-item>
 		</dx-form>

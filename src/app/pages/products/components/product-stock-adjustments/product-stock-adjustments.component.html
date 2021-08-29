@@ -1,14 +1,12 @@
-<h4>Product Stock Adjustments</h4>
+<h4 class="sub-header">Product Stock Adjustments</h4>
 
-<dx-data-grid [columnAutoWidth]="true" [columnHidingEnabled]="true"
+<dx-data-grid id="stockAdjustmentsGrid" [columnAutoWidth]="true" [columnHidingEnabled]="true"
 			  [dataSource]="stockAdjustmentsDataSource"
-			  [focusedRowEnabled]="true" [focusedRowIndex]="0"
 			  [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
 			  keyExpr="id">
 	<dxo-paging [pageSize]="10"></dxo-paging>
 	<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
 	<dxo-filter-row [visible]="true"></dxo-filter-row>
-
 	<dxi-column dataField="created" dataType="date" sortOrder="desc"></dxi-column>
 	<dxi-column caption="Warehouse" dataField="wareHouseId">
 		<dxo-lookup

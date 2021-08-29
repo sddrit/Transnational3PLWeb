@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { ACCESS_TOKEN_KEY } from '../constants/common';
 import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { catchError } from 'rxjs/operators';
-import { IPurchaseOrder } from '../models/purchaseOrder';
+import { ICalculateStorage, ICalculateStorageResponse, IPurchaseOrder } from '../models/purchaseOrder';
 import { Observable } from 'rxjs';
 import { LoaderHandler } from '../utilities/loader.handler';
 
@@ -47,6 +47,12 @@ export class PurchaseOrderService extends BaseService {
 	public updatePurchaseOrder(purchaseOrder: IPurchaseOrder) {
 		return this.http.put(this.apiUrl + '/PurchaseOrder', purchaseOrder)
 			.pipe(catchError(e => this.handleError(e, 'Update purchase order')));
+	}
+
+	public calculateStorage(calculateStorage: ICalculateStorage) {
+		return this.http.post<ICalculateStorageResponse>(this.apiUrl + '/PurchaseOrder/calculate-storage',
+				calculateStorage)
+			.pipe(catchError(e => this.handleError(e, 'Calculate storage')));
 	}
 }
 

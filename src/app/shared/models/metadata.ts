@@ -33,6 +33,17 @@ export interface IDeliveryType {
 	name: string;
 }
 
+export interface IUnitOfMeasure {
+	id: number;
+	code: string;
+	description: string;
+}
+
+export interface IPurchaseOrderType {
+	id: number;
+	name: string;
+}
+
 export interface IMetaData {
 	storeTypes: IStoreType[];
 	massUnits: IMassUnit[];
@@ -41,4 +52,6 @@ export interface IMetaData {
 	grnTypes: IGrnType[];
 	deliveryStatus: IDeliveryStatus[];
 	deliveryTypes: IDeliveryType[];
+	unitOfMeasures: IUnitOfMeasure[];
+	purchaseOrderStatus: IPurchaseOrderType[];
 }

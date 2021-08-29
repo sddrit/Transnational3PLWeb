@@ -22,6 +22,7 @@ export class StockTransferListComponent implements OnInit {
 				private warehouseService: WarehouseService,
 				private router: Router,
 				private activatedRoute: ActivatedRoute) {
+		this.viewStockTransfer = this.viewStockTransfer.bind(this);
 	}
 
 	ngOnInit(): void {
@@ -32,6 +33,10 @@ export class StockTransferListComponent implements OnInit {
 
 	openStockTransfer(id: number) {
 		this.router.navigate(['/stock-transfer/' + id]);
+	}
+
+	viewStockTransfer(e) {
+		this.router.navigate(['/stock-transfer/' + e.row.data.id]);
 	}
 
 }

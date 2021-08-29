@@ -1,10 +1,11 @@
 <div class="responsive-paddings">
 
-	<h2 class="page-header"><i class="dx-icon-home"></i>
-		{{warehouse.id === 0 ? 'New Warehouse' : 'Edit Warehouse'}}
-		<dx-button (onClick)="backToList()" class="btn-back" type="back">
+	<div class="page-header">
+		<h2>{{warehouse.id === 0 ? 'New Warehouse' : 'Edit Warehouse'}}</h2>
+		<h5>Warehouse details</h5>
+		<dx-button (onClick)="backToList()" class="btn-back" text="Back to List" type="back">
 		</dx-button>
-	</h2>
+	</div>
 
 	<div>
 		<form (submit)="handleSubmit($event)">
@@ -25,7 +26,7 @@
 						<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'address-line-2' }}" [label]="{text: 'Address Line 2'}"
 								  dataField="address.addressLine2"></dxi-item>
 						<dxi-item [editorOptions]="{ id:'fake-city', dataSource: cityStore, displayExpr: 'cityName', valueExpr: 'id',
-						  searchExpr: 'cityName', searchMode: 'contains', minSearchLength: 3, searchEnabled: true, inputAttr: { autocomplete: 'chrome-off' } }" [isRequired]="true" [label]="{text: 'City'}"
+						  searchExpr: 'cityName', searchMode: 'contains', minSearchLength: 0, searchEnabled: true, inputAttr: { autocomplete: 'chrome-off' } }" [isRequired]="true" [label]="{text: 'City'}"
 								  dataField="address.cityId"
 								  editorType="dxSelectBox"></dxi-item>
 						<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'postal-code' }}" [isRequired]="true" [label]="{text: 'Postal Code'}"

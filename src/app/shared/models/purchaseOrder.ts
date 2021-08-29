@@ -3,6 +3,7 @@ import { IProduct } from './product';
 
 export interface IPurchaseOrderDetails {
 	id: number;
+	status: number;
 	poNumber: string;
 	note: string;
 	supplierId: number;
@@ -25,6 +26,7 @@ export interface IPurchaseOrderDetailsItem {
 
 export interface IPurchaseOrder {
 	id: number;
+	status: number;
 	poNumber: string;
 	created: Date;
 	note: string;
@@ -37,5 +39,19 @@ export interface IPurchaseOrderItem {
 	id: number;
 	productId: number;
 	quantity: number;
+	receivedQuantity: number;
 	unitCost: number;
+}
+
+export interface ICalculateStorage {
+	products: ICalculateStorageProductItem[];
+}
+
+export interface ICalculateStorageProductItem {
+	productId: number;
+	quantity: number;
+}
+
+export interface ICalculateStorageResponse {
+	totalStorage: number;
 }

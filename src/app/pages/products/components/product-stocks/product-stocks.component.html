@@ -1,8 +1,7 @@
-<h4>Product Stocks</h4>
+<h4 class="sub-header">Product Stocks</h4>
 
-<dx-data-grid [columnAutoWidth]="true" [columnHidingEnabled]="true"
+<dx-data-grid id="productStocksGrid" [columnAutoWidth]="true" [columnHidingEnabled]="true"
 			  [dataSource]="productStocksDataSource"
-			  [focusedRowEnabled]="true" [focusedRowIndex]="0"
 			  [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
 			  keyExpr="id">
 	<dxo-paging [pageSize]="10"></dxo-paging>
@@ -18,7 +17,15 @@
 	</dxi-column>
 	<dxi-column [width]="200" dataField="quantity" dataType="number">
 	</dxi-column>
+	<dxi-column [width]="200" dataField="returnQuantity" dataType="number">
+	</dxi-column>
 
+	<dxi-column [width]="110" type="buttons">
+		<dxi-button visible="true" hint="Transfer Return Stock"
+					cssClass="default-button"
+					icon="icon ion-md-refresh"
+					[onClick]="transferReturnStock"></dxi-button>
+	</dxi-column>
 
 </dx-data-grid>
 

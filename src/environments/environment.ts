@@ -5,7 +5,8 @@
 export const environment = {
 	production: false,
 	apiUrl: 'https://localhost:44361/api',
-	apiDomainName: 'localhost:44361'
+	apiDomainName: 'localhost:44361',
+	reportHostUrl: 'https://localhost:44361'
 };
 
 /*

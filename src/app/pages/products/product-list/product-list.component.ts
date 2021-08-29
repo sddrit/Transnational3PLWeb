@@ -28,6 +28,8 @@ export class ProductListComponent implements OnInit {
 		private router: Router,
 		private activatedRoute: ActivatedRoute
 	) {
+		this.editProduct = this.editProduct.bind(this);
+		this.viewProduct = this.viewProduct.bind(this);
 	}
 
 
@@ -47,9 +49,12 @@ export class ProductListComponent implements OnInit {
 		this.router.navigate(['/product/' + id]);
 	}
 
-	openProductInventory(e: any, id: number) {
-		e.event.stopPropagation();
-		this.router.navigate(['/product-inventory/' + id]);
+	editProduct(e) {
+		this.router.navigate(['/product/' + e.row.data.id]);
+	}
+
+	viewProduct(e) {
+		this.router.navigate(['/product/product-details/' + e.row.data.id]);
 	}
 
 	isSupplier() {

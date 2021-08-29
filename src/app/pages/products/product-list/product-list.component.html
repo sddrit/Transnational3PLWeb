@@ -1,16 +1,16 @@
 <div class="responsive-paddings">
 
-	<h2 class="page-header"><i class="dx-icon-box"></i>
-		Products
+	<div class="page-header">
+		<h2>Products</h2>
+		<h5>List of products</h5>
 		<dx-button [visible]="!isSupplier()" (onClick)="openProduct(0)" class="btn-new-product" icon="add" text="New Product" type="normal">
 		</dx-button>
-	</h2>
+	</div>
 
-	<dx-data-grid (onRowClick)="openProduct($event.data.id)" [columnAutoWidth]="true"
+	<dx-data-grid [columnAutoWidth]="true"
 				  [columnHidingEnabled]="true"
 				  [dataSource]="productStore"
-				  [focusedRowEnabled]="true"
-				  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
+				  [showBorders]="true" class="dx-card wide-card"
 				  keyExpr="id">
 
 		<dxo-paging [pageSize]="10"></dxo-paging>
@@ -41,28 +41,15 @@
 				</div>
 			</dxo-lookup>
 		</dxi-column>
-		<dxi-column dataField="unitPrice">
+		<dxi-column [width]="110" type="buttons">
+			<dxi-button visible="true" hint="Edit Supplier"
+						cssClass="default-button"
+						icon="icon ion-md-create"
+						[onClick]="editProduct"></dxi-button>
+			<dxi-button visible="true" hint="View Supplier"
+						cssClass="info-button"
+						icon="icon ion-md-information-circle"
+						[onClick]="viewProduct"></dxi-button>
 		</dxi-column>
-		<dxi-column dataField="reorderLevel">
-		</dxi-column>
-		<dxi-column dataField="storageUnits">
-		</dxi-column>
-		<dxi-column dataField="massUnit">
-			<dxo-lookup
-				[dataSource]="metaData.massUnits"
-				displayExpr="name"
-				valueExpr="id">
-			</dxo-lookup>
-		</dxi-column>
-		<dxi-column dataField="weight">
-		</dxi-column>
-		<dxi-column>
-			<dxi-column cellTemplate="inventoryCellTemplate"></dxi-column>
-			<div *dxTemplate="let data of 'inventoryCellTemplate'">
-				<dx-button (onClick)="openProductInventory($event,data.data.id)" icon="chart">
-				</dx-button>
-			</div>
-		</dxi-column>
-
 	</dx-data-grid>
 </div>

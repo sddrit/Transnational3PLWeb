@@ -93,10 +93,12 @@ export class StockTransferEditorComponent implements OnInit {
 			this.stockTransferService.getStockTransferById(+stockTransferId).subscribe((data: IStockTransfer) => {
 				this.stockTransfer = data;
 			});
+		} else {
+			this.stockTransfer.stockTransferItems = [];
 		}
 	}
 
 	private getNewStockTransfers() {
-		return { id: 0, toWareHouseId: null, fromWareHouseId: null, reason: null, stockTransferItems: [] } as IStockTransfer;
+		return { id: 0, toWareHouseId: null, fromWareHouseId: null, reason: null, stockTransferItems: null } as IStockTransfer;
 	}
 }

@@ -46,9 +46,9 @@ import { InvoiceListComponent } from './pages/invoice/invoice-list/invoice-list.
 import { MetadataResolver } from './shared/resolvers/metadata.resolver';
 import { GrnEditorComponent } from './pages/grn/grn-editor/grn-editor.component';
 import { GrnListComponent } from './pages/grn/grn-list/grn-list.component';
-import { ProductInventoryComponent } from './pages/products/product-inventory/product-inventory.component';
-import { ProductStocksComponent } from './shared/components/product-stocks/product-stocks.component';
-import { ProductStockAdjustmentsComponent } from './shared/components/product-stock-adjustments/product-stock-adjustments.component';
+import { ProductDetailsComponent } from './pages/products/product-details/product-details.component';
+import { ProductStocksComponent } from './pages/products/components/product-stocks/product-stocks.component';
+import { ProductStockAdjustmentsComponent } from './pages/products/components/product-stock-adjustments/product-stock-adjustments.component';
 import { StockTransferListComponent } from './pages/stock-transfer/stock-transfer-list/stock-transfer-list.component';
 import { StockTransferEditorComponent } from './pages/stock-transfer/stock-transfer-editor/stock-transfer-editor.component';
 import { DeliveryListComponent } from './pages/delivery/delivery-list/delivery-list.component';
@@ -59,6 +59,7 @@ import { UserListComponent } from './pages/user/user-list/user-list.component';
 import { UserUpdateComponent } from './pages/user/user-update/user-update.component';
 import { WaybillComponent } from './pages/delivery/waybill/waybill.component';
 import { GrnViewComponent } from './pages/grn/grn-view/grn-view.component';
+import { TransferReturnStockPopupComponent } from './pages/products/components/transfer-return-stock-popup/transfer-return-stock-popup.component';
 
 
 const routes: Routes = [
@@ -138,8 +139,8 @@ const routes: Routes = [
 		}
 	},
 	{
-		path: 'product-inventory/:id',
-		component: ProductInventoryComponent,
+		path: 'product/product-details/:id',
+		component: ProductDetailsComponent,
 		canActivate: [AuthGuardService],
 		resolve: {
 			metadata: MetadataResolver
@@ -148,12 +149,18 @@ const routes: Routes = [
 	{
 		path: 'purchase-orders',
 		component: PurchaseOrderListComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
 	},
 	{
 		path: 'purchase-order/:id',
 		component: PurchaseOrderUpdateComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
 	},
 	{
 		path: 'grn/:id',
@@ -281,7 +288,7 @@ const routes: Routes = [
 		SupplierPickupAddressModalComponent,
 		ProductListComponent,
 		ProductUpdateComponent,
-		ProductInventoryComponent,
+		ProductDetailsComponent,
 		PurchaseOrderListComponent,
 		PurchaseOrderUpdateComponent,
 		GrnEditorComponent,
@@ -300,7 +307,8 @@ const routes: Routes = [
 		WaybillComponent,
 		GrnViewComponent,
 		CreateAccountPopupComponent,
-		SupplierDetailsComponent
+		SupplierDetailsComponent,
+		TransferReturnStockPopupComponent
 	]
 })
 export class AppRoutingModule {

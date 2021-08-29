@@ -1,10 +1,11 @@
 <div class="responsive-paddings">
 
-	<h2 class="page-header"><i class="dx-icon-box"></i>
-		{{product.id == 0 ? 'Add' : 'Update' }} Product
+	<div class="page-header">
+		<h2>{{product.id == 0 ? 'Add' : 'Update' }} Product</h2>
+		<h5>Product details</h5>
 		<dx-button (onClick)="backToList()" class="btn-back" type="back">
 		</dx-button>
-	</h2>
+	</div>
 
 	<div>
 		<form (submit)="handleSubmit($event)">
@@ -20,7 +21,7 @@
 						  [label]="{ text: 'Storing Type' }" dataField="storingType" editorType="dxSelectBox">
 				</dxi-item>
 				<dxi-item [colSpan]="2" [isRequired]="true" dataField="name"></dxi-item>
-				<dxi-item [colSpan]="2" [editorOptions]="{ height: 120 }" dataField="description"
+				<dxi-item [colSpan]="4" [editorOptions]="{ height: 120 }" dataField="description"
 						  itemType="dxTextArea"></dxi-item>
 				<dxi-item [colSpan]="4" dataField="active" editorType="dxCheckBox"></dxi-item>
 
@@ -29,12 +30,16 @@
 
 				<dxi-item [colSpan]="2" caption="Inventory" itemType="group">
 					<dxi-item [isRequired]="true" dataField="sku"></dxi-item>
-					<dxi-item dataField="unitPrice"></dxi-item>
-					<dxi-item [isRequired]="true" dataField="reorderLevel"></dxi-item>
+					<dxi-item [editorOptions]="{ dataSource: metadata.unitOfMeasures, displayExpr: 'code', valueExpr: 'id' }"
+							  [isRequired]="true"
+							  [label]="{ text: 'Unit of Measure' }" dataField="unitOfMeasureId" editorType="dxSelectBox">
+					</dxi-item>
+					<dxi-item dataField="unitPrice" [isRequired]="true" dataType="number"></dxi-item>
+					<dxi-item dataField="reorderLevel" [isRequired]="true" dataType="number"></dxi-item>
 				</dxi-item>
 
 				<dxi-item [colSpan]="2" caption="Storage" itemType="group">
-					<dxi-item [isRequired]="true" dataField="storageUnits"></dxi-item>
+					<dxi-item [isRequired]="true" dataField="storageUnits" helpText="Number of cubic meter storage required"></dxi-item>
 					<dxi-item [editorOptions]="{ items: metadata.massUnits, displayExpr: 'name', valueExpr: 'id' }" dataField="massUnit"
 							  editorType="dxSelectBox"></dxi-item>
 					<dxi-item dataField="weight"></dxi-item>

@@ -13,7 +13,7 @@ export class GrnViewComponent implements OnInit {
 
 	title = 'WayBill';
 	reportUrl = '';
-	hostUrl = `http://${environment.apiDomainName}/`;
+	hostUrl = `${environment.reportHostUrl}/`;
 	invokeAction = 'DXXRDV';
 
 	constructor(private route: ActivatedRoute,
@@ -23,6 +23,10 @@ export class GrnViewComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+	}
+
+	beforeRender(e: any) {
+		e.args.reportPreview.zoom(1);
 	}
 
 	backToGrn() {

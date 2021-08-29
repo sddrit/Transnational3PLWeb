@@ -13,7 +13,7 @@ export class WaybillComponent implements OnInit {
 
 	title = 'WayBill';
 	reportUrl = '';
-	hostUrl = `http://${environment.apiDomainName}/`;
+	hostUrl = `${environment.reportHostUrl}/`;
 	invokeAction = 'DXXRDV';
 
 	constructor(private route: ActivatedRoute,

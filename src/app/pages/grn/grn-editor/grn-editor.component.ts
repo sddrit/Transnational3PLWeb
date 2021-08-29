@@ -11,6 +11,8 @@ import DevExpress from 'devextreme';
 import { GrnService } from '../../../shared/services/grn.service';
 import CustomStore = DevExpress.data.CustomStore;
 import { IMetaData } from '../../../shared/models/metadata';
+import DataSource from 'devextreme/data/data_source';
+import { confirm } from 'devextreme/ui/dialog';
 
 @Component({
 	selector: 'app-grn-editor',
@@ -25,9 +27,11 @@ export class GrnEditorComponent implements OnInit {
 	supplierStore: CustomStore;
 	warehouseStore: CustomStore;
 	productStore: CustomStore;
-	purchaseOrderStore: CustomStore;
+	purchaseOrderStore: DataSource;
+	grnStore: DataSource;
 
 	grnGridItemValid = true;
+	grnTypeSuspendValueChagned = false;
 
 	constructor(
 		private supplierService: SupplierService,
@@ -42,6 +46,8 @@ export class GrnEditorComponent implements OnInit {
 		private cdr: ChangeDetectorRef
 	) {
 		this.onPurchaseOrderChange = this.onPurchaseOrderChange.bind(this);
+		this.onGrnChange = this.onGrnChange.bind(this);
+		this.onGrnTypeChange = this.onGrnTypeChange.bind(this);
 	}
 
 	ngOnInit(): void {
@@ -51,7 +57,14 @@ export class GrnEditorComponent implements OnInit {
 		this.productStore = this.productService.getProducts();
 		this.supplierStore = this.supplierService.getSuppliers();
 		this.warehouseStore = this.warehouseService.getWarehouses();
-		this.purchaseOrderStore = this.purchaseOrderService.getPurchaseOrders();
+		this.purchaseOrderStore = new DataSource({
+			store: this.purchaseOrderService.getPurchaseOrders(),
+			filter: ['status', '<>', 2]
+		});
+		this.grnStore = new DataSource({
+			store: this.grnServie.getGrns(),
+			filter: ['type', '<>', 1]
+		});
 		this.setGrn();
 	}
 
@@ -88,24 +101,101 @@ export class GrnEditorComponent implements OnInit {
 	}
 
 	onPurchaseOrderChange(e) {
-		this.loader.show(true);
 		const purchaseOrderId = e.value;
+		if (this.grn.id !== 0 || purchaseOrderId == null) {
+			return;
+		}
+		this.loader.show(true);
 		this.purchaseOrderService.getPurchaseOrderById(purchaseOrderId).subscribe(po => {
 			if ( po.wareHouseId != null ) {
 				this.grn.wareHouseId = po.wareHouseId;
 			}
 			this.grn.supplierId = po.supplierId;
-			this.grn.goodReceivedNoteItems = po.purchaseOrderItems.map(item => {
+			const receivedNoteItems = po.purchaseOrderItems.map(item => {
+				return {
+					id: 0,
+					productId: item.productId,
+					quantity: item.quantity - item.receivedQuantity,
+					unitCost: item.unitCost,
+					expiredDate: null
+				};
+			});
+			this.grn.goodReceivedNoteItems = receivedNoteItems.filter(item => item.quantity > 0);
+			this.loader.show(false);
+		});
+	}
+
+	onGrnChange(e) {
+		const grnId = e.value;
+		if (this.grn.id !== 0 || grnId == null) {
+			return;
+		}
+		this.loader.show(true);
+		this.grnServie.getById(grnId).subscribe(grn => {
+			if ( grn.wareHouseId != null ) {
+				this.grn.wareHouseId = grn.wareHouseId;
+			}
+			this.grn.supplierId = grn.supplierId;
+			this.grn.returnGoodReceivedNoteId = grn.id;
+			const receivedNoteItems = grn.goodReceivedNoteItems.map(item => {
 				return {
 					id: 0,
 					productId: item.productId,
 					quantity: item.quantity,
-					unitCost: item.quantity,
-					expiredDate: null
+					unitCost: item.unitCost,
+					expiredDate: item.expiredDate
 				};
 			});
+			this.grn.goodReceivedNoteItems = receivedNoteItems;
 			this.loader.show(false);
 		});
+	}
+
+	onGrnTypeChange(e) {
+		if (this.grnTypeSuspendValueChagned) {
+			this.grnTypeSuspendValueChagned = false;
+			return;
+		}
+		if (this.grn.id !== 0) {
+			return;
+		}
+		const value = e.value;
+		const previousValue = e.previousValue;
+		if (this.grn.purchaseOrderId != null || this.grn.goodReceivedNoteItems.length !== 0) {
+			const result = confirm('<i>The current changes will be lost. Do you want to continue it?</i>',
+				'');
+			result.then((dialogResult) => {
+				if (dialogResult) {
+					this.grn.purchaseOrderId = null;
+					this.grn.returnGoodReceivedNoteId = null;
+					this.grn.goodReceivedNoteItems = [];
+				}else {
+					this.grnTypeSuspendValueChagned = true;
+					e.component.option('value', previousValue);
+				}
+			});
+		} else {
+			this.grn.purchaseOrderId = null;
+			this.grn.returnGoodReceivedNoteId = null;
+			this.grn.goodReceivedNoteItems = [];
+		}
+	}
+
+	onEditorPreparing(e) {
+		if (e.dataField === 'productId') {
+			const standardHandler = e.editorOptions.onValueChanged;
+			e.editorOptions.onValueChanged = (editorEvent) => {
+				standardHandler(editorEvent);
+				this.productService.getProductById(editorEvent.value).subscribe(product => {
+					e.component.cellValue(e.row.rowIndex, 'unitCost', product.unitPrice);
+					e.component.editCell(e.row.rowIndex, 1);
+				});
+			};
+		}
+	}
+
+	keyUp(e) {
+		console.log(e);
 	}
 
 	public backToGrnList() {
@@ -124,10 +214,12 @@ export class GrnEditorComponent implements OnInit {
 			this.grnServie.getById(+grnId).subscribe((data: IGrn) => {
 				this.grn = data;
 			});
+		} else {
+			this.grn.goodReceivedNoteItems = [];
 		}
 	}
 
 	private getNewGrn() {
-		return { id: 0, supplierId: null, goodReceivedNoteItems: [], wareHouseId: null, purchaseOrderId: null } as IGrn;
+		return { id: 0, supplierId: null, goodReceivedNoteItems: null, wareHouseId: null, purchaseOrderId: null } as IGrn;
 	}
 }

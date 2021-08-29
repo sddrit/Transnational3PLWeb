@@ -1,3 +1,4 @@
+import * as moment from 'moment';
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import DevExpress from 'devextreme';
 import { SupplierService } from '../../../shared/services/supplier.service';
@@ -7,12 +8,13 @@ import { NotifyHandler } from '../../../shared/utilities/notify.handler';
 import { WarehouseService } from '../../../shared/services/warehouse.service';
 import { ProductService } from '../../../shared/services/product.service';
 import CustomStore = DevExpress.data.CustomStore;
-import { IDelivery } from '../../../shared/models/delivery';
+import { IDelivery, IDeliveryTracking } from '../../../shared/models/delivery';
 import { DeliveryService } from '../../../shared/services/delivery.service';
 import { CityService } from '../../../shared/services/city.service';
 import { IMetaData } from '../../../shared/models/metadata';
 import { confirm } from 'devextreme/ui/dialog';
 import { AuthService } from '../../../shared/services';
+import { DxDataGridComponent } from 'devextreme-angular';
 
 @Component({
 	selector: 'app-delivery-transfer-editor',
@@ -20,6 +22,8 @@ import { AuthService } from '../../../shared/services';
 	styleUrls: ['./delivery-editor.component.scss']
 })
 export class DeliveryEditorComponent implements OnInit {
+
+	@ViewChild('dxDataGridDeliveryItems') dataGrid: DxDataGridComponent;
 
 	delivery: IDelivery;
 	supplierStore: CustomStore;
@@ -30,10 +34,18 @@ export class DeliveryEditorComponent implements OnInit {
 	deliveryItemGridValid = true;
 	metaData: IMetaData;
 
+	currentTracking: IDeliveryTracking = {
+		id: 0,
+		status: 0,
+		trackingNumber: null,
+		deliveryTrackingItems: []
+	};
+
 	processingPopupVisible = false;
 	dispatchPopupVisible = false;
 	returnPopupVisible = false;
 	customerReturnPopupVisible = false;
+	productMappingPopupVisible = false;
 
 	processingFormData = {
 		requiredNumberOfTrackingNumber: 0
@@ -64,9 +76,15 @@ export class DeliveryEditorComponent implements OnInit {
 		private notify: NotifyHandler,
 		private cdr: ChangeDetectorRef
 	) {
+		this.onGridKeyUp = this.onGridKeyUp.bind(this);
+		this.onEditorPreparing = this.onEditorPreparing.bind(this);
+		this.mapProductToTracking = this.mapProductToTracking.bind(this);
 	}
 
 	ngOnInit(): void {
+		document.addEventListener('keydown', (event) => {
+			this.onGridKeyUp(event);
+		});
 		this.productStore = this.productService.getProducts();
 		this.supplierStore = this.supplierService.getSuppliers();
 		this.warehouseStore = this.warehouseService.getWarehouses();
@@ -197,13 +215,24 @@ export class DeliveryEditorComponent implements OnInit {
 		});
 	}
 
+	mapProduct(e) {
+		this.currentTracking = e.row.data;
+		this.productMappingPopupVisible = true;
+		e.event.preventDefault();
+	}
+
+	handleMapProduct(e) {
+		e.preventDefault();
+		this.productMappingPopupVisible = false;
+	}
+
 	wayBill(e) {
 		e.event.preventDefault();
 		this.router.navigate([`/waybill/${this.delivery.id}`]);
 	}
 
 	canMarkAsProcessing () {
-		return this.delivery.deliveryStatus === 0;
+		return this.delivery.deliveryStatus === 0 && this.delivery.id !== 0;
 	}
 
 	canMarkAsDispatch() {
@@ -222,8 +251,43 @@ export class DeliveryEditorComponent implements OnInit {
 		return this.delivery.deliveryStatus === 3;
 	}
 
+	canShowMapProductToTracking(e) {
+		return e.row.data.status === 0;
+		//this.router.navigate(['/purchase-order/' + e.row.data.id]);
+	}
+
+	mapProductToTracking(e) {
+		this.mapProduct(e);
+	}
+
 	isSupplier() {
 		return this.authService.isSupplier;
+	}
+
+	disabledDates(args) {
+		const date = args.date;
+		return moment().add(-1, 'day') > date;
+	}
+
+	onEditorPreparing(e) {
+		if (e.dataField === 'productId') {
+			const standardHandler = e.editorOptions.onValueChanged;
+			e.editorOptions.onValueChanged = (editorEvent) => {
+				standardHandler(editorEvent);
+				this.productService.getProductById(editorEvent.value).subscribe(product => {
+					e.component.cellValue(e.row.rowIndex, 'unitCost', product.unitPrice);
+					e.component.editCell(e.row.rowIndex, 1);
+				});
+			};
+		}
+	}
+
+	onGridKeyUp(e) {
+		if (e.altKey && e.key === 'a') {
+			this.dataGrid.instance.addRow().then(() => {
+				this.dataGrid.instance.editCell(0, 0);
+			});
+		}
 	}
 
 	private setDelivery() {

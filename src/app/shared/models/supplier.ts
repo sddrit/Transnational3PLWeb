@@ -43,3 +43,17 @@ export interface ICreateAccount {
 	password: string;
 	confirmPassword: string;
 }
+
+export interface ITotalStorageByWareHouse {
+	wareHouseId: number;
+	wareHouseName: string;
+	wareHouseCode: string;
+	totalStorage: number;
+}
+
+export interface ISupplierStorage {
+	allocatedStorage: number;
+	totalStorage: number;
+	totalStorageByWareHouses: ITotalStorageByWareHouse[];
+}
+

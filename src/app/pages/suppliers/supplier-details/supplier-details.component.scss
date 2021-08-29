@@ -1,5 +1,31 @@
-.supplier-details {
-	h4{
+.dx-field-item-help-text {
+	font-style: normal !important;
+	font-weight: 400 !important;
+	font-size: 12px !important;
+	color: #9c9c9c !important;
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+.space-pie-chart-section {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.pie-chart {
+	width: 100%;
+	display: block;
+	.total-used-title {
+		text-align: center;
+		font-weight: 200;
+		font-size: 28px;
+		margin-top: 50px;
+		margin-bottom: 10px;
+	}
+	.total-used-pecentage-val {
+		text-align: center;
 		font-weight: 400;
+		font-size: 48px;
+		margin-top: 10px;
 	}
 }
