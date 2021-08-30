@@ -6,6 +6,7 @@
 		<dx-button [visible]="!isSupplier()" (click)="openDelivery(0)" icon="add" text="New Delivery"
 				   type="normal">
 		</dx-button>
+		<dx-button class="upload-complete-sheet-btn" type="normal" (click)="uploadCompleteSheet()" text="Upload Complete Sheet" icon="rowfield"></dx-button>
 	</div>
 
 	<dx-data-grid (onRowClick)="openDelivery($event.data.id)"
@@ -51,4 +52,57 @@
 		</dxi-column>
 	</dx-data-grid>
 </div>
+
+<dx-popup
+	[width]="500"
+	[height]="'auto'"
+	[showTitle]="true"
+	title="Upload Complete Delivery Sheet"
+	[dragEnabled]="false"
+	[closeOnOutsideClick]="false"
+	[showCloseButton]="true"
+	[(visible)]="showUploadCompleteSheetPopup">
+	<div *dxTemplate="let data of 'content'">
+		<dx-file-uploader
+			#fileUploader
+			[uploadUrl]="deliveryCompleteProcessUploadUrl"
+			(onBeforeSend)="onBeforeSend($event)"
+			(onUploaded)="onUploaded($event)"
+			(onUploadStarted)="onUploadStarted($event)"
+			[multiple]="false"
+			accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+			selectButtonText="Upload Excel File"
+			name="file"
+			uploadMode="instantly"
+		></dx-file-uploader>
+	</div>
+</dx-popup>
+
+<dx-popup
+	[width]="900"
+	[height]="'auto'"
+	[showTitle]="true"
+	title="Upload Complete Delivery Sheet Result"
+	[dragEnabled]="false"
+	[closeOnOutsideClick]="false"
+	[showCloseButton]="true"
+	[(visible)]="showUploadCompleteSheetResultPopup">
+	<div *dxTemplate="let data of 'content'">
+		<dx-data-grid
+					  [columnAutoWidth]="true"
+					  [columnHidingEnabled]="true"
+					  [rowAlternationEnabled]="true"
+					  [dataSource]="uploadCompleteSheetResultDataSource"
+					  [showBorders]="true">
+			<dxo-export [enabled]="true"></dxo-export>
+			<dxo-paging [pageSize]="10"></dxo-paging>
+			<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
+			<dxo-filter-row [visible]="true"></dxo-filter-row>
+			<dxi-column caption="Tracking Number" dataField="trackingNumber" width="100"></dxi-column>
+			<dxi-column trueText="Success" falseText="Error" caption="Result" dataField="success" width="100"></dxi-column>
+			<dxi-column caption="Message" dataField="message"></dxi-column>
+		</dx-data-grid>
+	</div>
+</dx-popup>
+
 

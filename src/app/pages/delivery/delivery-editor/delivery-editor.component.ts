@@ -14,7 +14,7 @@ import { CityService } from '../../../shared/services/city.service';
 import { IMetaData } from '../../../shared/models/metadata';
 import { confirm } from 'devextreme/ui/dialog';
 import { AuthService } from '../../../shared/services';
-import { DxDataGridComponent } from 'devextreme-angular';
+import { DxDataGridComponent, DxFormComponent } from 'devextreme-angular';
 
 @Component({
 	selector: 'app-delivery-transfer-editor',
@@ -24,6 +24,8 @@ import { DxDataGridComponent } from 'devextreme-angular';
 export class DeliveryEditorComponent implements OnInit {
 
 	@ViewChild('dxDataGridDeliveryItems') dataGrid: DxDataGridComponent;
+	@ViewChild('completeForm') completeForm: DxFormComponent;
+	@ViewChild('customerReturnForm') customerReturnForm: DxFormComponent;
 
 	delivery: IDelivery;
 	supplierStore: CustomStore;
@@ -183,31 +185,60 @@ export class DeliveryEditorComponent implements OnInit {
 	}
 
 	customerReturn(e) {
-		this.customerReturnPopupVisible = true;
 		e.event.preventDefault();
+		this.customerReturnPopupVisible = true;
+		if (this.customerReturnForm != null) {
+			this.customerReturnForm.instance.resetValues();
+		}
 	}
 
 	handleCustomerReturnForm(e) {
 		e.preventDefault();
+		const data = this.customerReturnForm.instance.option('formData');
+		const trackingNumbers = Object.getOwnPropertyNames(data);
+		const selectedTrackingNumbers = trackingNumbers.filter(trackingNumber => {
+			return trackingNumber.toLocaleLowerCase() !== 'note' && data[trackingNumber];
+		});
 		this.customerReturnPopupVisible = false;
+		if (selectedTrackingNumbers.length === 0) {
+			this.notify.warning('No any tracking number select for mark as customer return');
+			return;
+		}
 		this.loader.show(true);
-		this.deliveryService.markAsCustomerReturn(this.delivery.id,
-			this.customerReturnFormData.note).subscribe(() => {
+		this.deliveryService.markAsCustomerReturn(this.delivery.id, selectedTrackingNumbers, data.note)
+			.subscribe(() => {
 			this.notify.success('Successfully marked as customer return');
-			this.loader.show(false);
 			this.setDelivery();
+			this.loader.show(false);
 		});
 	}
 
 	markAsComplete(e) {
-		this.completePopupVisible = true;
 		e.event.preventDefault();
+		this.completePopupVisible = true;
+		if (this.completeForm != null) {
+			this.completeForm.instance.resetValues();
+		}
 	}
 
 	handleComplete(e) {
 		e.preventDefault();
-		console.log(e);
+		const data = this.completeForm.instance.option('formData');
+		const trackingNumbers = Object.getOwnPropertyNames(data);
+		const selectedTrackingNumbers = trackingNumbers.filter(trackingNumber => {
+			return data[trackingNumber];
+		});
 		this.completePopupVisible = false;
+		if (selectedTrackingNumbers.length === 0) {
+			this.notify.warning('No any tracking number select for complete this delivery');
+			return;
+		}
+		this.loader.show(true);
+		this.deliveryService.markAsComplete(this.delivery.id, selectedTrackingNumbers).subscribe(() => {
+			this.notify.success('Successfully marked as completed');
+			this.setDelivery();
+			this.loader.show(false);
+		});
 	}
 
 	wayBill(e) {
@@ -215,7 +246,7 @@ export class DeliveryEditorComponent implements OnInit {
 		this.router.navigate([`/waybill/${this.delivery.id}`]);
 	}
 
-	canMarkAsProcessing () {
+	canMarkAsProcessing() {
 		return this.delivery.deliveryStatus === 0 && this.delivery.id !== 0;
 	}
 
@@ -224,15 +255,15 @@ export class DeliveryEditorComponent implements OnInit {
 	}
 
 	canMarkAsComplete() {
-		return this.delivery.deliveryStatus === 2;
+		return this.delivery.deliveryStatus === 2 || this.delivery.deliveryStatus === 3;
 	}
 
 	canMarkAsReturn() {
-		return this.delivery.deliveryStatus === 3;
+		return this.delivery.deliveryStatus === 4;
 	}
 
 	canMarkAsCustomerReturn() {
-		return this.delivery.deliveryStatus === 3;
+		return this.delivery.deliveryStatus === 4 || this.delivery.deliveryStatus === 6;
 	}
 
 	isSupplier() {
@@ -271,6 +302,20 @@ export class DeliveryEditorComponent implements OnInit {
 			this.delivery = delivery;
 			this.loader.show(false);
 		});
+	}
+
+	getDispatchedTrackings() {
+		if (this.delivery == null || this.delivery.deliveryTrackings == null) {
+			return [];
+		}
+		return this.delivery.deliveryTrackings.filter(item => item.status === 1);
+	}
+
+	getCompletedOrDispatchedTrackings() {
+		if (this.delivery == null || this.delivery.deliveryTrackings == null) {
+			return [];
+		}
+		return this.delivery.deliveryTrackings.filter(item => item.status === 1 || item.status === 2);
 	}
 
 	private setDelivery() {

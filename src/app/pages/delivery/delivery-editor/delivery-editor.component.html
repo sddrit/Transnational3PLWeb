@@ -80,7 +80,12 @@
 					<dxi-item [colSpan]="2" dataField="created" editorType="dxDateBox"
 							  [editorOptions]="{ dataType:'date', format: 'shortDateShortTime' }"
 							  [visible]="delivery.id !=0"></dxi-item>
-
+					<dxi-item [colSpan]="2" dataField="deliveryStatus"
+							  [visible]="delivery.id !=0"
+							  [editorOptions]="{ dataSource: metaData.deliveryStatus, displayExpr: 'name', valueExpr: 'id' }"
+							  [isRequired]="true"
+							  [label]="{ text: 'Delivery Status' }" editorType="dxSelectBox">
+					</dxi-item>
 					<dxi-item [colSpan]="2"
 							  [editorOptions]="{ dataSource: supplierStore, displayExpr: 'supplierName', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'supplierName'],
 				  fieldTemplate: 'supplierField', itemTemplate: 'supplierField'  }"
@@ -206,7 +211,7 @@
 							  class="wide-card">
 					<dxi-column [allowSorting]="false"  dataField="trackingNumber">
 					</dxi-column>
-					<dxi-column dataField="status" [width]="100">
+					<dxi-column dataField="status" [width]="200">
 						<dxo-lookup
 							[dataSource]="metaData.trackingStatus"
 							displayExpr="name"
@@ -332,21 +337,22 @@
 		[width]="500"
 		[height]="'auto'"
 		[showTitle]="true"
-		title="Complete"
+		title="Complete Delivery"
 		[dragEnabled]="false"
 		[closeOnOutsideClick]="false"
 		[showCloseButton]="true"
 		[(visible)]="completePopupVisible">
 		<div *dxTemplate="let data of 'content'">
-			<p>
-				<b>Delivery Number : </b>
-				<span> {{delivery.deliveryNo}}</span>
-			</p>
+			<p class="popup-message">Select the completed tracking numbers</p>
+			<br/>
 			<form (submit)="handleComplete($event)">
-				<dx-form [formData]="dispatchFormData" labelLocation="top">
-					<dxi-item [dataField]="tracking.trackingNumber" editorType="dxCheckBox"
-							  *ngFor="let tracking of delivery.deliveryTrackings">
+				<dx-form #completeForm labelLocation="left">
+
+					<dxi-item
+						*ngFor="let tracking of getDispatchedTrackings()" [dataField]="tracking.trackingNumber"
+						editorType="dxCheckBox">
 					</dxi-item>
+
 					<dxi-item
 						itemType="empty"
 						[colSpan]="2">
@@ -364,19 +370,17 @@
 		[width]="500"
 		[height]="'auto'"
 		[showTitle]="true"
-		title="Return"
+		title="Return Delivery"
 		[dragEnabled]="false"
 		[closeOnOutsideClick]="false"
 		[showCloseButton]="true"
 		[(visible)]="returnPopupVisible">
 		<div *dxTemplate="let data of 'content'">
-			<p>
-				<b>Delivery Number : </b>
-				<span> {{delivery.deliveryNo}}</span>
-			</p>
 			<form (submit)="handleReturnForm($event)">
+				<p class="popup-message">Enter your note for return the delivery</p>
+				<br/>
 				<dx-form [showColonAfterLabel]="true" [formData]="returnFormData" labelLocation="top">
-					<dxi-item dataField="note">
+					<dxi-item dataField="note" editorType="dxTextArea">
 						<dxi-validation-rule type="required"
 											 message="Note is required">
 						</dxi-validation-rule>
@@ -404,21 +408,32 @@
 		[showCloseButton]="true"
 		[(visible)]="customerReturnPopupVisible">
 		<div *dxTemplate="let data of 'content'">
-			<p>
-				<b>Delivery Number : </b>
-				<span> {{delivery.deliveryNo}}</span>
-			</p>
+			<p class="popup-message">Enter your note and select the tracking numbers for customer return</p>
+			<br/>
 			<form (submit)="handleCustomerReturnForm($event)">
-				<dx-form [showColonAfterLabel]="true" [formData]="customerReturnFormData" labelLocation="top">
-					<dxi-item dataField="note">
-						<dxi-validation-rule type="required"
-											 message="Note is required">
-						</dxi-validation-rule>
+				<dx-form #customerReturnForm [showColonAfterLabel]="true" [formData]="customerReturnFormData" labelLocation="left">
+
+					<dxi-item
+						*ngFor="let tracking of getCompletedOrDispatchedTrackings()" [dataField]="tracking.trackingNumber"
+						editorType="dxCheckBox">
 					</dxi-item>
+
 					<dxi-item
 						itemType="empty"
 						[colSpan]="2">
 					</dxi-item>
+
+					<dxi-item dataField="note" editorType="dxTextArea">
+						<dxi-validation-rule type="required"
+											 message="Note is required">
+						</dxi-validation-rule>
+					</dxi-item>
+
+					<dxi-item
+						itemType="empty"
+						[colSpan]="2">
+					</dxi-item>
+
 					<dxi-item
 						itemType="button"
 						[buttonOptions]="{ text: 'Customer Return', useSubmitBehavior: true }">

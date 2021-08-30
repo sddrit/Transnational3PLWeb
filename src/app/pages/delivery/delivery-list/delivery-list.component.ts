@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import DevExpress from 'devextreme';
 import { confirm } from 'devextreme/ui/dialog';
 import { SupplierService } from '../../../shared/services/supplier.service';
@@ -7,10 +7,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DeliveryService } from '../../../shared/services/delivery.service';
 import { IMetaData } from '../../../shared/models/metadata';
 import CustomStore = DevExpress.data.CustomStore;
-import { IDelivery } from '../../../shared/models/delivery';
 import { LoaderHandler } from '../../../shared/utilities/loader.handler';
 import { NotifyHandler } from '../../../shared/utilities/notify.handler';
 import { AuthService } from '../../../shared/services';
+import { ACCESS_TOKEN_KEY } from '../../../shared/constants/common';
+import { DxFileUploaderComponent } from 'devextreme-angular';
+import DataSource from 'devextreme/data/data_source';
+import ArrayStore from 'devextreme/data/array_store';
 
 @Component({
 	selector: 'app-delivery-list',
@@ -19,10 +22,19 @@ import { AuthService } from '../../../shared/services';
 })
 export class DeliveryListComponent implements OnInit {
 
+	@ViewChild('fileUploader') fileUploader: DxFileUploaderComponent;
+
+	deliveryCompleteProcessUploadUrl = null;
+
 	metaData: IMetaData;
 	deliveryDataSource: CustomStore;
 	supplierDataSource: CustomStore;
 	warehouseDataSource: CustomStore;
+
+	showUploadCompleteSheetPopup = false;
+	showUploadCompleteSheetResultPopup = false;
+
+	uploadCompleteSheetResultDataSource: DataSource;
 
 	constructor(private deliveryService: DeliveryService,
 				private authService: AuthService,
@@ -45,6 +57,7 @@ export class DeliveryListComponent implements OnInit {
 		}
 
 		this.deliveryDataSource = this.deliveryService.getDeliveries();
+		this.deliveryCompleteProcessUploadUrl = this.deliveryService.getDeliveryCompleteUploadUrl();
 	}
 
 	openDelivery(id: number) {
@@ -53,5 +66,32 @@ export class DeliveryListComponent implements OnInit {
 
 	isSupplier() {
 		return this.authService.isSupplier;
+	}
+
+	uploadCompleteSheet() {
+		this.showUploadCompleteSheetPopup = true;
+		if (this.fileUploader) {
+			this.fileUploader.instance.reset();
+		}
+	}
+
+	onBeforeSend(e){
+		const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+		e.request.setRequestHeader('Authorization', 'Bearer ' + token);
+	}
+
+	onUploaded(e) {
+		this.loader.show(false);
+		this.showUploadCompleteSheetPopup = false;
+		this.uploadCompleteSheetResultDataSource = new DataSource({
+			store: new ArrayStore({
+				data: JSON.parse(e.request.response)
+			})
+		});
+		this.showUploadCompleteSheetResultPopup = true;
+	}
+
+	onUploadStarted(e) {
+		this.loader.show(true);
 	}
 }

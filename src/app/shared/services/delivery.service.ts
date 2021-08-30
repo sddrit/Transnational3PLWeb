@@ -61,9 +61,9 @@ export class DeliveryService extends BaseService {
 			.pipe(catchError(e => this.handleError(e, 'Mark as dispatch')));
 	}
 
-	public markAsComplete(deliveryId: number) {
+	public markAsComplete(deliveryId: number, trackingNumbers: string[]) {
 		return this.http.post(this.apiUrl + '/Delivery/mark-as-complete',
-			{ deliveryId })
+			{ deliveryId, trackingNumbers })
 			.pipe(catchError(e => this.handleError(e, 'Mark as complete')));
 	}
 
@@ -73,10 +73,14 @@ export class DeliveryService extends BaseService {
 			.pipe(catchError(e => this.handleError(e, 'Mark as return')));
 	}
 
-	public markAsCustomerReturn(deliveryId: number, note: string) {
+	public markAsCustomerReturn(deliveryId: number, trackingNumbers: string[], note: string) {
 		return this.http.post(this.apiUrl + '/Delivery/mark-as-customer-return',
-			{ deliveryId, note })
+			{ deliveryId, note, trackingNumbers })
 			.pipe(catchError(e => this.handleError(e, 'Mark as customer return')));
+	}
+
+	public getDeliveryCompleteUploadUrl() {
+		return this.apiUrl + '/Delivery/process-delivery-complete';
 	}
 }
 
