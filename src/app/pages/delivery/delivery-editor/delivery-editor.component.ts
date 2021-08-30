@@ -45,7 +45,7 @@ export class DeliveryEditorComponent implements OnInit {
 	dispatchPopupVisible = false;
 	returnPopupVisible = false;
 	customerReturnPopupVisible = false;
-	productMappingPopupVisible = false;
+	completePopupVisible = false;
 
 	processingFormData = {
 		requiredNumberOfTrackingNumber: 0
@@ -78,7 +78,6 @@ export class DeliveryEditorComponent implements OnInit {
 	) {
 		this.onGridKeyUp = this.onGridKeyUp.bind(this);
 		this.onEditorPreparing = this.onEditorPreparing.bind(this);
-		this.mapProductToTracking = this.mapProductToTracking.bind(this);
 	}
 
 	ngOnInit(): void {
@@ -166,21 +165,6 @@ export class DeliveryEditorComponent implements OnInit {
 		});
 	}
 
-	markAsComplete(e) {
-		e.event.preventDefault();
-		const result = confirm("<i>Are you sure you want to complete this delivery?</i>", "Complete Delivery");
-		result.then((dialogResult) => {
-			if (dialogResult) {
-				this.loader.show(true);
-				this.deliveryService.markAsComplete(this.delivery.id).subscribe(() => {
-					this.notify.success('Successfully marked as complete');
-					this.loader.show(false);
-					this.setDelivery();
-				});
-			}
-		});
-	}
-
 	return(e) {
 		this.returnPopupVisible = true;
 		e.event.preventDefault();
@@ -215,15 +199,15 @@ export class DeliveryEditorComponent implements OnInit {
 		});
 	}
 
-	mapProduct(e) {
-		this.currentTracking = e.row.data;
-		this.productMappingPopupVisible = true;
+	markAsComplete(e) {
+		this.completePopupVisible = true;
 		e.event.preventDefault();
 	}
 
-	handleMapProduct(e) {
+	handleComplete(e) {
 		e.preventDefault();
-		this.productMappingPopupVisible = false;
+		console.log(e);
+		this.completePopupVisible = false;
 	}
 
 	wayBill(e) {
@@ -249,15 +233,6 @@ export class DeliveryEditorComponent implements OnInit {
 
 	canMarkAsCustomerReturn() {
 		return this.delivery.deliveryStatus === 3;
-	}
-
-	canShowMapProductToTracking(e) {
-		return e.row.data.status === 0;
-		//this.router.navigate(['/purchase-order/' + e.row.data.id]);
-	}
-
-	mapProductToTracking(e) {
-		this.mapProduct(e);
 	}
 
 	isSupplier() {
@@ -288,6 +263,14 @@ export class DeliveryEditorComponent implements OnInit {
 				this.dataGrid.instance.editCell(0, 0);
 			});
 		}
+	}
+
+	onTrackingSaveChanges(e) {
+		this.loader.show(true);
+		this.deliveryService.mapDeliveryProduct(this.delivery).subscribe(delivery => {
+			this.delivery = delivery;
+			this.loader.show(false);
+		});
 	}
 
 	private setDelivery() {

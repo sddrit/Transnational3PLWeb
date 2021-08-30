@@ -192,20 +192,57 @@
 			</dxi-item>
 
 			<dxi-item [colCount]="2" [colSpan]="2"  caption="Tracking Numbers" itemType="group">
+				<dx-button stylingMode="outlined"
+						   icon="save"
+						   [visible]="delivery.deliveryStatus == 1"
+						   text="Save Changes"
+						   (onClick)="onTrackingSaveChanges($event)"
+						   type="success">
+				</dx-button>
+				<br *ngIf="delivery.deliveryStatus == 1"/><br *ngIf="delivery.deliveryStatus == 1"/>
 				<dx-data-grid
 							  [dataSource]="delivery.deliveryTrackings"
 							  [rowAlternationEnabled]="true" [showBorders]="true"
 							  class="wide-card">
 					<dxi-column [allowSorting]="false"  dataField="trackingNumber">
 					</dxi-column>
-					<dxi-column [allowSorting]="false"  dataField="status">
+					<dxi-column dataField="status" [width]="100">
+						<dxo-lookup
+							[dataSource]="metaData.trackingStatus"
+							displayExpr="name"
+							valueExpr="id">
+						</dxo-lookup>
 					</dxi-column>
-					<dxi-column [width]="110" type="buttons">
-						<dxi-button [visible]="canShowMapProductToTracking" hint="Map Product"
-									cssClass="info-button"
-									icon="icon ion-md-information-circle"
-									[onClick]="mapProductToTracking"></dxi-button>
-					</dxi-column>
+					<dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+					<div *dxTemplate="let tracking of 'detail'">
+						<div class="master-detail-caption">Tracking Number : {{tracking.data.trackingNumber}}</div>
+						<br/>
+						<dx-data-grid [dataSource]="tracking.data.deliveryTrackingItems"
+									  [rowAlternationEnabled]="true" [showBorders]="true">
+							<dxo-editing
+								[allowAdding]="false"
+								[allowDeleting]="false"
+								[allowUpdating]="delivery.deliveryStatus == 1"
+								mode="cell">
+							</dxo-editing>
+							<dxi-column [allowEditing]="false" caption="Product Name" dataField="productId">
+								<dxi-validation-rule message="Product is required" type="required"></dxi-validation-rule>
+								<dxo-lookup
+									[dataSource]="{ store: productStore, filter: [['supplierId', '=', delivery.supplierId], ['active', '=', true]] }"
+									displayExpr="name"
+									valueExpr="id">
+								</dxo-lookup>
+							</dxi-column>
+							<dxi-column [width]="120" dataField="quantity" dataType="number">
+								<dxi-validation-rule message="Quantity is required" type="required"></dxi-validation-rule>
+							</dxi-column>
+							<dxi-column [allowEditing]="false" [width]="120" dataField="unitCost" dataType="number">
+								<dxi-validation-rule message="Unit Cost is required" type="required"></dxi-validation-rule>
+							</dxi-column>
+							<dxi-column [allowEditing]="false" [calculateCellValue]='calcualteTotal' [width]="120" alignment="right"
+										caption="Total" dataType="total" name="total"></dxi-column>
+						</dx-data-grid>
+					</div>
 				</dx-data-grid>
 			</dxi-item>
 
@@ -295,6 +332,38 @@
 		[width]="500"
 		[height]="'auto'"
 		[showTitle]="true"
+		title="Complete"
+		[dragEnabled]="false"
+		[closeOnOutsideClick]="false"
+		[showCloseButton]="true"
+		[(visible)]="completePopupVisible">
+		<div *dxTemplate="let data of 'content'">
+			<p>
+				<b>Delivery Number : </b>
+				<span> {{delivery.deliveryNo}}</span>
+			</p>
+			<form (submit)="handleComplete($event)">
+				<dx-form [formData]="dispatchFormData" labelLocation="top">
+					<dxi-item [dataField]="tracking.trackingNumber" editorType="dxCheckBox"
+							  *ngFor="let tracking of delivery.deliveryTrackings">
+					</dxi-item>
+					<dxi-item
+						itemType="empty"
+						[colSpan]="2">
+					</dxi-item>
+					<dxi-item
+						itemType="button"
+						[buttonOptions]="{ text: 'Complete', useSubmitBehavior: true }">
+					</dxi-item>
+				</dx-form>
+			</form>
+		</div>
+	</dx-popup>
+
+	<dx-popup
+		[width]="500"
+		[height]="'auto'"
+		[showTitle]="true"
 		title="Return"
 		[dragEnabled]="false"
 		[closeOnOutsideClick]="false"
@@ -353,58 +422,6 @@
 					<dxi-item
 						itemType="button"
 						[buttonOptions]="{ text: 'Customer Return', useSubmitBehavior: true }">
-					</dxi-item>
-				</dx-form>
-			</form>
-		</div>
-	</dx-popup>
-
-	<dx-popup
-		[width]="800"
-		[height]="'auto'"
-		[showTitle]="true"
-		title="Map Products"
-		[dragEnabled]="false"
-		[closeOnOutsideClick]="false"
-		[showCloseButton]="true"
-		[(visible)]="productMappingPopupVisible">
-		<div *dxTemplate="let data of 'content'">
-			<p>
-				<b>Tracking Number : </b>
-				<span> {{currentTracking.trackingNumber}}</span>
-			</p>
-			<form (submit)="handleMapProduct($event)">
-				<dx-form [showColonAfterLabel]="true" labelLocation="top">
-					<dxi-item>
-						<dx-data-grid [dataSource]="currentTracking.deliveryTrackingItems"
-									  [rowAlternationEnabled]="true" [showBorders]="true">
-							<dxo-editing
-								[allowAdding]="false"
-								[allowDeleting]="false"
-								[allowUpdating]="true"
-								mode="cell">
-							</dxo-editing>
-							<dxi-column [allowEditing]="false" caption="Product Name" dataField="productId">
-								<dxi-validation-rule message="Product is required" type="required"></dxi-validation-rule>
-								<dxo-lookup
-									[dataSource]="{ store: productStore, filter: [['supplierId', '=', delivery.supplierId], ['active', '=', true]] }"
-									displayExpr="name"
-									valueExpr="id">
-								</dxo-lookup>
-							</dxi-column>
-							<dxi-column [width]="120" dataField="quantity" dataType="number">
-								<dxi-validation-rule message="Quantity is required" type="required"></dxi-validation-rule>
-							</dxi-column>
-							<dxi-column [allowEditing]="false" [width]="120" dataField="unitCost" dataType="number">
-								<dxi-validation-rule message="Unit Cost is required" type="required"></dxi-validation-rule>
-							</dxi-column>
-							<dxi-column [allowEditing]="false" [calculateCellValue]='calcualteTotal' [width]="120" alignment="right"
-										caption="Total" dataType="total" name="total"></dxi-column>
-						</dx-data-grid>
-					</dxi-item>
-					<dxi-item
-						itemType="button"
-						[buttonOptions]="{ text: 'Save Changes', useSubmitBehavior: true }">
 					</dxi-item>
 				</dx-form>
 			</form>

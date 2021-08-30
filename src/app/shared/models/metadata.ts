@@ -44,6 +44,11 @@ export interface IPurchaseOrderType {
 	name: string;
 }
 
+export interface TrackingStatus {
+	id: number;
+	name: string;
+}
+
 export interface IMetaData {
 	storeTypes: IStoreType[];
 	massUnits: IMassUnit[];
@@ -54,4 +59,5 @@ export interface IMetaData {
 	deliveryTypes: IDeliveryType[];
 	unitOfMeasures: IUnitOfMeasure[];
 	purchaseOrderStatus: IPurchaseOrderType[];
+	trackingStatus: TrackingStatus[];
 }

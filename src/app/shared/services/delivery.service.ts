@@ -40,8 +40,13 @@ export class DeliveryService extends BaseService {
 	}
 
 	public addDelivery(delivery: IDelivery) {
-		return this.http.post(this.apiUrl + '/Delivery', delivery)
+		return this.http.post<IDelivery>(this.apiUrl + '/Delivery', delivery)
 			.pipe(catchError(e => this.handleError(e, 'Create delivery')));
+	}
+
+	public mapDeliveryProduct(delivery: IDelivery) {
+		return this.http.put<IDelivery>(this.apiUrl + '/Delivery/map-delivery-product', delivery)
+			.pipe(catchError(e => this.handleError(e, 'Mapping products to tracking numbers')));
 	}
 
 	public markAsProcessing(deliveryId: number, requiredTrackingNumbers: number) {
