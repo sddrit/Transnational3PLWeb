@@ -9,6 +9,7 @@
 
 	<dx-data-grid (onRowClick)="openGrn($event.data.id)" [columnAutoWidth]="true"
 				  [columnHidingEnabled]="true"
+				  [rowAlternationEnabled]="true"
 				  [dataSource]="grnDataSource" [remoteOperations]="true" [showBorders]="true"
 				  class="dx-card wide-card" keyExpr="id">
 

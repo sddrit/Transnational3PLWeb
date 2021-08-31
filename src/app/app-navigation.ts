@@ -1,5 +1,10 @@
 export const adminNavigation = [
 	{
+		text: 'Dashboard',
+		path: '/home',
+		icon: 'icon ion-md-apps'
+	},
+	{
 		text: 'Suppliers',
 		path: '/suppliers',
 		icon: 'icon ion-md-people'
@@ -47,6 +52,11 @@ export const adminNavigation = [
 ];
 
 export const supplierNavigation = [
+	{
+		text: 'Dashboard',
+		path: '/home',
+		icon: 'icon ion-md-home'
+	},
 	{
 		text: 'Products',
 		path: '/products',

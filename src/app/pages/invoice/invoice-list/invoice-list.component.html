@@ -1,13 +1,16 @@
 <div class="responsive-paddings">
-	<h2 class="page-header"><i class="dx-icon-verticalaligncenter"></i>
-		Invoices
-	</h2>
+
+	<div class="page-header">
+		<h2>Invoices</h2>
+		<h5>Invoice List</h5>
+	</div>
 
 	<dx-data-grid #grid [columnAutoWidth]="true"
 				  [columnHidingEnabled]="true"
 				  [dataSource]="invoiceStore"
-				  [focusedRowEnabled]="true"
-				  [focusedRowIndex]="0" [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
+				  [rowAlternationEnabled]="true"
+				  [remoteOperations]="true"
+				  [showBorders]="true" class="dx-card wide-card"
 				  keyExpr="id">
 
 		<dxo-paging [pageSize]="10"></dxo-paging>

@@ -2,6 +2,7 @@
 
 <dx-data-grid id="stockAdjustmentsGrid" [columnAutoWidth]="true" [columnHidingEnabled]="true"
 			  [dataSource]="stockAdjustmentsDataSource"
+			  [rowAlternationEnabled]="true"
 			  [remoteOperations]="true" [showBorders]="true" class="dx-card wide-card"
 			  keyExpr="id">
 	<dxo-paging [pageSize]="10"></dxo-paging>

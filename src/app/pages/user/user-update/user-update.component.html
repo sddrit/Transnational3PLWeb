@@ -1,9 +1,11 @@
 <div class="responsive-paddings">
-	<h2 class="page-header"><i class="dx-icon-user"></i>
-		{{user.id == 0 ? 'New' : 'Update' }} User
+
+	<div class="page-header">
+		<h2>{{user.id == 0 ? 'New' : 'Update' }} User</h2>
+		<h5>Details of Users</h5>
 		<dx-button (onClick)="backToUsers()" class="btn-back" type="back">
 		</dx-button>
-	</h2>
+	</div>
 
 	<div>
 

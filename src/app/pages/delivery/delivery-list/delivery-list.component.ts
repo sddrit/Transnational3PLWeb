@@ -44,6 +44,7 @@ export class DeliveryListComponent implements OnInit {
 				private loader: LoaderHandler,
 				private notify: NotifyHandler,
 				private activatedRoute: ActivatedRoute) {
+		this.viewDelivery = this.viewDelivery.bind(this);
 	}
 
 	ngOnInit(): void {
@@ -62,6 +63,10 @@ export class DeliveryListComponent implements OnInit {
 
 	openDelivery(id: number) {
 		this.router.navigate(['/delivery/' + id]);
+	}
+
+	viewDelivery(e) {
+		this.router.navigate(['/delivery/' + e.row.data.id]);
 	}
 
 	isSupplier() {

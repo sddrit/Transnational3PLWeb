@@ -13,7 +13,7 @@ export class InvoiceDetailsComponent implements OnInit {
 
 	title = 'Invoice';
 	reportUrl = '';
-	hostUrl = `http://${environment.apiDomainName}/`;
+	hostUrl = `${environment.reportHostUrl}/`;
 	invokeAction = 'DXXRDV';
 
 	constructor(private route: ActivatedRoute,

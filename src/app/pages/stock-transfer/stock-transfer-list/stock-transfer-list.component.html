@@ -10,6 +10,7 @@
 	<dx-data-grid (onRowClick)="openStockTransfer($event.data.id)" [columnAutoWidth]="true"
 				  [columnHidingEnabled]="true"
 				  [dataSource]="stockTransferDataSource"
+				  [rowAlternationEnabled]="true"
 				  [remoteOperations]="true" [showBorders]="true"
 				  class="dx-card wide-card" keyExpr="id">
 
