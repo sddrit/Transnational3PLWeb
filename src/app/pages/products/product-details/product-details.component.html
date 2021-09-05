@@ -22,7 +22,7 @@
 		<dxi-item [colSpan]="4" [isRequired]="true" dataField="name"></dxi-item>
 		<dxi-item [colSpan]="4" [editorOptions]="{ height: 120 }" dataField="description"
 				  itemType="dxTextArea"></dxi-item>
-		<dxi-item [colSpan]="1" caption="Inventory" itemType="group">
+		<dxi-item [colSpan]="2" [colCount]="2" caption="Inventory" itemType="group">
 			<dxi-item [isRequired]="true" dataField="sku"></dxi-item>
 			<dxi-item [editorOptions]="{ dataSource: metadata.unitOfMeasures, displayExpr: 'code', valueExpr: 'id' }"
 					  [isRequired]="true"
@@ -32,8 +32,10 @@
 			<dxi-item dataField="reorderLevel" dataType="number"></dxi-item>
 		</dxi-item>
 
-		<dxi-item [colSpan]="1" caption="Storage" itemType="group">
-			<dxi-item [isRequired]="true" dataField="storageUnits" helpText="Number of cubic meter storage required"></dxi-item>
+		<dxi-item [colSpan]="2" [colCount]="3" caption="Storage" itemType="group">
+			<dxi-item [isRequired]="true" dataField="width" helpText="Product width (m)"></dxi-item>
+			<dxi-item [isRequired]="true" dataField="height" helpText="Product height (m)"></dxi-item>
+			<dxi-item [isRequired]="true" dataField="length" helpText="Product length (m)"></dxi-item>
 			<dxi-item [editorOptions]="{ items: metadata.massUnits, displayExpr: 'name', valueExpr: 'id' }" dataField="massUnit"
 					  editorType="dxSelectBox"></dxi-item>
 			<dxi-item dataField="weight" dataType="number"></dxi-item>

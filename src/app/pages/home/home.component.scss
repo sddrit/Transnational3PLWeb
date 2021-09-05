@@ -1,36 +1,25 @@
-.logos-container {
-	margin: 20px 0 40px 0;
+.dashboard-title {
+	font-size: 28px !important;
+	font-weight: 200 !important;
 	text-align: center;
+}
 
-	svg {
-		display: inline-block;
+.day-stat-box {
+	border: 1px solid #eeeeee;
+	margin: 20px;
+	padding: 20px;
+	box-shadow: 2px 2px 5px #f1f1f1;
+	border-radius: 10px;
+	.day-stat-count {
+		color: #4b3f2d;
+		text-align: center;
+		font-weight: 600;
+		font-size: 28px;
 	}
-}
-
-.devextreme-logo {
-	width: 200px;
-	height: 34px;
-	margin-bottom: 13px;
-}
-
-.angular-logo {
-	width: 220px;
-	height: 62px;
-}
-
-.plus {
-	margin: 15px 10px;
-	width: 22px;
-	height: 22px;
-}
-
-:host-context(.screen-x-small) .logos-container {
-	svg {
-		width: 100%;
-		display: block;
-
-		&.plus {
-			margin: 0;
-		}
+	.day-stat-name {
+		color: #757575;
+		text-align: center;
+		font-size: 16px;
+		font-weight: 400;
 	}
 }

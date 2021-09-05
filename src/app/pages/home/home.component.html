@@ -1,7 +1,115 @@
 <div class="responsive-paddings">
 
-	<div class="page-header">
-		<h2>Dashboard</h2>
+	<h3 class="dashboard-title">Daily Delivery Statistics</h3>
+
+	<div>
+		<dx-responsive-box singleColumnScreen="sm" [(screenByWidth)]="screen">
+			<dxi-row [ratio]="1">
+			</dxi-row>
+			<dxi-col [ratio]="1">
+			</dxi-col>
+			<dxi-col [ratio]="1">
+			</dxi-col>
+			<dxi-col [ratio]="1">
+			</dxi-col>
+			<dxi-col [ratio]="1">
+			</dxi-col>
+			<dxi-col [ratio]="1">
+			</dxi-col>
+			<dxi-col [ratio]="1">
+			</dxi-col>
+			<dxi-item>
+				<dxi-location [row]="0" [col]="0"></dxi-location>
+				<div *dxTemplate class="header item">
+					<div class="day-stat-box">
+						<p class="day-stat-count">{{this.pendingCount}}</p>
+						<p class="day-stat-name">Pending</p>
+					</div>
+				</div>
+			</dxi-item>
+			<dxi-item>
+				<dxi-location [row]="0" [col]="1"></dxi-location>
+				<div *dxTemplate class="header item">
+					<div class="day-stat-box">
+						<p class="day-stat-count">{{this.processingCount}}</p>
+						<p class="day-stat-name">Processing</p>
+					</div>
+				</div>
+			</dxi-item>
+			<dxi-item>
+				<dxi-location [row]="0" [col]="2"></dxi-location>
+				<div *dxTemplate class="header item">
+					<div class="day-stat-box">
+						<p class="day-stat-count">{{this.dispatchedCount}}</p>
+						<p class="day-stat-name">Dispatched</p>
+					</div>
+				</div>
+			</dxi-item>
+			<dxi-item>
+				<dxi-location [row]="0" [col]="3"></dxi-location>
+				<div *dxTemplate class="header item">
+					<div class="day-stat-box">
+						<p class="day-stat-count">{{this.partiallyCompletedCount}}</p>
+						<p class="day-stat-name">Partially Completed</p>
+					</div>
+				</div>
+			</dxi-item>
+			<dxi-item>
+				<dxi-location [row]="0" [col]="4"></dxi-location>
+				<div *dxTemplate class="header item">
+					<div class="day-stat-box">
+						<p class="day-stat-count">{{this.completedCount}}</p>
+						<p class="day-stat-name">Completed</p>
+					</div>
+				</div>
+			</dxi-item>
+			<dxi-item>
+				<dxi-location [row]="0" [col]="5"></dxi-location>
+				<div *dxTemplate class="header item">
+					<div class="day-stat-box">
+						<p class="day-stat-count">{{this.returnCount}}</p>
+						<p class="day-stat-name">Return</p>
+					</div>
+				</div>
+			</dxi-item>
+		</dx-responsive-box>
+	</div>
+
+	<br/><br/>
+
+	<div *ngIf="monthlyDeliveryStat">
+		<dx-chart
+			id="monthly-delivery-stat"
+			title="Monthly Delivery Statistics"
+			[dataSource]="monthlyDeliveryStat">
+			<dxi-series valueField="Pending" name="Pending"></dxi-series>
+			<dxi-series valueField="Processing" name="Processing"></dxi-series>
+			<dxi-series valueField="Dispatched" name="Dispatched"></dxi-series>
+			<dxi-series valueField="Partially Completed" name="Partially Completed"></dxi-series>
+			<dxi-series valueField="Completed" name="Completed"></dxi-series>
+			<dxi-series valueField="Return" name="Return"></dxi-series>
+			<dxi-series valueField="Partially Customer Return" name="Partially Customer Return"></dxi-series>
+			<dxi-series valueField="Customer Return" name="Customer Return"></dxi-series>
+			<dxi-value-axis position="right">
+				<dxo-title text="Delivery Counts"></dxo-title>
+			</dxi-value-axis>
+			<dxo-common-series-settings
+				argumentField="date"
+				type="stackedBar">
+			</dxo-common-series-settings>
+			<dxo-argument-axis [label]="{ format: 'shortDate', displayMode: 'stagger'}"></dxo-argument-axis>
+			<dxo-legend
+				verticalAlignment="bottom"
+				horizontalAlignment="center"
+				itemTextPosition="top">
+			</dxo-legend>
+			<dxo-export [enabled]="true"></dxo-export>
+			<dxo-tooltip
+				[enabled]="true"
+				[customizeTooltip]="customizeTooltipMonthlyStat"
+				location="edge">
+			</dxo-tooltip>
+		</dx-chart>
 	</div>
 
 </div>

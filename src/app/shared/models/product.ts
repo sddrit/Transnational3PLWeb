@@ -12,6 +12,9 @@ export interface IProduct {
 	reorderLevel: number;
 	sku: string;
 	storageUnits: number;
+	height: number;
+	width: number;
+	length: number;
 	weight?: number;
 	massUnit?: number;
 	active: boolean;

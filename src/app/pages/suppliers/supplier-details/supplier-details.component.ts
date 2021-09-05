@@ -10,6 +10,7 @@ import CustomStore from 'devextreme/data/custom_store';
 import { AuthService } from '../../../shared/services';
 import DataSource from 'devextreme/data/data_source';
 import { confirm } from 'devextreme/ui/dialog';
+import { DxFormComponent } from 'devextreme-angular';
 
 @Component({
 	encapsulation: ViewEncapsulation.None,
@@ -26,6 +27,15 @@ export class SupplierDetailsComponent implements OnInit {
 
 	public showCreateAccountPopup = false;
 
+	@ViewChild('resetPasswordForm') resetPasswordForm: DxFormComponent;
+	resetPasswordPopupVisible = false;
+	resetPasswordFormData = {
+		id: 0,
+		userName: null,
+		password: null,
+		confirmationPassword: null
+	};
+
 	constructor(
 		private supplierService: SupplierService,
 		private cityService: CityService,
@@ -38,6 +48,7 @@ export class SupplierDetailsComponent implements OnInit {
 	) {
 		this.deleteUser = this.deleteUser.bind(this);
 		this.setUserStatus = this.setUserStatus.bind(this);
+		this.resetPassword = this.resetPassword.bind(this);
 		this.cityStore = this.cityService.getCities();
 		this.setSupplier();
 	}
@@ -116,6 +127,31 @@ export class SupplierDetailsComponent implements OnInit {
 			}
 		});
 
+	}
+
+	public passwordComparison = () => {
+		return this.resetPasswordForm.instance.option('formData').password;
+	}
+
+	public resetPassword(e: any): void {
+		if (this.resetPasswordForm) {
+			this.resetPasswordForm.instance.resetValues();
+		}
+		this.resetPasswordFormData.id = e.row.data.id;
+		this.resetPasswordFormData.userName = e.row.data.userName;
+		this.resetPasswordPopupVisible = true;
+	}
+
+	handleResetPasswordForm(e) {
+		e.preventDefault();
+		const data = this.resetPasswordForm.instance.option('formData');
+		this.resetPasswordPopupVisible = false;
+		this.loader.show(true);
+		this.authService.resetPassword(data.id, data.password, data.confirmationPassword).subscribe(() => {
+			this.loader.show(false);
+			this.notify.success('Successfully reset the password');
+			this.setSupplier();
+		});
 	}
 
 	customizeLabelStorageByWareHouse(arg) {

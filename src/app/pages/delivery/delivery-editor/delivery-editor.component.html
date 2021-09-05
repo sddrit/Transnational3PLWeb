@@ -47,15 +47,6 @@
 			text="Return">
 		</dx-button>
 		<dx-button
-			icon="card"
-			stylingMode="outlined"
-			type="danger"
-			[visible]="!isSupplier()"
-			[disabled]="!canMarkAsCustomerReturn()"
-			(onClick)="customerReturn($event)"
-			text="Customer Return">
-		</dx-button>
-		<dx-button
 			class="waybill-action"
 			icon="print"
 			stylingMode="outlined"
@@ -109,7 +100,7 @@
 						<dxo-label text="First Name"></dxo-label>
 					</dxi-item>
 					<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'last-name-field' }}"
-							  [isRequired]="true" dataField="deliveryCustomer.lastName">
+							  dataField="deliveryCustomer.lastName">
 						<dxo-label text="Last Name"></dxo-label>
 					</dxi-item>
 					<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'address-line1-field' }}"
@@ -397,50 +388,4 @@
 			</form>
 		</div>
 	</dx-popup>
-
-	<dx-popup
-		[width]="500"
-		[height]="'auto'"
-		[showTitle]="true"
-		title="Customer Return"
-		[dragEnabled]="false"
-		[closeOnOutsideClick]="false"
-		[showCloseButton]="true"
-		[(visible)]="customerReturnPopupVisible">
-		<div *dxTemplate="let data of 'content'">
-			<p class="popup-message">Enter your note and select the tracking numbers for customer return</p>
-			<br/>
-			<form (submit)="handleCustomerReturnForm($event)">
-				<dx-form #customerReturnForm [showColonAfterLabel]="true" [formData]="customerReturnFormData" labelLocation="left">
-
-					<dxi-item
-						*ngFor="let tracking of getCompletedOrDispatchedTrackings()" [dataField]="tracking.trackingNumber"
-						editorType="dxCheckBox">
-					</dxi-item>
-
-					<dxi-item
-						itemType="empty"
-						[colSpan]="2">
-					</dxi-item>
-
-					<dxi-item dataField="note" editorType="dxTextArea">
-						<dxi-validation-rule type="required"
-											 message="Note is required">
-						</dxi-validation-rule>
-					</dxi-item>
-
-					<dxi-item
-						itemType="empty"
-						[colSpan]="2">
-					</dxi-item>
-
-					<dxi-item
-						itemType="button"
-						[buttonOptions]="{ text: 'Customer Return', useSubmitBehavior: true }">
-					</dxi-item>
-				</dx-form>
-			</form>
-		</div>
-	</dx-popup>
-
 </div>

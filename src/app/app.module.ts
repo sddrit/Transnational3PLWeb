@@ -7,8 +7,7 @@ import {
 	ChangePasswordFormModule,
 	CreateAccountFormModule,
 	FooterModule,
-	LoginFormModule,
-	ResetPasswordFormModule
+	LoginFormModule
 } from './shared/components';
 
 import { AppComponent } from './app.component';
@@ -48,7 +47,6 @@ export function tokenGetter() {
 		SideNavInnerToolbarModule,
 		SingleCardModule,
 		FooterModule,
-		ResetPasswordFormModule,
 		CreateAccountFormModule,
 		ChangePasswordFormModule,
 		LoginFormModule,

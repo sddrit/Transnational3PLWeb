@@ -1,7 +1,6 @@
 export const environment = {
 	production: true,
-	apiUrl: 'http://192.168.52.101:8101/api',
-	apiDomainName: '192.168.52.101:8101',
-	reportHostUrl: 'http://192.168.52.101:8101'
-
+	apiUrl: 'http://3pl.transnational-lk.local:8101/api',
+	apiDomainName: '3pl.transnational-lk.local:8101',
+	reportHostUrl: 'http://3pl.transnational-lk.local:8101'
 };

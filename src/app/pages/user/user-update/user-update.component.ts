@@ -6,6 +6,9 @@ import { NotifyHandler } from 'src/app/shared/utilities/notify.handler';
 import { IUser } from '../../../shared/models/auth';
 import { AuthService } from '../../../shared/services';
 import { DxFormComponent } from 'devextreme-angular';
+import CustomStore from 'devextreme/data/custom_store';
+import { WarehouseService } from '../../../shared/services/warehouse.service';
+import { IMetaData } from '../../../shared/models/metadata';
 
 interface IUserModel {
 	id: number;
@@ -14,6 +17,7 @@ interface IUserModel {
 	active: boolean;
 	password: string;
 	confirmationPassword: string;
+	wareHouses: number[];
 }
 
 @Component({
@@ -22,18 +26,30 @@ interface IUserModel {
 })
 export class UserUpdateComponent {
 
+	public metadata: IMetaData;
+	public warehouseStore: CustomStore;
+
 	public user: IUserModel;
 	@ViewChild(DxFormComponent, { static: false }) form: DxFormComponent;
 
 	constructor(
 		private authService: AuthService,
+		private warehouseService: WarehouseService,
 		private route: ActivatedRoute,
 		private router: Router,
 		private loader: LoaderHandler,
 		private notify: NotifyHandler,
 		private cdr: ChangeDetectorRef
 	) {
+		this.warehouseStore = this.warehouseService.getWarehouses();
+		this.user = this.newUser();
 		this.setUser();
+	}
+
+	ngOnInit(): void {
+		this.route.data.subscribe(data => {
+			this.metadata = data.metadata;
+		});
 	}
 
 	ngAfterViewInit() {
@@ -81,7 +97,7 @@ export class UserUpdateComponent {
 		const userId = this.route.snapshot.paramMap.get('id');
 		if ( userId !== '0' ) {
 			this.authService.getUserById(+userId).subscribe((data: IUser) => {
-				this.user = {...data, password: null, confirmationPassword: null};
+				this.user = {...data, password: null, confirmationPassword: null, wareHouses: data.wareHouses };
 			});
 		}
 	}
@@ -93,7 +109,8 @@ export class UserUpdateComponent {
 			email: null,
 			active: true,
 			password: null,
-			confirmationPassword: null
+			confirmationPassword: null,
+			wareHouses: []
 		};
 	}
 }

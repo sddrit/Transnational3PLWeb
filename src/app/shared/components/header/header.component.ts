@@ -28,13 +28,7 @@ export class HeaderComponent {
 
 	user: IUser = JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
 
-	userMenuItems = [{
-		text: 'Profile',
-		icon: 'user',
-		onClick: () => {
-			this.router.navigate(['/profile']);
-		}
-	},
+	userMenuItems = [
 		{
 			text: 'Logout',
 			icon: 'runner',

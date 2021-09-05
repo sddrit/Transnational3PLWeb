@@ -52,3 +52,18 @@ export interface IDeliveryTrackingItem {
 	quantity: number;
 	unitCost: number;
 }
+
+export interface IDeliveryStat {
+	dayStat: IDeliveryStatItem[];
+	monthlyStat: IMonthyDeliveryStateItem[];
+}
+
+export interface IMonthyDeliveryStateItem {
+	date: Date;
+	deliveryStats: IDeliveryStatItem[];
+}
+
+export interface IDeliveryStatItem {
+	status: number;
+	count: number;
+}

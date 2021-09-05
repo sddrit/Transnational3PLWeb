@@ -15,6 +15,7 @@ export interface IUser {
 	username: string;
 	email: string;
 	active: boolean;
+	wareHouses: number[];
 }
 
 export interface ICreateUser {
@@ -24,4 +25,5 @@ export interface ICreateUser {
 	active: boolean;
 	password: string;
 	confirmPassword: string;
+	wareHouses: number[];
 }

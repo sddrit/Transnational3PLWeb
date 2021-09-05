@@ -10,6 +10,7 @@ import { InvoiceService } from '../../../shared/services/invoice.service';
 import { LoaderHandler } from '../../../shared/utilities/loader.handler';
 import { NotifyHandler } from '../../../shared/utilities/notify.handler';
 import { DxDataGridComponent } from 'devextreme-angular';
+import { IInvoice, IInvoiceItem } from '../../../shared/models/invoice';
 
 
 @Component({
@@ -25,6 +26,10 @@ export class InvoiceListComponent implements OnInit {
 	invoiceStore: CustomStore;
 	supplierStore: CustomStore;
 
+	currentInvoice: IInvoice;
+	currentInvoiceItems: IInvoiceItem[];
+	showManualChargePopup = false;
+
 	constructor(
 		private invoiceService: InvoiceService,
 		private metadataService: MetadataService,
@@ -35,6 +40,7 @@ export class InvoiceListComponent implements OnInit {
 		private activatedRoute: ActivatedRoute
 	) {
 		this.markAsPaid = this.markAsPaid.bind(this);
+		this.manualCharge = this.manualCharge.bind(this);
 	}
 
 	ngOnInit(): void {
@@ -64,6 +70,34 @@ export class InvoiceListComponent implements OnInit {
 	viewInvoice(e) {
 		e.event.preventDefault();
 		this.router.navigate(['/invoice/' + e.row.data.id]);
+	}
+
+	manualCharge(e) {
+		e.event.preventDefault();
+		this.loader.show(true);
+		this.invoiceService.getInvoiceById(e.row.data.id).subscribe(invoice => {
+			this.currentInvoice = invoice;
+			this.currentInvoiceItems = invoice.invoiceItems.filter(i => i.type === 3);
+			this.loader.show(false);
+			this.showManualChargePopup = true;
+		});
+	}
+
+	saveManualChanges() {
+		this.loader.show(true);
+		this.invoiceService.updateInvoice(this.currentInvoice.id, this.currentInvoiceItems.map(item => {
+			return {
+				description: item.description,
+				amount: item.amount,
+				type: 3,
+				date: null,
+				id: item.id
+			};
+		})).subscribe(() => {
+			this.notify.success('Successfully saved the changes of invoice');
+			this.loader.show(false);
+			this.showManualChargePopup = false;
+		});
 	}
 
 	canMarkAsPaid (e) {

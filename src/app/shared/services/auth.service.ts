@@ -126,6 +126,11 @@ export class AuthService extends BaseService {
 			.pipe(catchError(e => this.handleError(e, 'Set user status')));
 	}
 
+	public resetPassword(id: number, password: string, confirmationPassword: string) {
+		return this.http.post(this.apiUrl + '/Account/reset-password', { id, password, confirmationPassword })
+			.pipe(catchError(e => this.handleError(e, 'Reset password')));
+	}
+
 	async createAccount(email, password) {
 		try {
 			// Send request
@@ -155,23 +160,6 @@ export class AuthService extends BaseService {
 			return {
 				isOk: false,
 				message: 'Failed to change password'
-			};
-		}
-		;
-	}
-
-	async resetPassword(email: string) {
-		try {
-			// Send request
-			console.log(email);
-
-			return {
-				isOk: true
-			};
-		} catch {
-			return {
-				isOk: false,
-				message: 'Failed to reset password'
 			};
 		}
 	}

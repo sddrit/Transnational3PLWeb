@@ -9,7 +9,7 @@ import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { LoaderHandler } from '../utilities/loader.handler';
-import { IDelivery } from '../models/delivery';
+import { IDelivery, IDeliveryStat } from '../models/delivery';
 
 @Injectable()
 export class DeliveryService extends BaseService {
@@ -37,6 +37,11 @@ export class DeliveryService extends BaseService {
 	public getDeliveryById(id: number): Observable<IDelivery> {
 		return this.http.get<IDelivery>(this.apiUrl + '/Delivery/get-delivery/' + id)
 			.pipe(catchError(e => this.handleError(e, 'Getting delivery by id')));
+	}
+
+	public getDeliveryStat(): Observable<IDeliveryStat> {
+		return this.http.get<IDeliveryStat>(this.apiUrl + '/Delivery/delivery-stat')
+			.pipe(catchError(e => this.handleError(e, 'Getting delivery stat')));
 	}
 
 	public addDelivery(delivery: IDelivery) {
@@ -71,12 +76,6 @@ export class DeliveryService extends BaseService {
 		return this.http.post(this.apiUrl + '/Delivery/mark-as-return',
 			{ deliveryId, note })
 			.pipe(catchError(e => this.handleError(e, 'Mark as return')));
-	}
-
-	public markAsCustomerReturn(deliveryId: number, trackingNumbers: string[], note: string) {
-		return this.http.post(this.apiUrl + '/Delivery/mark-as-customer-return',
-			{ deliveryId, note, trackingNumbers })
-			.pipe(catchError(e => this.handleError(e, 'Mark as customer return')));
 	}
 
 	public getDeliveryCompleteUploadUrl() {

@@ -21,7 +21,6 @@ import {
 	ChangePasswordFormComponent,
 	CreateAccountFormComponent,
 	LoginFormComponent,
-	ResetPasswordFormComponent
 } from './shared/components';
 
 import { AuthGuardService } from './shared/services';
@@ -80,12 +79,10 @@ const routes: Routes = [
 	{
 		path: 'home',
 		component: HomeComponent,
-		canActivate: [AuthGuardService]
-	},
-	{
-		path: 'reset-password',
-		component: ResetPasswordFormComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
 	},
 	{
 		path: 'create-account-popup',
@@ -250,6 +247,9 @@ const routes: Routes = [
 		path: 'user/:id',
 		component: UserUpdateComponent,
 		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
 	},
 	{
 		path: '**',

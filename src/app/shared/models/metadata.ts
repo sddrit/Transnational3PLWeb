@@ -60,4 +60,5 @@ export interface IMetaData {
 	unitOfMeasures: IUnitOfMeasure[];
 	purchaseOrderStatus: IPurchaseOrderType[];
 	trackingStatus: TrackingStatus[];
+	roles: string[];
 }

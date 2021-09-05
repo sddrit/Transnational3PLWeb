@@ -46,7 +46,6 @@ export class DeliveryEditorComponent implements OnInit {
 	processingPopupVisible = false;
 	dispatchPopupVisible = false;
 	returnPopupVisible = false;
-	customerReturnPopupVisible = false;
 	completePopupVisible = false;
 
 	processingFormData = {
@@ -184,35 +183,6 @@ export class DeliveryEditorComponent implements OnInit {
 		});
 	}
 
-	customerReturn(e) {
-		e.event.preventDefault();
-		this.customerReturnPopupVisible = true;
-		if (this.customerReturnForm != null) {
-			this.customerReturnForm.instance.resetValues();
-		}
-	}
-
-	handleCustomerReturnForm(e) {
-		e.preventDefault();
-		const data = this.customerReturnForm.instance.option('formData');
-		const trackingNumbers = Object.getOwnPropertyNames(data);
-		const selectedTrackingNumbers = trackingNumbers.filter(trackingNumber => {
-			return trackingNumber.toLocaleLowerCase() !== 'note' && data[trackingNumber];
-		});
-		this.customerReturnPopupVisible = false;
-		if (selectedTrackingNumbers.length === 0) {
-			this.notify.warning('No any tracking number select for mark as customer return');
-			return;
-		}
-		this.loader.show(true);
-		this.deliveryService.markAsCustomerReturn(this.delivery.id, selectedTrackingNumbers, data.note)
-			.subscribe(() => {
-			this.notify.success('Successfully marked as customer return');
-			this.setDelivery();
-			this.loader.show(false);
-		});
-	}
-
 	markAsComplete(e) {
 		e.event.preventDefault();
 		this.completePopupVisible = true;
@@ -260,10 +230,6 @@ export class DeliveryEditorComponent implements OnInit {
 
 	canMarkAsReturn() {
 		return this.delivery.deliveryStatus === 4;
-	}
-
-	canMarkAsCustomerReturn() {
-		return this.delivery.deliveryStatus === 4 || this.delivery.deliveryStatus === 6;
 	}
 
 	isSupplier() {

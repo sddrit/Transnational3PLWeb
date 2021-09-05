@@ -37,10 +37,74 @@
 		<dxi-column dataField="paid">
 		</dxi-column>
 		<dxi-column type="buttons">
+			<dxi-button text="Manual Charges" [onClick]="manualCharge"  icon="edit">
+			</dxi-button>
 			<dxi-button text="Mark as Paid" [visible]="canMarkAsPaid" [onClick]="markAsPaid" icon="check">
 			</dxi-button>
 			<dxi-button  text="View Invoice" icon="print" [onClick]="viewInvoice">
 			</dxi-button>
 		</dxi-column>
 	</dx-data-grid>
+
+	<dx-popup
+		[width]="900"
+		[height]="'auto'"
+		[showTitle]="true"
+		title="Manual Charges"
+		[dragEnabled]="false"
+		[closeOnOutsideClick]="false"
+		[showCloseButton]="true"
+		[(visible)]="showManualChargePopup">
+		<div *dxTemplate="let data of 'content'">
+			<p class="popup-message">Configure the manual charges of this Invoice</p>
+			<br/>
+			<div *ngIf="currentInvoice">
+				<dx-form
+					labelLocation="left"
+					readOnly="true"
+					colCount="2"
+					[(formData)]="currentInvoice">
+					<dxi-item dataField="invoiceNo"></dxi-item>
+					<dxi-item [editorOptions]="{ dataSource: supplierStore,
+						displayExpr: 'supplierName', valueExpr: 'id', searchEnabled: true,
+						searchExpr: ['code', 'supplierName'],
+				  		fieldTemplate: 'supplierField', itemTemplate: 'supplierField' }"
+					  [label]="{ text: 'Supplier' }" dataField="supplierId" editorType="dxLookup">
+					</dxi-item>
+					<dxi-item dataField="from" [editorOptions]="{ dataType:'date', format: 'shortDateShortTime' }" editorType="dxDateBox"></dxi-item>
+					<dxi-item dataField="to" [editorOptions]="{ dataType:'date', format: 'shortDateShortTime' }" editorType="dxDateBox"></dxi-item>
+					<div *dxTemplate="let item of 'supplierField'">
+						<div>{{item?.code}} - {{item?.supplierName}}</div>
+					</div>
+				</dx-form>
+				<br/>
+				<dx-data-grid
+					[dataSource]="currentInvoiceItems"
+					[rowAlternationEnabled]="true" [showBorders]="true"
+					class="wide-card">
+					<dxo-editing
+						[allowAdding]="true"
+						[allowDeleting]="true"
+						[allowUpdating]="true"
+						mode="cell">
+					</dxo-editing>
+					<dxi-column [allowSorting]="false"  dataField="description">
+						<dxi-validation-rule message="Description is required" type="required"></dxi-validation-rule>
+					</dxi-column>
+					<dxi-column [allowSorting]="false" width="100"  dataField="amount" dataType="number">
+						<dxi-validation-rule message="Amount is required" type="required"></dxi-validation-rule>
+					</dxi-column>
+				</dx-data-grid>
+				<br/><br/>
+				<dx-button type="success"
+						   class="save-manual-invoice-item-button"
+						   (click)="saveManualChanges()"
+						   text="Save Changes"
+						   icon="save">
+				</dx-button>
+			</div>
+		</div>
+	</dx-popup>
+
+
 </div>

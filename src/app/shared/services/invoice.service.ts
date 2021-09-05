@@ -8,7 +8,7 @@ import { ACCESS_TOKEN_KEY } from '../constants/common';
 import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { catchError } from 'rxjs/operators';
 import { LoaderHandler } from '../utilities/loader.handler';
-import { IInvoice } from '../models/invoice';
+import { IInvoice, IInvoiceItem } from '../models/invoice';
 
 @Injectable()
 export class InvoiceService extends BaseService {
@@ -41,6 +41,11 @@ export class InvoiceService extends BaseService {
 	public markAsPaid(id: number) {
 		return this.http.post(this.apiUrl + '/Invoice/mark-as-paid', { id })
 			.pipe(catchError(e => this.handleError(e, 'Mark as paid')));
+	}
+
+	public updateInvoice(id: number, invoiceItems: IInvoiceItem[]) {
+		return this.http.put<IInvoice>(this.apiUrl + '/Invoice/' + id, invoiceItems)
+			.pipe(catchError(e => this.handleError(e, 'Update invoice')));
 	}
 }
 
