@@ -59,6 +59,7 @@ import { UserUpdateComponent } from './pages/user/user-update/user-update.compon
 import { WaybillComponent } from './pages/delivery/waybill/waybill.component';
 import { GrnViewComponent } from './pages/grn/grn-view/grn-view.component';
 import { TransferReturnStockPopupComponent } from './pages/products/components/transfer-return-stock-popup/transfer-return-stock-popup.component';
+import { PurchaseOrderPrintComponent } from './pages/purchase-order/purchase-order-print-viewer/purchase-order-print.component';
 
 
 const routes: Routes = [
@@ -158,6 +159,11 @@ const routes: Routes = [
 		resolve: {
 			metadata: MetadataResolver
 		}
+	},
+	{
+		path: 'purchase-order-print-view/:id',
+		component: PurchaseOrderPrintComponent,
+		canActivate: [AuthGuardService]
 	},
 	{
 		path: 'grn/:id',
@@ -291,6 +297,7 @@ const routes: Routes = [
 		ProductDetailsComponent,
 		PurchaseOrderListComponent,
 		PurchaseOrderUpdateComponent,
+		PurchaseOrderPrintComponent,
 		GrnEditorComponent,
 		GrnListComponent,
 		ProductStocksComponent,

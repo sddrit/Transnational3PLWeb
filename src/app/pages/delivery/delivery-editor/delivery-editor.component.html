@@ -52,7 +52,7 @@
 			stylingMode="outlined"
 			type="default"
 			[visible]="!isSupplier()"
-			[disabled]="canMarkAsProcessing()"
+			[disabled]="!canPrintWayBill()"
 			(onClick)="wayBill($event)"
 			text="Way Bill">
 		</dx-button>
@@ -61,19 +61,20 @@
 	<br/><br/>
 
 	<form (submit)="handleSubmit($event)">
-		<dx-form [formData]="delivery" [readOnly]="delivery.id != 0" id="form" labelLocation="top">
+		<dx-form [formData]="delivery" [readOnly]="!canEdit" id="form" labelLocation="top">
 
 			<dxi-item itemType="group" [colCount]="2">
 				<dxi-item [colCount]="2" [colSpan]="4" caption="General Details" itemType="group">
 
 					<dxi-item [colSpan]="2" dataField="deliveryNo"
+							  [editorOptions]="{ readOnly: true }"
 							  [visible]="delivery.id !=0"></dxi-item>
 					<dxi-item [colSpan]="2" dataField="created" editorType="dxDateBox"
-							  [editorOptions]="{ dataType:'date', format: 'shortDateShortTime' }"
+							  [editorOptions]="{ dataType:'date', format: 'shortDateShortTime', readOnly: true }"
 							  [visible]="delivery.id !=0"></dxi-item>
 					<dxi-item [colSpan]="2" dataField="deliveryStatus"
 							  [visible]="delivery.id !=0"
-							  [editorOptions]="{ dataSource: metaData.deliveryStatus, displayExpr: 'name', valueExpr: 'id' }"
+							  [editorOptions]="{ dataSource: metaData.deliveryStatus, displayExpr: 'name', valueExpr: 'id', readOnly: true }"
 							  [isRequired]="true"
 							  [label]="{ text: 'Delivery Status' }" editorType="dxSelectBox">
 					</dxi-item>
@@ -90,7 +91,7 @@
 					</dxi-item>
 					<dxi-item [colSpan]="2"
 							  [isRequired]="true"
-							  [editorOptions]="{ disabledDates: disabledDates }"
+							  [editorOptions]="{ disabledDates: disabledDates, dateSerializationFormat: 'yyyy-MM-dd' }"
 							  [label]="{ text: 'Delivery Date' }" dataField="deliveryDate" editorType="dxDateBox">
 					</dxi-item>
 				</dxi-item>
@@ -123,12 +124,14 @@
 						<dxo-label text="Postal Code"></dxo-label>
 					</dxi-item>
 
-					<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'mobile-field' }}"
+					<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'mobile-field' },  mask : '0000000000',
+								maskInvalidMessage : 'Mobile number is invalid'}"
 							  [isRequired]="true" dataField="deliveryCustomer.mobile">
 						<dxo-label text="Mobile"></dxo-label>
 					</dxi-item>
 
-					<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'phone-field' }}"
+					<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'phone-field' }, mask : '0000000000',
+								maskInvalidMessage : 'Phone number is invalid'}"
 							  dataField="deliveryCustomer.phone">
 						<dxo-label text="Phone"></dxo-label>
 					</dxi-item>
@@ -143,14 +146,14 @@
 				<p class="shortcut-hint">Press <span>Alt + A</span> For Add New Item</p>
 				<dxi-item>
 					<dx-data-grid #dxDataGridDeliveryItems (onRowValidating)="onRowValidating($event)"
-								  [dataSource]="delivery.deliveryItems" [disabled]="delivery.supplierId == 0"
+								  [dataSource]="delivery.deliveryItems"
 								  [rowAlternationEnabled]="true" [showBorders]="true"
 								  (keyup)="onGridKeyUp($event)"
 								  (onEditorPreparing)="onEditorPreparing($event)">
 						<dxo-editing
-							[allowAdding]="delivery.id == 0"
-							[allowDeleting]="delivery.id == 0"
-							[allowUpdating]="delivery.id == 0"
+							[allowAdding]="canEdit"
+							[allowDeleting]="canEdit"
+							[allowUpdating]="canEdit"
 							mode="cell">
 						</dxo-editing>
 						<dxi-column caption="Product Name" dataField="productId">
@@ -243,7 +246,7 @@
 			</dxi-item>
 
 			<dxi-item [buttonOptions]="{ text: 'Save Changes', useSubmitBehavior: true, icon: 'save', type: 'success',
-						class: 'btn-save-product', visible: delivery.id == 0 }" [colSpan]="4" class="btn-save-product"
+						class: 'btn-save-product', visible: canEdit }" [colSpan]="4" class="btn-save-product"
 					  itemType="button">
 			</dxi-item>
 		</dx-form>
@@ -260,9 +263,9 @@
 		[(visible)]="processingPopupVisible">
 		<div *dxTemplate="let data of 'content'">
 			<p>
-				<b>Delivery Number : </b>
-				<span> {{delivery.deliveryNo}}</span>
+				Enter required tracking numbers count for dispatch the shipment
 			</p>
+			<br/>
 			<form (submit)="handleProcessingForm($event)">
 				<dx-form [showColonAfterLabel]="true" [formData]="processingFormData" labelLocation="top">
 					<dxi-item dataField="requiredNumberOfTrackingNumber">

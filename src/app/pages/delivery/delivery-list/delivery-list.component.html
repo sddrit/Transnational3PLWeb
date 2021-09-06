@@ -7,9 +7,9 @@
 				   type="normal">
 		</dx-button>
 		<dx-button [visible]="!isSupplier()"
-				   class="upload-complete-sheet-btn" type="normal"
-				   (click)="uploadCompleteSheet()"
-				   text="Upload Complete Sheet"
+				   class="upload-delivery-sheet-btn" type="normal"
+				   (click)="uploadDeliverySheet()"
+				   text="Upload Delivery Sheet"
 				   icon="rowfield">
 		</dx-button>
 	</div>
@@ -67,11 +67,11 @@
 	[width]="500"
 	[height]="'auto'"
 	[showTitle]="true"
-	title="Upload Complete Delivery Sheet"
+	title="Upload Delivery Sheet"
 	[dragEnabled]="false"
 	[closeOnOutsideClick]="false"
 	[showCloseButton]="true"
-	[(visible)]="showUploadCompleteSheetPopup">
+	[(visible)]="showUploadDeliverySheetPopup">
 	<div *dxTemplate="let data of 'content'">
 		<dx-file-uploader
 			#fileUploader
@@ -92,11 +92,11 @@
 	[width]="900"
 	[height]="'auto'"
 	[showTitle]="true"
-	title="Upload Complete Delivery Sheet Result"
+	title="Processing Delivery Sheet Overview"
 	[dragEnabled]="false"
 	[closeOnOutsideClick]="false"
 	[showCloseButton]="true"
-	[(visible)]="showUploadCompleteSheetResultPopup">
+	[(visible)]="showUploadDeliverySheetResultPopup">
 	<div *dxTemplate="let data of 'content'">
 		<dx-data-grid
 					  [columnAutoWidth]="true"

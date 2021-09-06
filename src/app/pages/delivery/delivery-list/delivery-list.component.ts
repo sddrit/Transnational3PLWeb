@@ -31,8 +31,8 @@ export class DeliveryListComponent implements OnInit {
 	supplierDataSource: CustomStore;
 	warehouseDataSource: CustomStore;
 
-	showUploadCompleteSheetPopup = false;
-	showUploadCompleteSheetResultPopup = false;
+	showUploadDeliverySheetPopup = false;
+	showUploadDeliverySheetResultPopup = false;
 
 	uploadCompleteSheetResultDataSource: DataSource;
 
@@ -73,8 +73,8 @@ export class DeliveryListComponent implements OnInit {
 		return this.authService.isSupplier;
 	}
 
-	uploadCompleteSheet() {
-		this.showUploadCompleteSheetPopup = true;
+	uploadDeliverySheet() {
+		this.showUploadDeliverySheetPopup = true;
 		if (this.fileUploader) {
 			this.fileUploader.instance.reset();
 		}
@@ -87,13 +87,13 @@ export class DeliveryListComponent implements OnInit {
 
 	onUploaded(e) {
 		this.loader.show(false);
-		this.showUploadCompleteSheetPopup = false;
+		this.showUploadDeliverySheetPopup = false;
 		this.uploadCompleteSheetResultDataSource = new DataSource({
 			store: new ArrayStore({
 				data: JSON.parse(e.request.response)
 			})
 		});
-		this.showUploadCompleteSheetResultPopup = true;
+		this.showUploadDeliverySheetResultPopup = true;
 	}
 
 	onUploadStarted(e) {

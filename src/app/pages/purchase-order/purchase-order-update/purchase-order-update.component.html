@@ -5,10 +5,20 @@
 		<h5>Purchase Order Details</h5>
 		<dx-button (onClick)="backToPurchaseOrders()" type="back">
 		</dx-button>
+		<dx-button
+			class="print-purchase-order"
+			icon="print"
+			stylingMode="outlined"
+			type="default"
+			(onClick)="printPurchaseOrder()"
+			text="Print Purchase Order">
+		</dx-button>
 	</div>
 
+	<h3 class="printed-text" *ngIf="purchaseOrder.printed">Printed</h3>
+
 	<form (submit)="handleSubmit($event)">
-		<dx-form [colCount]="4" [formData]="purchaseOrder" [readOnly]="purchaseOrder.id != 0" id="form"
+		<dx-form [colCount]="4" [formData]="purchaseOrder" [readOnly]="!canEdit" id="form"
 				 labelLocation="top">
 			<dxi-item [colCount]="4" [colSpan]="4" caption="General Details" itemType="group">
 
@@ -19,13 +29,14 @@
 						  [visible]="purchaseOrder.id !=0"></dxi-item>
 
 				<dxi-item [colSpan]="1"
-						  [visible]="purchaseOrder.id !=0"
-						  [editorOptions]="{ dataSource: metadata.purchaseOrderStatus, displayExpr: 'name', valueExpr: 'id' }"
+						  [visible]="purchaseOrder.id != 0"
+						  [editorOptions]="{ dataSource: metadata.purchaseOrderStatus, displayExpr: 'name', valueExpr: 'id', readOnly: true }"
 						  [isRequired]="true"
 						  [label]="{ text: 'Status' }" dataField="status" editorType="dxSelectBox">
 				</dxi-item>
 
-				<dxi-item [colSpan]="1" [editorOptions]="{ dataSource: warehouseStore, displayExpr: 'name', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'name'],
+				<dxi-item [colSpan]="1" [editorOptions]="{ dataSource: warehouseStore,
+					displayExpr: 'name', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'name'],
 					fieldTemplate: 'warehouseField', itemTemplate: 'warehouseField'}"
 						  [isRequired]="false"
 						  [label]="{ text: 'Warehouse' }" dataField="wareHouseId" editorType="dxLookup">
@@ -54,15 +65,14 @@
 				<dxi-item>
 					<dx-data-grid #dxDataGridPurchaseOrderItems (onRowValidating)="onRowValidating($event)"
 								  [dataSource]="purchaseOrder.purchaseOrderItems"
-								  [disabled]="purchaseOrder.supplierId == 0"
 								  [rowAlternationEnabled]="true" [showBorders]="true"
 								  (onEditorPreparing)="onEditorPreparing($event)"
 								  (onSaved)="onGridSaved($event)"
 								  class="wide-card">
 						<dxo-editing
-							[allowAdding]="purchaseOrder.id == 0"
-							[allowDeleting]="purchaseOrder.id == 0"
-							[allowUpdating]="purchaseOrder.id == 0"
+							[allowAdding]="canEdit"
+							[allowDeleting]="canEdit"
+							[allowUpdating]="canEdit"
 							mode="cell">
 						</dxo-editing>
 						<dxi-column [allowSorting]="false" caption="Product Name" dataField="productId">
@@ -77,7 +87,9 @@
 						<dxi-column [allowSorting]="false" [width]="200" dataField="quantity" dataType="number">
 							<dxi-validation-rule message="Quantity is required" type="required"></dxi-validation-rule>
 						</dxi-column>
-						<dxi-column [allowSorting]="false" [width]="200" [visible]="purchaseOrder.id != 0" dataField="receivedQuantity" dataType="number">
+						<dxi-column [allowSorting]="false" [width]="200" [visible]="purchaseOrder.id != 0"
+									[allowEditing]="false"
+									dataField="receivedQuantity" dataType="number">
 						</dxi-column>
 						<dxi-column [allowSorting]="false" [width]="200" dataField="unitCost" dataType="number">
 							<dxi-validation-rule message="Unit Cost is required" type="required"></dxi-validation-rule>
@@ -105,7 +117,8 @@
 			</dxi-item>
 
 			<dxi-item
-				[buttonOptions]="{ text: 'Save Changes', visible: purchaseOrder.id == 0, useSubmitBehavior: true, icon: 'save', type: 'success', class: 'btn-save-product' }"
+				[buttonOptions]="{ text: 'Save Changes', visible: canEdit,
+					useSubmitBehavior: true, icon: 'save', type: 'success', class: 'btn-save-product' }"
 				[colSpan]="4" class="btn-save-product"
 				itemType="button">
 			</dxi-item>

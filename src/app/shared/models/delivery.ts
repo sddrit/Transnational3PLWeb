@@ -25,6 +25,7 @@ export interface IDeliveryItem {
 	product: IProduct;
 	quantity: number;
 	unitCost: number;
+	deliveryId: number;
 }
 
 export interface IDeliveryCustomer {
@@ -66,4 +67,8 @@ export interface IMonthyDeliveryStateItem {
 export interface IDeliveryStatItem {
 	status: number;
 	count: number;
+}
+
+export interface ILatestDeliveryItemPriceResponse {
+	unitPrice: number;
 }

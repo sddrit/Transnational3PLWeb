@@ -54,5 +54,10 @@ export class PurchaseOrderService extends BaseService {
 				calculateStorage)
 			.pipe(catchError(e => this.handleError(e, 'Calculate storage')));
 	}
+
+	public markAsPrinted(id: number) {
+		return this.http.post(this.apiUrl + '/PurchaseOrder/mark-as-printed/' + id, {})
+			.pipe(catchError(e => this.handleError(e, 'Mark as printed')));
+	}
 }
 

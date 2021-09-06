@@ -64,6 +64,24 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 		this.setPurchaseOrder();
 	}
 
+	get canEdit(): boolean {
+
+		if (!this.purchaseOrder) {
+			return false;
+		}
+		if (this.purchaseOrder.id === 0) {
+			return true;
+		}
+		if (this.purchaseOrder.status !== 0) {
+			return false;
+		}
+		if (!this.purchaseOrder.printed) {
+			return true;
+		}
+		return false;
+
+	}
+
 	handleSubmit(e: Event) {
 		e.preventDefault();
 
@@ -135,6 +153,10 @@ export class PurchaseOrderUpdateComponent implements OnInit {
 
 	public backToPurchaseOrders() {
 		this.router.navigate(['/purchase-orders']);
+	}
+
+	public printPurchaseOrder() {
+		this.router.navigate(['/purchase-order-print-view', this.purchaseOrder.id]);
 	}
 
 	private setPurchaseOrder() {

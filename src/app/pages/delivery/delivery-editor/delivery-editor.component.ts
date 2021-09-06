@@ -95,17 +95,43 @@ export class DeliveryEditorComponent implements OnInit {
 		this.setDelivery();
 	}
 
+	get canEdit(): boolean {
+		if (!this.delivery) {
+			return false;
+		}
+		if (this.delivery.id === 0) {
+			return true;
+		}
+		if (this.delivery.deliveryStatus === 0) {
+			return true;
+		}
+		return false;
+	}
+
 	handleSubmit(e: Event) {
 		e.preventDefault();
+
 		if ( ! this.deliveryItemGridValid ) {
 			this.notify.error('Please check the delivery items');
 			return;
 		}
+
 		if ( this.delivery.deliveryItems == null || this.delivery.deliveryItems.length == 0 ) {
 			this.notify.error('Delivery should have at lease one delivery item');
 			return;
 		}
+
 		this.loader.show(true);
+
+		if (this.delivery.id !== 0) {
+			this.deliveryService.updateDelivery(this.delivery).subscribe(data => {
+				this.notify.success('Successfully updated delivery');
+				this.delivery = data;
+				this.loader.show(false);
+			});
+			return;
+		}
+
 		this.deliveryService.addDelivery(this.delivery).subscribe(data => {
 			this.notify.success('Successfully created delivery');
 			this.loader.show(false);
@@ -224,12 +250,17 @@ export class DeliveryEditorComponent implements OnInit {
 		return this.delivery.deliveryStatus === 1;
 	}
 
+	canPrintWayBill() {
+		return this.delivery.deliveryStatus >= 2;
+	}
+
 	canMarkAsComplete() {
 		return this.delivery.deliveryStatus === 2 || this.delivery.deliveryStatus === 3;
 	}
 
 	canMarkAsReturn() {
-		return this.delivery.deliveryStatus === 4;
+		return this.delivery.deliveryStatus === 2 || this.delivery.deliveryStatus === 3 ||
+			this.delivery.deliveryStatus === 4;
 	}
 
 	isSupplier() {
@@ -246,7 +277,7 @@ export class DeliveryEditorComponent implements OnInit {
 			const standardHandler = e.editorOptions.onValueChanged;
 			e.editorOptions.onValueChanged = (editorEvent) => {
 				standardHandler(editorEvent);
-				this.productService.getProductById(editorEvent.value).subscribe(product => {
+				this.deliveryService.getLatestDeliveryPrice(editorEvent.value).subscribe(product => {
 					e.component.cellValue(e.row.rowIndex, 'unitCost', product.unitPrice);
 					e.component.editCell(e.row.rowIndex, 1);
 				});
@@ -275,13 +306,6 @@ export class DeliveryEditorComponent implements OnInit {
 			return [];
 		}
 		return this.delivery.deliveryTrackings.filter(item => item.status === 1);
-	}
-
-	getCompletedOrDispatchedTrackings() {
-		if (this.delivery == null || this.delivery.deliveryTrackings == null) {
-			return [];
-		}
-		return this.delivery.deliveryTrackings.filter(item => item.status === 1 || item.status === 2);
 	}
 
 	private setDelivery() {

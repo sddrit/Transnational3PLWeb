@@ -12,6 +12,8 @@ export interface IPurchaseOrderDetails {
 	wareHouse?: null;
 	purchaseOrderItems: IPurchaseOrderDetailsItem[];
 	created: Date;
+	printed: boolean;
+	PrintedDate?: Date;
 }
 
 export interface IPurchaseOrderDetailsItem {
@@ -32,6 +34,8 @@ export interface IPurchaseOrder {
 	note: string;
 	supplierId: number;
 	wareHouseId: number;
+	printed: boolean;
+	PrintedDate?: Date;
 	purchaseOrderItems: IPurchaseOrderItem[];
 }
 

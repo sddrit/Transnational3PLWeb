@@ -40,6 +40,7 @@ export class StockTransferEditorComponent implements OnInit {
 		private notify: NotifyHandler,
 		private cdr: ChangeDetectorRef
 	) {
+		this.onEditorPreparing = this.onEditorPreparing.bind(this);
 	}
 
 	ngOnInit(): void {
@@ -83,6 +84,19 @@ export class StockTransferEditorComponent implements OnInit {
 
 	public backToStockTransfers() {
 		this.router.navigate(['/stock-transfers']);
+	}
+
+	onEditorPreparing(e) {
+		if (e.dataField === 'productId') {
+			const standardHandler = e.editorOptions.onValueChanged;
+			e.editorOptions.onValueChanged = (editorEvent) => {
+				standardHandler(editorEvent);
+				this.productService.getProductById(editorEvent.value).subscribe(product => {
+					e.component.cellValue(e.row.rowIndex, 'unitCost', product.unitPrice);
+					e.component.editCell(e.row.rowIndex, 1);
+				});
+			};
+		}
 	}
 
 	private setStockTransfer() {

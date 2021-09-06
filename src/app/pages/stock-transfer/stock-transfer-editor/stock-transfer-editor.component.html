@@ -40,7 +40,7 @@
 					<dx-data-grid #dxDataGridStockTransferItems (onRowValidating)="onRowValidating($event)"
 								  [dataSource]="stockTransfer.stockTransferItems" [disabled]="stockTransfer.fromWareHouseId == 0"
 								  [rowAlternationEnabled]="true" [showBorders]="true"
-								  class=""
+								  (onEditorPreparing)="onEditorPreparing($event)"
 								  id="dxDataGridStockTransferItems">
 						<dxo-editing
 							[allowAdding]="stockTransfer.id == 0"

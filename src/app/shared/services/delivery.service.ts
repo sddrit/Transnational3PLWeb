@@ -9,7 +9,7 @@ import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { LoaderHandler } from '../utilities/loader.handler';
-import { IDelivery, IDeliveryStat } from '../models/delivery';
+import { IDelivery, IDeliveryStat, ILatestDeliveryItemPriceResponse } from '../models/delivery';
 
 @Injectable()
 export class DeliveryService extends BaseService {
@@ -49,6 +49,11 @@ export class DeliveryService extends BaseService {
 			.pipe(catchError(e => this.handleError(e, 'Create delivery')));
 	}
 
+	public updateDelivery(delivery: IDelivery) {
+		return this.http.put<IDelivery>(this.apiUrl + '/Delivery', delivery)
+			.pipe(catchError(e => this.handleError(e, 'Update delivery')));
+	}
+
 	public mapDeliveryProduct(delivery: IDelivery) {
 		return this.http.put<IDelivery>(this.apiUrl + '/Delivery/map-delivery-product', delivery)
 			.pipe(catchError(e => this.handleError(e, 'Mapping products to tracking numbers')));
@@ -78,8 +83,14 @@ export class DeliveryService extends BaseService {
 			.pipe(catchError(e => this.handleError(e, 'Mark as return')));
 	}
 
+	public getLatestDeliveryPrice(productId: number) {
+		return this.http.get<ILatestDeliveryItemPriceResponse>(this.apiUrl
+			+ '/Delivery/latest-delivery-unit-price/' + productId)
+			.pipe(catchError(e => this.handleError(e, 'Unable to get latest delivery price')));
+	}
+
 	public getDeliveryCompleteUploadUrl() {
-		return this.apiUrl + '/Delivery/process-delivery-complete';
+		return this.apiUrl + '/Delivery/process-delivery-sheet';
 	}
 }
 
