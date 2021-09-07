@@ -47,7 +47,7 @@ export class LoginFormComponent implements OnInit {
 				localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(data.user));
 				localStorage.setItem(ROLE_KEY, data.roles[0]);
 				if (this.authService.isSupplier) {
-					this.router.navigate(['/products']);
+					this.router.navigate(['/home']);
 					return;
 				}
 				this.router.navigate([this.returnUrl]);

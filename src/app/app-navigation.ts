@@ -66,6 +66,77 @@ export const supplierNavigation = [
 		text: 'Deliveries',
 		path: '/deliveries',
 		icon: 'runner'
+	},
+	{
+		text: 'Invoices',
+		path: '/invoices',
+		icon: 'icon ion-md-paper'
+	}
+];
+
+export const userNavigations = [
+	{
+		text: 'Dashboard',
+		path: '/home',
+		icon: 'icon ion-md-apps'
+	},
+	{
+		text: 'Products',
+		path: '/products',
+		icon: 'icon ion-md-cube'
+	},
+	{
+		text: 'Purchase Orders',
+		path: '/purchase-orders',
+		icon: 'icon ion-md-cart'
+	},
+	{
+		text: 'Good Received Notes',
+		path: '/grn-list',
+		icon: 'icon ion-md-airplane'
+	},
+	{
+		text: 'Stock Transfers',
+		path: '/stock-transfers',
+		icon: 'icon ion-md-git-compare'
+	},
+	{
+		text: 'Deliveries',
+		path: '/deliveries',
+		icon: 'icon ion-md-walk'
+	}
+];
+
+export const wareHouseManagerNavigations = [
+	{
+		text: 'Dashboard',
+		path: '/home',
+		icon: 'icon ion-md-apps'
+	},
+	{
+		text: 'Products',
+		path: '/products',
+		icon: 'icon ion-md-cube'
+	},
+	{
+		text: 'Purchase Orders',
+		path: '/purchase-orders',
+		icon: 'icon ion-md-cart'
+	},
+	{
+		text: 'Good Received Notes',
+		path: '/grn-list',
+		icon: 'icon ion-md-airplane'
+	},
+	{
+		text: 'Stock Transfers',
+		path: '/stock-transfers',
+		icon: 'icon ion-md-git-compare'
+	},
+	{
+		text: 'Deliveries',
+		path: '/deliveries',
+		icon: 'icon ion-md-walk'
 	}
 ];
 

@@ -81,6 +81,9 @@ export class WarehouseUpdateComponent implements OnInit {
 				postalCode: null
 			},
 			name: null,
+			height: 0,
+			length: 0,
+			width: 0,
 		} as IWarehouse;
 	}
 

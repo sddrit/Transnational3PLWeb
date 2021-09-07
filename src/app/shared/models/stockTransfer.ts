@@ -1,11 +1,14 @@
 import { IWarehouse } from './warehouse';
 import { IProduct } from './product';
 
-export interface IReturnStockTransfer {
+export interface IProductStockTransfer {
+	transferType: string;
 	wareHouseId: number;
 	productId: number;
 	quantity: number;
+	damageQuantity: number;
 	unitCost: number;
+	trackingNumber: string;
 	expiredDate?: Date;
 	note: string;
 }

@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<h2>Products</h2>
 		<h5>List of products</h5>
-		<dx-button [visible]="!isSupplier()" (onClick)="openProduct(0)" class="btn-new-product" icon="add" text="New Product" type="normal">
+		<dx-button [visible]="canAdd()" (onClick)="openProduct(0)" class="btn-new-product" icon="add" text="New Product" type="normal">
 		</dx-button>
 	</div>
 
@@ -30,7 +30,7 @@
 		</dxi-column>
 		<dxi-column caption="SKU" dataField="sku">
 		</dxi-column>
-		<dxi-column [visible]="!isSupplier()" caption="Supplier" dataField="supplierId">
+		<dxi-column [visible]="canDisplaySupplierColumn()" caption="Supplier" dataField="supplierId">
 			<dxo-lookup
 				[dataSource]="supplierStore"
 				displayExpr="supplierName"
@@ -45,7 +45,7 @@
 		<dxi-column caption="Storage Units (m³)" [width]="150" dataField="storageUnits">
 		</dxi-column>
 		<dxi-column [width]="110" type="buttons">
-			<dxi-button visible="true" hint="Edit Product Details"
+			<dxi-button [visible]="canEdit()" hint="Edit Product Details"
 						cssClass="default-button"
 						icon="icon ion-md-create"
 						[onClick]="editProduct"></dxi-button>
@@ -54,5 +54,9 @@
 						icon="icon ion-md-information-circle"
 						[onClick]="viewProduct"></dxi-button>
 		</dxi-column>
+		<dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+		<div *dxTemplate="let item of 'detail'">
+			<app-product-stocks [displayActions]="false" [productId]="item.key" [warehouseDataSource]="warehouseStore"></app-product-stocks>
+		</div>
 	</dx-data-grid>
 </div>

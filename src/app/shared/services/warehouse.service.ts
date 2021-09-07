@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { BaseService } from './base.service';
-import { IWarehouse } from '../../shared/models/warehouse';
+import { IWarehouse, IWareHouseStorageInfo } from '../../shared/models/warehouse';
 import { Router } from '@angular/router';
 import { NotifyHandler } from '../utilities/notify.handler';
 import { ACCESS_TOKEN_KEY } from '../constants/common';
@@ -9,6 +9,7 @@ import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { LoaderHandler } from '../utilities/loader.handler';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class WarehouseService extends BaseService {
@@ -46,6 +47,11 @@ export class WarehouseService extends BaseService {
 	public updateWarehouse(wareHouse: IWarehouse) {
 		return this.http.put<IWarehouse>(this.apiUrl + '/WareHouse/', wareHouse)
 			.pipe(catchError(e => this.handleError(e, 'Adding warehouse')));
+	}
+
+	public getWareHouseStorageInfo(): Observable<IWareHouseStorageInfo[]> {
+		return this.http.get<IWareHouseStorageInfo[]>(this.apiUrl + '/WareHouse/warehouse-storage-info')
+			.pipe(catchError(e => this.handleError(e, 'Getting warehouse storage details')));
 	}
 }
 

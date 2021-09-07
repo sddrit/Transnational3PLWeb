@@ -12,6 +12,7 @@ import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import CustomStore from 'devextreme/data/custom_store';
 import { IInvoice } from '../models/invoice';
 import DataSource from 'devextreme/data/data_source';
+import loader from '@angular-devkit/build-angular/src/webpack/plugins/single-test-transform';
 
 const defaultPath = '/';
 const defaultUser = {
@@ -49,6 +50,14 @@ export class AuthService extends BaseService {
 		return this.role === 'Supplier';
 	}
 
+	get isUser(): boolean {
+		return this.role === 'User';
+	}
+
+	get isWareHouseManager(): boolean {
+		return this.role === 'Warehouse Manager';
+	}
+
 	private _lastAuthenticatedPath: string = defaultPath;
 
 	set lastAuthenticatedPath(value: string) {
@@ -59,19 +68,8 @@ export class AuthService extends BaseService {
 		return this.http.post<ILoginResponseModel>(this.apiUrl + '/Account', loginModel).pipe(catchError(this.extractError));
 	}
 
-	async getUser() {
-		try {
-			// Send request
-
-			return {
-				isOk: true,
-				data: this._user
-			};
-		} catch {
-			return {
-				isOk: false
-			};
-		}
+	getUser(): IUser {
+		return JSON.parse(localStorage.getItem(CURRENT_USER_KEY)) as IUser;
 	}
 
 	public getUsers(): CustomStore {
@@ -131,39 +129,6 @@ export class AuthService extends BaseService {
 			.pipe(catchError(e => this.handleError(e, 'Reset password')));
 	}
 
-	async createAccount(email, password) {
-		try {
-			// Send request
-			console.log(email, password);
-
-			this.router.navigate(['/create-account-popup']);
-			return {
-				isOk: true
-			};
-		} catch {
-			return {
-				isOk: false,
-				message: 'Failed to create account'
-			};
-		}
-	}
-
-	async changePassword(email: string, recoveryCode: string) {
-		try {
-			// Send request
-			console.log(email, recoveryCode);
-
-			return {
-				isOk: true
-			};
-		} catch {
-			return {
-				isOk: false,
-				message: 'Failed to change password'
-			};
-		}
-	}
-
 	async logOut() {
 		localStorage.removeItem(ACCESS_TOKEN_KEY);
 		localStorage.removeItem(CURRENT_USER_KEY);
@@ -199,30 +164,5 @@ export class AuthGuardService implements CanActivate {
 
 		this.router.navigate(['/login-form'], { queryParams: { returnUrl: state.url } });
 		return false;
-
-
-		// const isLoggedIn = this.authService.loggedIn;
-		// const isAuthForm = [
-		//   'login-form',
-		//   'reset-password',
-		//   'create-account-popup',
-		//   'change-password/:recoveryCode'
-		// ].includes(route.routeConfig.path);
-
-		// if (isLoggedIn && isAuthForm) {
-		//   this.authService.lastAuthenticatedPath = defaultPath;
-		//   this.router.navigate([defaultPath]);
-		//   return false;
-		// }
-
-		// if (!isLoggedIn && !isAuthForm) {
-		//   this.router.navigate(['/login-form']);
-		// }
-
-		// if (isLoggedIn) {
-		//   this.authService.lastAuthenticatedPath = route.routeConfig.path;
-		// }
-
-		// return isLoggedIn || isAuthForm;
 	}
 }

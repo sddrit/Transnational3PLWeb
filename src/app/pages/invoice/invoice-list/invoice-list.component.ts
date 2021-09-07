@@ -11,6 +11,7 @@ import { LoaderHandler } from '../../../shared/utilities/loader.handler';
 import { NotifyHandler } from '../../../shared/utilities/notify.handler';
 import { DxDataGridComponent } from 'devextreme-angular';
 import { IInvoice, IInvoiceItem } from '../../../shared/models/invoice';
+import { AuthService } from '../../../shared/services';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class InvoiceListComponent implements OnInit {
 		private invoiceService: InvoiceService,
 		private metadataService: MetadataService,
 		private supplierService: SupplierService,
+		private authService: AuthService,
 		private loader: LoaderHandler,
 		private notify: NotifyHandler,
 		private router: Router,
@@ -41,6 +43,8 @@ export class InvoiceListComponent implements OnInit {
 	) {
 		this.markAsPaid = this.markAsPaid.bind(this);
 		this.manualCharge = this.manualCharge.bind(this);
+		this.canAddManualCharges = this.canAddManualCharges.bind(this);
+		this.canMarkAsPaid = this.canMarkAsPaid.bind(this);
 	}
 
 	ngOnInit(): void {
@@ -101,7 +105,15 @@ export class InvoiceListComponent implements OnInit {
 	}
 
 	canMarkAsPaid (e) {
-		return !e.row.data.paid;
+		return !e.row.data.paid && !this.isSupplier();
+	}
+
+	canAddManualCharges(e) {
+		return !this.isSupplier();
+	}
+
+	isSupplier() {
+		return this.authService.isSupplier;
 	}
 }
 

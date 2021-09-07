@@ -10,7 +10,7 @@ import {
 	ViewChild
 } from '@angular/core';
 import { DxTreeViewComponent, DxTreeViewModule } from 'devextreme-angular/ui/tree-view';
-import { adminNavigation, supplierNavigation } from '../../../app-navigation';
+import { adminNavigation, supplierNavigation, userNavigations, wareHouseManagerNavigations } from '../../../app-navigation';
 
 import * as events from 'devextreme/events';
 import { AuthService } from '../../services';
@@ -50,7 +50,19 @@ export class SideNavigationMenuComponent implements AfterViewInit, OnDestroy {
 
 	get items() {
 		if ( ! this._items ) {
-			const navigation = this.authService.role === 'Admin' ? adminNavigation : supplierNavigation;
+			let navigation = [];
+			if (this.authService.isAdmin) {
+				navigation = adminNavigation;
+			}
+			if (this.authService.isSupplier) {
+				navigation = supplierNavigation;
+			}
+			if (this.authService.isWareHouseManager) {
+				navigation = wareHouseManagerNavigations;
+			}
+			if (this.authService.isUser) {
+				navigation = userNavigations;
+			}
 			this._items = navigation.map((item) => {
 				if ( item.path && ! (/^\//.test(item.path)) ) {
 					item.path = `/${item.path}`;

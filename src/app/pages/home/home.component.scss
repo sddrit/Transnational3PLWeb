@@ -23,3 +23,13 @@
 		font-weight: 400;
 	}
 }
+
+.ware-house-space-container {
+	width: 100%;
+}
+
+.ware-house-space-container > .pie {
+	width: 50%;
+	float: left;
+	margin-bottom: 50px;
+}

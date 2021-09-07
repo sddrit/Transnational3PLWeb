@@ -16,8 +16,8 @@
 					<dxi-item dataField="active" editorType="dxCheckBox"></dxi-item>
 				</dxi-item>
 
-				<dxi-item [colSpan]="2" itemType="empty"></dxi-item>
-				<dxi-item [colSpan]="2" itemType="empty"></dxi-item>
+				<dxi-item [colSpan]="3" itemType="empty"></dxi-item>
+
 				<dxi-item caption="Address Details" itemType="group">
 					<dxi-item [colCount]="2" itemType="group">
 						<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'address-line-1' }}" [isRequired]="true"
@@ -33,6 +33,15 @@
 								  dataField="address.postalCode"></dxi-item>
 					</dxi-item>
 				</dxi-item>
+
+				<dxi-item [colSpan]="3" itemType="empty"></dxi-item>
+
+				<dxi-item [colSpan]="2" [colCount]="3" caption="Storage" itemType="group">
+					<dxi-item [isRequired]="true" dataField="width" helpText="Warehouse storage space width (m)"></dxi-item>
+					<dxi-item [isRequired]="true" dataField="height" helpText="Product storage space height (m)"></dxi-item>
+					<dxi-item [isRequired]="true" dataField="length" helpText="Product storage space length (m)"></dxi-item>
+				</dxi-item>
+
 				<dxi-item [buttonOptions]="{text: 'Save Changes', useSubmitBehavior: true, icon: 'save', type: 'success', class: 'btn-save-warehouse' }" class="btn-save-warehouse"
 						  itemType="button">
 				</dxi-item>

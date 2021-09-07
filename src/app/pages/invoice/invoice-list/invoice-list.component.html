@@ -18,7 +18,7 @@
 		<dxo-filter-row [visible]="true"></dxo-filter-row>
 		<dxi-column dataField="invoiceNo">
 		</dxi-column>
-		<dxi-column caption="Supplier" dataField="supplierId">
+		<dxi-column [visible]="!isSupplier()" caption="Supplier" dataField="supplierId">
 			<dxo-lookup
 				[dataSource]="supplierStore"
 				displayExpr="supplierName"
@@ -37,7 +37,7 @@
 		<dxi-column dataField="paid">
 		</dxi-column>
 		<dxi-column type="buttons">
-			<dxi-button text="Manual Charges" [onClick]="manualCharge"  icon="edit">
+			<dxi-button text="Manual Charges" [visible]="canAddManualCharges" [onClick]="manualCharge"  icon="edit">
 			</dxi-button>
 			<dxi-button text="Mark as Paid" [visible]="canMarkAsPaid" [onClick]="markAsPaid" icon="check">
 			</dxi-button>

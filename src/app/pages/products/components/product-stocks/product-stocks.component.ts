@@ -4,6 +4,7 @@ import { StockService } from '../../../../shared/services/stock.service';
 import CustomStore = DevExpress.data.CustomStore;
 import { DxDataGridComponent } from 'devextreme-angular';
 import { IProductStock } from '../../../../shared/models/product';
+import { AuthService } from '../../../../shared/services';
 
 
 @Component({
@@ -17,17 +18,22 @@ export class ProductStocksComponent implements OnInit {
 	productId: number;
 	@Input()
 	warehouseDataSource: CustomStore;
+	@Input()
+	displayActions: boolean;
 
-	@Output() onTransferReturnStock = new EventEmitter<IProductStock>();
+	@Output() onTransferDispatchReturnStock = new EventEmitter<IProductStock>();
+	@Output() onTransferSaleReturnStock = new EventEmitter<IProductStock>();
 
 	@ViewChild(DxDataGridComponent, { static: false }) productStocksGrid: DxDataGridComponent;
 
 	productStocksDataSource: CustomStore;
 
 	constructor(
-		private stockService: StockService
+		private stockService: StockService,
+		private authService: AuthService
 	) {
-		this.transferReturnStock = this.transferReturnStock.bind(this);
+		this.transferDispatchReturnStock = this.transferDispatchReturnStock.bind(this);
+		this.transferSalesReturnStock = this.transferSalesReturnStock.bind(this);
 	}
 
 	ngOnInit(): void {
@@ -38,11 +44,22 @@ export class ProductStocksComponent implements OnInit {
 		this.productStocksGrid.instance.refresh();
 	}
 
-	public transferReturnStock(e) {
-		if (!this.onTransferReturnStock) {
+	public transferDispatchReturnStock(e) {
+		if (!this.onTransferDispatchReturnStock) {
 			return;
 		}
-		this.onTransferReturnStock.emit(e.row.data);
+		this.onTransferDispatchReturnStock.emit(e.row.data);
+	}
+
+	public transferSalesReturnStock(e) {
+		if (!this.onTransferSaleReturnStock) {
+			return;
+		}
+		this.onTransferSaleReturnStock.emit(e.row.data);
+	}
+
+	canMoveStock() {
+		return (this.authService.isAdmin || this.authService.isWareHouseManager) && this.displayActions;
 	}
 
 }

@@ -2,7 +2,7 @@
 	[width]="500"
 	[height]="'auto'"
 	[showTitle]="true"
-	title="Transfer Return Stock"
+	[title]="title"
 	[dragEnabled]="false"
 	[closeOnOutsideClick]="false"
 	(onShowing)="onShowingPopup($event)"
@@ -10,10 +10,10 @@
 	[showCloseButton]="true"
 	[(visible)]="visible">
 	<div *dxTemplate="let data of 'content'">
-		<p>Enter details for transfer the return stock into normal stock</p>
+		<p>Enter details for transfer the {{transferType}}</p>
 		<br/>
 		<form (submit)="handleSubmit($event)">
-			<dx-form [(formData)]="returnStockTransfer" id="form" labelLocation="top">
+			<dx-form [(formData)]="stockTransfer" id="form" labelLocation="top">
 				<dxi-item [editorOptions]="{ dataSource: warehouseStore, displayExpr: 'name', valueExpr: 'id',
 					searchEnabled: true, searchExpr: ['code', 'name'], fieldTemplate: 'warehouseField',
 					itemTemplate: 'warehouseField', readOnly: true }"
@@ -30,7 +30,11 @@
 				</dxi-item>
 				<dxi-item dataField="quantity" dataType="number" [isRequired]="true">
 				</dxi-item>
+				<dxi-item dataField="damageQuantity" dataType="number" [isRequired]="true">
+				</dxi-item>
 				<dxi-item dataField="unitCost" dataType="number" [isRequired]="true">
+				</dxi-item>
+				<dxi-item dataField="trackingNumber" [isRequired]="true">
 				</dxi-item>
 				<dxi-item [isRequired]="true" [editorOptions]="{ height: 120 }" dataField="note"
 						  itemType="dxTextArea"></dxi-item>

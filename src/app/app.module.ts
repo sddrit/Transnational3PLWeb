@@ -4,8 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import {
-	ChangePasswordFormModule,
-	CreateAccountFormModule,
 	FooterModule,
 	LoginFormModule
 } from './shared/components';
@@ -47,8 +45,6 @@ export function tokenGetter() {
 		SideNavInnerToolbarModule,
 		SingleCardModule,
 		FooterModule,
-		CreateAccountFormModule,
-		ChangePasswordFormModule,
 		LoginFormModule,
 		UnauthenticatedContentModule,
 		AppRoutingModule,

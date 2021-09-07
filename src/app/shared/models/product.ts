@@ -25,6 +25,8 @@ export interface IProductStock {
 	id: number;
 	wareHouseId: number;
 	quantity: number;
-	returnQuantity: number;
+	dispatchReturnQuantity: number;
+	damageStockQuantity: number;
+	salesReturnQuantity: number;
 	productId: number;
 }

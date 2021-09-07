@@ -10,6 +10,7 @@ import { SupplierService } from '../../../shared/services/supplier.service';
 import { NotifyHandler } from '../../../shared/utilities/notify.handler';
 import { ProductStocksComponent } from '../components/product-stocks/product-stocks.component';
 import { ProductStockAdjustmentsComponent } from '../components/product-stock-adjustments/product-stock-adjustments.component';
+import { AuthService } from '../../../shared/services';
 
 @Component({
 	templateUrl: 'product-details.component.html',
@@ -24,18 +25,21 @@ export class ProductDetailsComponent {
 	warehouseDataSource: CustomStore;
 	supplierStore: CustomStore;
 
-	showTransferReturnStockModal: boolean = false;
+	showTransferStockModal: boolean = false;
+	transferStockType: string = null;
 
 	@ViewChild(ProductStockAdjustmentsComponent, { static: false }) productStockAdjustmentsComponent: ProductStockAdjustmentsComponent;
 	@ViewChild(ProductStocksComponent, { static: false }) productStocksSection: ProductStocksComponent;
 
-	currentProductStock: IProductStock = { id: 0, productId: 0, quantity: 0, wareHouseId: 0, returnQuantity: 0 };
+	currentProductStock: IProductStock = { id: 0, productId: 0, quantity: 0, wareHouseId: 0,
+		dispatchReturnQuantity: 0, damageStockQuantity: 0, salesReturnQuantity: 0 };
 
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
 		private activatedRoute: ActivatedRoute,
 		private notify: NotifyHandler,
+		private authService: AuthService,
 		private warehouseService: WarehouseService,
 		private productService: ProductService,
 		private supplierService: SupplierService,
@@ -52,7 +56,7 @@ export class ProductDetailsComponent {
 
 		this.warehouseDataSource = this.warehouseService.getWarehouses();
 		this.supplierStore = this.supplierService.getSuppliers();
-		this.onTransferReturnStock = this.onTransferReturnStock.bind(this);
+		this.onTransferStock = this.onTransferStock.bind(this);
 	}
 
 	ngOnInit(): void {
@@ -70,29 +74,35 @@ export class ProductDetailsComponent {
 		this.router.navigate(['/products']);
 	}
 
-	onTransferReturnStock(productStock: IProductStock) {
+	onTransferStock(type: string, productStock: IProductStock) {
 		this.currentProductStock = productStock;
-		if (this.currentProductStock.returnQuantity <= 0) {
-			this.notify.warning('You dont have any stock to transfer from return stock');
+		this.transferStockType = type;
+		console.log(this.transferStockType);
+		if (type === 'Dispatch Return' && this.currentProductStock.dispatchReturnQuantity <= 0) {
+			this.notify.warning('You dont have any stock to transfer');
 			return;
 		}
-		this.transferReturnStockModalShow();
+		if (type === 'Sales Return' && this.currentProductStock.salesReturnQuantity <= 0) {
+			this.notify.warning('You dont have any stock to transfer');
+			return;
+		}
+		this.transferStockModalShow();
 	}
 
-	transferReturnStockModalShow(): void {
-		this.showTransferReturnStockModal = true;
+	transferStockModalShow(): void {
+		this.showTransferStockModal = true;
 	}
 
-	onTransferReturnStockSuccess(): void {
-		this.notify.success('Successfully transferred the return stocks');
-		this.showTransferReturnStockModal = false;
+	onTransferStockSuccess(): void {
+		this.notify.success('Successfully transferred the stock');
+		this.showTransferStockModal = false;
 		this.productStockAdjustmentsComponent.refresh();
 		this.productStocksSection.refresh();
 	}
 
 	// tslint:disable-next-line:indent
-	 onTransferReturnStockModalCancel(): void {
-		this.showTransferReturnStockModal = false;
+	 onTransferStockModalCancel(): void {
+		this.showTransferStockModal = false;
 	}
 
 }

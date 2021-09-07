@@ -96,6 +96,9 @@ export class DeliveryEditorComponent implements OnInit {
 	}
 
 	get canEdit(): boolean {
+		if (!this.canOperate()) {
+			return false;
+		}
 		if (!this.delivery) {
 			return false;
 		}
@@ -177,6 +180,10 @@ export class DeliveryEditorComponent implements OnInit {
 
 	dispatch(e) {
 		this.dispatchPopupVisible = true;
+		const user = this.authService.getUser();
+		if (user.wareHouses != null && user.wareHouses.length === 1) {
+			this.dispatchFormData.wareHouseId = user.wareHouses[0];
+		}
 		e.event.preventDefault();
 	}
 
@@ -263,10 +270,6 @@ export class DeliveryEditorComponent implements OnInit {
 			this.delivery.deliveryStatus === 4;
 	}
 
-	isSupplier() {
-		return this.authService.isSupplier;
-	}
-
 	disabledDates(args) {
 		const date = args.date;
 		return moment().add(-1, 'day') > date;
@@ -306,6 +309,10 @@ export class DeliveryEditorComponent implements OnInit {
 			return [];
 		}
 		return this.delivery.deliveryTrackings.filter(item => item.status === 1);
+	}
+
+	canOperate() {
+		return !this.authService.isSupplier;
 	}
 
 	private setDelivery() {

@@ -50,8 +50,10 @@
 	<app-product-stocks
 		id="productStockAdjustmentsComponent"
 		[productId]="productId"
+		[displayActions]="true"
 		[warehouseDataSource]="warehouseDataSource"
-		(onTransferReturnStock)="onTransferReturnStock($event)">
+		(onTransferDispatchReturnStock)="onTransferStock('Dispatch Return', $event)"
+		(onTransferSaleReturnStock)="onTransferStock('Sales Return', $event)">
 	</app-product-stocks>
 
 	<br/><br/>
@@ -63,14 +65,15 @@
 		[warehouseDataSource]="warehouseDataSource">
 	</app-product-stock-adjustments>
 
-	<app-transfer-return-stock-popup
-		(onSuccess)="onTransferReturnStockSuccess()"
-		(onCancel)="onTransferReturnStockModalCancel()"
+	<app-transfer-stock-popup
+		(onSuccess)="onTransferStockSuccess()"
+		(onCancel)="onTransferStockModalCancel()"
 		[productId]="productId"
+		[transferType]="transferStockType"
 		[wareHouseId]="currentProductStock.wareHouseId"
 		[unitCost]="product.unitPrice"
-		[visible]="showTransferReturnStockModal"
-		[quantity]="currentProductStock.returnQuantity">
-	</app-transfer-return-stock-popup>
+		[visible]="showTransferStockModal"
+		[quantity]="0">
+	</app-transfer-stock-popup>
 
 </div>

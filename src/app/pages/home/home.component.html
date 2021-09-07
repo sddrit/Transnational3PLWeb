@@ -79,6 +79,8 @@
 
 	<div *ngIf="monthlyDeliveryStat">
 		<dx-chart
+			palette="Soft Blue"
+			paletteExtensionMode="Blend"
 			id="monthly-delivery-stat"
 			title="Monthly Delivery Statistics"
 			[dataSource]="monthlyDeliveryStat">
@@ -110,6 +112,29 @@
 				location="edge">
 			</dxo-tooltip>
 		</dx-chart>
+	</div>
+
+	<br/><br/><br/>
+
+	<div class="ware-house-space-container">
+		<dx-pie-chart *ngFor="let warehouse of warehouseStorageInfo" class="pie"
+					  [title]="warehouse.title"
+					  [dataSource]="warehouse.spaces"
+					  palette="Soft Blue"
+					  paletteExtensionMode="Blend"
+					  sizeGroup="piesGroup">
+			<dxi-series
+				pla
+				argumentField="name"
+				valueField="value">
+				<dxo-label [visible]="true" [customizeText]="customizePieChartLabel"></dxo-label>
+			</dxi-series>
+			<dxo-legend verticalAlignment="bottom"
+						horizontalAlignment="center"
+						itemTextPosition="right"
+						[rowCount]="2">
+			</dxo-legend>
+		</dx-pie-chart>
 	</div>
 
 </div>

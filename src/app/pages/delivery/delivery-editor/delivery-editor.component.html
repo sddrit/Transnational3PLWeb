@@ -9,12 +9,12 @@
 
 	<br/>
 
-	<div class="buttons-wrapper">
+	<div *ngIf="canOperate()" class="buttons-wrapper">
 		<dx-button
 			icon="fieldchooser"
 			stylingMode="outlined"
 			type="normal"
-			[visible]="!isSupplier()"
+			[visible]="canOperate()"
 			[disabled]="!canMarkAsProcessing()"
 			(onClick)="processing($event)"
 			text="Mark As Process">
@@ -23,7 +23,7 @@
 			icon="car"
 			stylingMode="outlined"
 			type="default"
-			[visible]="!isSupplier()"
+			[visible]="canOperate()"
 			[disabled]="!canMarkAsDispatch()"
 			(onClick)="dispatch($event)"
 			text="Dispatch">
@@ -32,7 +32,7 @@
 			icon="todo"
 			stylingMode="outlined"
 			type="success"
-			[visible]="!isSupplier()"
+			[visible]="canOperate()"
 			[disabled]="!canMarkAsComplete()"
 			(onClick)="markAsComplete($event)"
 			text="Complete">
@@ -41,7 +41,7 @@
 			icon="revert"
 			stylingMode="outlined"
 			type="danger"
-			[visible]="!isSupplier()"
+			[visible]="canOperate()"
 			[disabled]="!canMarkAsReturn()"
 			(onClick)="return($event)"
 			text="Return">
@@ -51,7 +51,7 @@
 			icon="print"
 			stylingMode="outlined"
 			type="default"
-			[visible]="!isSupplier()"
+			[visible]="canOperate()"
 			[disabled]="!canPrintWayBill()"
 			(onClick)="wayBill($event)"
 			text="Way Bill">
@@ -193,7 +193,7 @@
 			<dxi-item [colCount]="2" [colSpan]="2"  caption="Tracking Numbers" itemType="group">
 				<dx-button stylingMode="outlined"
 						   icon="save"
-						   [visible]="delivery.deliveryStatus == 1"
+						   [visible]="delivery.deliveryStatus == 1 && canOperate()"
 						   text="Save Changes"
 						   (onClick)="onTrackingSaveChanges($event)"
 						   type="success">
@@ -299,10 +299,6 @@
 		[showCloseButton]="true"
 		[(visible)]="dispatchPopupVisible">
 		<div *dxTemplate="let data of 'content'">
-			<p>
-				<b>Delivery Number : </b>
-				<span> {{delivery.deliveryNo}}</span>
-			</p>
 			<form (submit)="handleDispatchForm($event)">
 				<dx-form [formData]="dispatchFormData" labelLocation="top">
 					<dxi-item [colSpan]="2"

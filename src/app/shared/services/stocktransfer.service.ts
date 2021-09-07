@@ -9,7 +9,7 @@ import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { LoaderHandler } from '../utilities/loader.handler';
-import { IReturnStockTransfer, IStockTransfer } from '../models/stockTransfer';
+import { IProductStockTransfer, IStockTransfer } from '../models/stockTransfer';
 
 @Injectable()
 export class StockTransferService extends BaseService {
@@ -44,8 +44,8 @@ export class StockTransferService extends BaseService {
 			.pipe(catchError(e => this.handleError(e, 'Create stock transfer')));
 	}
 
-	public transferReturnStock(returnStock: IReturnStockTransfer) {
-		return this.http.post(this.apiUrl + '/Stock/Transfer-Return-Stock', returnStock)
+	public transferStock(returnStock: IProductStockTransfer) {
+		return this.http.post(this.apiUrl + '/Stock/transfer-stock', returnStock)
 			.pipe(catchError(e => this.handleError(e, 'Transfer Return Stock')));
 	}
 }

@@ -18,8 +18,6 @@ import {
 import { DxReportViewerModule } from 'devexpress-reporting-angular';
 
 import {
-	ChangePasswordFormComponent,
-	CreateAccountFormComponent,
 	LoginFormComponent,
 } from './shared/components';
 
@@ -58,7 +56,7 @@ import { UserListComponent } from './pages/user/user-list/user-list.component';
 import { UserUpdateComponent } from './pages/user/user-update/user-update.component';
 import { WaybillComponent } from './pages/delivery/waybill/waybill.component';
 import { GrnViewComponent } from './pages/grn/grn-view/grn-view.component';
-import { TransferReturnStockPopupComponent } from './pages/products/components/transfer-return-stock-popup/transfer-return-stock-popup.component';
+import { TransferStockPopupComponent } from './pages/products/components/transfer-stock-popup/transfer-stock-popup.component';
 import { PurchaseOrderPrintComponent } from './pages/purchase-order/purchase-order-print-viewer/purchase-order-print.component';
 
 
@@ -84,16 +82,6 @@ const routes: Routes = [
 		resolve: {
 			metadata: MetadataResolver
 		}
-	},
-	{
-		path: 'create-account-popup',
-		component: CreateAccountFormComponent,
-		canActivate: [AuthGuardService]
-	},
-	{
-		path: 'change-password/:recoveryCode',
-		component: ChangePasswordFormComponent,
-		canActivate: [AuthGuardService]
 	},
 	{
 		path: 'suppliers',
@@ -259,7 +247,7 @@ const routes: Routes = [
 	},
 	{
 		path: '**',
-		redirectTo: 'suppliers'
+		redirectTo: 'home'
 	}
 ];
 
@@ -315,7 +303,7 @@ const routes: Routes = [
 		GrnViewComponent,
 		CreateAccountPopupComponent,
 		SupplierDetailsComponent,
-		TransferReturnStockPopupComponent
+		TransferStockPopupComponent
 	]
 })
 export class AppRoutingModule {
