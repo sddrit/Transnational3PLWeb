@@ -45,6 +45,11 @@ export const adminNavigation = [
 		icon: 'icon ion-md-paper'
 	},
 	{
+		text: 'Reports',
+		path: '/reports',
+		icon: 'icon ion-md-document'
+	},
+	{
 		text: 'Users',
 		path: '/users',
 		icon: 'icon ion-md-person'

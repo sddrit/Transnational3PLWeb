@@ -15,7 +15,7 @@ export class AppComponent {
 		return Object.keys(this.screen.sizes).filter(cl => this.screen.sizes[cl]).join(' ');
 	}
 
-	isAuthenticated() {
+	get isAuthenticated() {
 		return this.authService.loggedIn;
 	}
 }

@@ -7,6 +7,7 @@ import { DxLoadIndicatorModule } from 'devextreme-angular/ui/load-indicator';
 import { ACCESS_TOKEN_KEY, CURRENT_USER_KEY, ROLE_KEY } from '../../constants/common';
 import { ILoginModel, ILoginResponseModel } from '../../models/auth';
 import { AuthService } from '../../services';
+import { DxScrollViewModule } from 'devextreme-angular/ui/scroll-view';
 
 
 @Component({
@@ -35,21 +36,19 @@ export class LoginFormComponent implements OnInit {
 				this.returnUrl = params.returnUrl;
 			}
 		});
+		if (this.authService.loggedIn) {
+			this.router.navigate([this.returnUrl]);
+		}
 	}
 
 
 	public login(e: any) {
 		e.preventDefault();
-
 		this.isLoading = true;
 		this.authService.login(this.loginModel).subscribe((data: ILoginResponseModel) => {
 				localStorage.setItem(ACCESS_TOKEN_KEY, data.token);
 				localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(data.user));
 				localStorage.setItem(ROLE_KEY, data.roles[0]);
-				if (this.authService.isSupplier) {
-					this.router.navigate(['/home']);
-					return;
-				}
 				this.router.navigate([this.returnUrl]);
 			},
 			(errorText: string) => {
@@ -66,6 +65,7 @@ export class LoginFormComponent implements OnInit {
 		RouterModule,
 		DxFormModule,
 		DxLoadIndicatorModule,
+		DxScrollViewModule
 	],
 	declarations: [LoginFormComponent],
 	exports: [LoginFormComponent]

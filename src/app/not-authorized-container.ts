@@ -6,7 +6,7 @@ import { SingleCardModule } from 'src/app/layouts';
 @Component({
 	selector: 'app-not-authorized-container',
 	template: `
-    <app-single-card [title]="title" [description]="description">
+    <app-single-card>
       <router-outlet></router-outlet>
     </app-single-card>
   `,
@@ -20,28 +20,6 @@ import { SingleCardModule } from 'src/app/layouts';
 export class NotAuthorizedContainerComponent {
 
 	constructor(private router: Router) {
-	}
-
-	get title() {
-		const path = this.router.url.split('/')[1];
-		switch ( path ) {
-			case 'login-form':
-				return '';
-			case 'reset-password':
-				return 'Reset Password';
-			case 'create-account-popup':
-				return 'Sign Up';
-			case 'change-password':
-				return 'Change Password';
-		}
-	}
-
-	get description() {
-		const path = this.router.url.split('/')[1];
-		switch ( path ) {
-			case 'reset-password':
-				return 'Please enter the email address that you used to register, and we will send you a link to reset your password via Email.';
-		}
 	}
 }
 

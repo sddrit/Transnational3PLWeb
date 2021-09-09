@@ -50,7 +50,7 @@ import { StockTransferListComponent } from './pages/stock-transfer/stock-transfe
 import { StockTransferEditorComponent } from './pages/stock-transfer/stock-transfer-editor/stock-transfer-editor.component';
 import { DeliveryListComponent } from './pages/delivery/delivery-list/delivery-list.component';
 import { DeliveryEditorComponent } from './pages/delivery/delivery-editor/delivery-editor.component';
-import { StockBalanceReportComponent } from './pages/report/stock-balance-report/stock-balance-report.component';
+import { ReportViewerComponent } from './pages/report/report-viewer/report-viewer.component';
 import { InvoiceDetailsComponent } from './pages/invoice/invoice-details/invoice-details.component';
 import { UserListComponent } from './pages/user/user-list/user-list.component';
 import { UserUpdateComponent } from './pages/user/user-update/user-update.component';
@@ -58,22 +58,13 @@ import { WaybillComponent } from './pages/delivery/waybill/waybill.component';
 import { GrnViewComponent } from './pages/grn/grn-view/grn-view.component';
 import { TransferStockPopupComponent } from './pages/products/components/transfer-stock-popup/transfer-stock-popup.component';
 import { PurchaseOrderPrintComponent } from './pages/purchase-order/purchase-order-print-viewer/purchase-order-print.component';
+import { ReportListComponent } from './pages/report/report-list/report-list.component';
 
 
 const routes: Routes = [
 	{
 		path: 'login-form',
 		component: LoginFormComponent
-	},
-	{
-		path: 'tasks',
-		component: TasksComponent,
-		canActivate: [AuthGuardService]
-	},
-	{
-		path: 'profile',
-		component: ProfileComponent,
-		canActivate: [AuthGuardService]
 	},
 	{
 		path: 'home',
@@ -218,8 +209,13 @@ const routes: Routes = [
 		}
 	},
 	{
-		path: 'report/stock-balanace',
-		component: StockBalanceReportComponent,
+		path: 'reports',
+		component: ReportListComponent,
+		canActivate: [AuthGuardService],
+	},
+	{
+		path: 'report/view/:name',
+		component: ReportViewerComponent,
 		canActivate: [AuthGuardService],
 	},
 	{
@@ -253,7 +249,7 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [
-		RouterModule.forRoot(routes, { useHash: true }),
+		RouterModule.forRoot(routes, { useHash: false }),
 		CommonModule,
 		DxDataGridModule,
 		DxFormModule,
@@ -294,7 +290,7 @@ const routes: Routes = [
 		StockTransferEditorComponent,
 		DeliveryListComponent,
 		DeliveryEditorComponent,
-		StockBalanceReportComponent,
+		ReportViewerComponent,
 		InvoiceListComponent,
 		InvoiceDetailsComponent,
 		UserListComponent,
@@ -303,7 +299,8 @@ const routes: Routes = [
 		GrnViewComponent,
 		CreateAccountPopupComponent,
 		SupplierDetailsComponent,
-		TransferStockPopupComponent
+		TransferStockPopupComponent,
+		ReportListComponent
 	]
 })
 export class AppRoutingModule {

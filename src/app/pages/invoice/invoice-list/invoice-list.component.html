@@ -36,12 +36,12 @@
 		</dxi-column>
 		<dxi-column dataField="paid">
 		</dxi-column>
-		<dxi-column type="buttons">
-			<dxi-button text="Manual Charges" [visible]="canAddManualCharges" [onClick]="manualCharge"  icon="edit">
+		<dxi-column alignment="right" type="buttons">
+			<dxi-button text="Manual Charges" cssClass="default-button" [visible]="canAddManualCharges" [onClick]="manualCharge" icon="edit">
 			</dxi-button>
-			<dxi-button text="Mark as Paid" [visible]="canMarkAsPaid" [onClick]="markAsPaid" icon="check">
+			<dxi-button text="Mark as Paid" cssClass="default-button" [visible]="canMarkAsPaid" [onClick]="markAsPaid" icon="check">
 			</dxi-button>
-			<dxi-button  text="View Invoice" icon="print" [onClick]="viewInvoice">
+			<dxi-button  text="View Invoice" cssClass="info-button" icon="print" [onClick]="viewInvoice">
 			</dxi-button>
 		</dxi-column>
 	</dx-data-grid>

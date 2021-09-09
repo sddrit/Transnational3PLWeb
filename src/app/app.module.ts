@@ -36,14 +36,13 @@ export function tokenGetter() {
 
 @NgModule({
 	declarations: [
-		AppComponent
+		AppComponent,
 	],
 	imports: [
 		BrowserModule,
 		HttpClientModule,
 		SideNavOuterToolbarModule,
 		SideNavInnerToolbarModule,
-		SingleCardModule,
 		FooterModule,
 		LoginFormModule,
 		UnauthenticatedContentModule,

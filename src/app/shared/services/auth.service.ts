@@ -10,9 +10,7 @@ import { BaseService } from './base.service';
 import { LoaderHandler } from '../utilities/loader.handler';
 import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import CustomStore from 'devextreme/data/custom_store';
-import { IInvoice } from '../models/invoice';
 import DataSource from 'devextreme/data/data_source';
-import loader from '@angular-devkit/build-angular/src/webpack/plugins/single-test-transform';
 
 const defaultPath = '/';
 const defaultUser = {
@@ -65,7 +63,8 @@ export class AuthService extends BaseService {
 	}
 
 	public login(loginModel: ILoginModel) {
-		return this.http.post<ILoginResponseModel>(this.apiUrl + '/Account', loginModel).pipe(catchError(this.extractError));
+		return this.http.post<ILoginResponseModel>(this.apiUrl + '/Account', loginModel)
+			.pipe(catchError(this.extractError));
 	}
 
 	getUser(): IUser {
