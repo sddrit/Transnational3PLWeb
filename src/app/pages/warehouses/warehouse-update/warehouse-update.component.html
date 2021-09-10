@@ -25,10 +25,11 @@
 								  dataField="address.addressLine1"></dxi-item>
 						<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'address-line-2' }}" [label]="{text: 'Address Line 2'}"
 								  dataField="address.addressLine2"></dxi-item>
-						<dxi-item [editorOptions]="{ id:'fake-city', dataSource: cityStore, displayExpr: 'cityName', valueExpr: 'id',
-						  searchExpr: 'cityName', searchMode: 'contains', minSearchLength: 0, searchEnabled: true, inputAttr: { autocomplete: 'chrome-off' } }" [isRequired]="true" [label]="{text: 'City'}"
-								  dataField="address.cityId"
-								  editorType="dxSelectBox"></dxi-item>
+						<dxi-item [colSpan]="1" [editorOptions]="{ dataSource: cityStore, displayExpr: 'cityName',
+									valueExpr: 'id', searchEnabled: true, searchExpr: ['cityName']}"
+								  [isRequired]="true"
+								  [label]="{ text: 'City' }" dataField="address.cityId" editorType="dxLookup">
+						</dxi-item>
 						<dxi-item [editorOptions]="{inputAttr: { autocomplete: 'postal-code' }}" [isRequired]="true" [label]="{text: 'Postal Code'}"
 								  dataField="address.postalCode"></dxi-item>
 					</dxi-item>

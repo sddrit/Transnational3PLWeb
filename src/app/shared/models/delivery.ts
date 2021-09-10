@@ -72,3 +72,32 @@ export interface IDeliveryStatItem {
 export interface ILatestDeliveryItemPriceResponse {
 	unitPrice: number;
 }
+
+export interface ITrackingDetailsItem {
+	trackingNo: string;
+	inwardedHub: string;
+	customerCode: string;
+	customerName: string;
+	customerAddress: string;
+	customerNumber: string;
+	receiverName: string;
+	receiverAddress: string;
+	receiverNumber: string;
+	tplwsBatchID: string;
+	snicNo: string;
+	rnicNo: string;
+	toLocation: string;
+	area: string;
+	itemType: string;
+	itemWeight: string;
+	taxRegNo: string;
+	inwardedBy: string;
+	inwardedDate: string;
+	codAmount: string;
+}
+
+export interface ITrackingDetails {
+	isSuccess: string;
+	message: string;
+	result: ITrackingDetailsItem[];
+}

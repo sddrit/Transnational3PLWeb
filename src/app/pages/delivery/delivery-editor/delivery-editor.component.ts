@@ -12,9 +12,9 @@ import { IDelivery, IDeliveryTracking } from '../../../shared/models/delivery';
 import { DeliveryService } from '../../../shared/services/delivery.service';
 import { CityService } from '../../../shared/services/city.service';
 import { IMetaData } from '../../../shared/models/metadata';
-import { confirm } from 'devextreme/ui/dialog';
 import { AuthService } from '../../../shared/services';
 import { DxDataGridComponent, DxFormComponent } from 'devextreme-angular';
+import DataSource from 'devextreme/data/data_source';
 
 @Component({
 	selector: 'app-delivery-transfer-editor',
@@ -36,6 +36,8 @@ export class DeliveryEditorComponent implements OnInit {
 	deliveryItemGridValid = true;
 	metaData: IMetaData;
 
+	trackingDetailsDataSource: DataSource;
+
 	currentTracking: IDeliveryTracking = {
 		id: 0,
 		status: 0,
@@ -47,6 +49,7 @@ export class DeliveryEditorComponent implements OnInit {
 	dispatchPopupVisible = false;
 	returnPopupVisible = false;
 	completePopupVisible = false;
+	trackingDetailsPopupVisible = false;
 
 	processingFormData = {
 		requiredNumberOfTrackingNumber: 0
@@ -313,6 +316,21 @@ export class DeliveryEditorComponent implements OnInit {
 
 	canOperate() {
 		return !this.authService.isSupplier;
+	}
+
+	showTrackingDetails(e, trackingNumber: string) {
+		e.event.preventDefault();
+		this.loader.show(true);
+		this.deliveryService.getTrackingDetails(trackingNumber).subscribe(details => {
+			if (details.isSuccess === '0') {
+				this.notify.error('Unable to get tracking details');
+				this.loader.show(false);
+				return;
+			}
+			this.trackingDetailsDataSource = new DataSource(details.result);
+			this.trackingDetailsPopupVisible = true;
+			this.loader.show(false);
+		});
 	}
 
 	private setDelivery() {

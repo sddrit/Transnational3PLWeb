@@ -216,6 +216,15 @@
 					<div *dxTemplate="let tracking of 'detail'">
 						<div class="master-detail-caption">Tracking Number : {{tracking.data.trackingNumber}}</div>
 						<br/>
+						<dx-button
+							icon="airplane"
+							stylingMode="outlined"
+							type="default"
+							(onClick)="showTrackingDetails($event, tracking.data.trackingNumber)"
+							text="View Tracking Details">
+						</dx-button>
+						<br/>
+						<br/>
 						<dx-data-grid [dataSource]="tracking.data.deliveryTrackingItems"
 									  [rowAlternationEnabled]="true" [showBorders]="true">
 							<dxo-editing
@@ -245,8 +254,9 @@
 				</dx-data-grid>
 			</dxi-item>
 
-			<dxi-item [buttonOptions]="{ text: 'Save Changes', useSubmitBehavior: true, icon: 'save', type: 'success',
-						class: 'btn-save-product', visible: canEdit }" [colSpan]="4" class="btn-save-product"
+			<dxi-item [buttonOptions]="{ text: 'Save Changes', useSubmitBehavior: true,
+				icon: 'save', type: 'success', visible: canEdit }" [colSpan]="4"
+					  class="btn-save-product"
 					  itemType="button">
 			</dxi-item>
 		</dx-form>
@@ -337,7 +347,6 @@
 			<br/>
 			<form (submit)="handleComplete($event)">
 				<dx-form #completeForm labelLocation="left">
-
 					<dxi-item
 						*ngFor="let tracking of getDispatchedTrackings()" [dataField]="tracking.trackingNumber"
 						editorType="dxCheckBox">
@@ -385,6 +394,36 @@
 					</dxi-item>
 				</dx-form>
 			</form>
+		</div>
+	</dx-popup>
+
+	<dx-popup
+		[width]="900"
+		[height]="'auto'"
+		[showTitle]="true"
+		title="Tracking Details"
+		[dragEnabled]="false"
+		[closeOnOutsideClick]="false"
+		[showCloseButton]="true"
+		readonly="true"
+		[(visible)]="trackingDetailsPopupVisible">
+		<div *dxTemplate="let data of 'content'">
+			<dx-data-grid
+				[dataSource]="trackingDetailsDataSource"
+				[columnAutoWidth]="true"
+				[columnHidingEnabled]="true"
+				[rowAlternationEnabled]="true"
+				[showBorders]="true">
+				<dxo-export [enabled]="true"></dxo-export>
+				<dxo-paging [pageSize]="10"></dxo-paging>
+				<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
+				<dxo-filter-row [visible]="true"></dxo-filter-row>
+				<dxi-column dataField="receiverNumber"></dxi-column>
+				<dxi-column caption="Location" dataField="toLocation"></dxi-column>
+				<dxi-column dataField="area"></dxi-column>
+				<dxi-column dataField="receiverName"></dxi-column>
+				<dxi-column dataField="receiverAddress"></dxi-column>
+			</dx-data-grid>
 		</div>
 	</dx-popup>
 </div>

@@ -49,8 +49,8 @@ export class HomeComponent {
 				this.pendingCount = this.getDayStat(0);
 				this.processingCount = this.getDayStat(1);
 				this.dispatchedCount = this.getDayStat(2);
-				this.completedCount = this.getDayStat(3);
-				this.returnCount = this.getDayStat(4);
+				this.completedCount = this.getDayStat(4);
+				this.returnCount = this.getDayStat(5);
 				this.loader.show(false);
 			});
 		this.warehouseService.getWareHouseStorageInfo().subscribe(warehouseStorageInfos => {

@@ -63,14 +63,10 @@
 						dataField="address.addressLine2">
 						<dxo-label text="Address Line 2"></dxo-label>
 					</dxi-item>
-					<dxi-item *ngIf="supplier && supplier.address">
-						<dxo-label text="City"></dxo-label>
-						<dx-select-box [(value)]="supplier.address.cityId" [dataSource]="cityStore"
-									   [inputAttr]="{ autocomplete : 'city-field'}"
-									   [showDataBeforeSearch]="true"
-									   [minSearchLength]="0" [searchEnabled]="true" [searchExpr]="'cityName'"
-									   [searchMode]="'contains'" [searchTimeout]="200" displayExpr="cityName"
-									   valueExpr="id"></dx-select-box>
+					<dxi-item [colSpan]="1" [editorOptions]="{ dataSource: cityStore, displayExpr: 'cityName',
+									valueExpr: 'id', searchEnabled: true, searchExpr: ['cityName']}"
+							  [isRequired]="true"
+							  [label]="{ text: 'City' }" dataField="address.cityId" editorType="dxLookup">
 					</dxi-item>
 					<dxi-item
 						[editorOptions]="{inputAttr: { autocomplete: 'postal-code-field' }}"

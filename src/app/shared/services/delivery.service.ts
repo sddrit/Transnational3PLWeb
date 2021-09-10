@@ -9,7 +9,12 @@ import * as AspNetData from 'devextreme-aspnet-data-nojquery';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { LoaderHandler } from '../utilities/loader.handler';
-import { IDelivery, IDeliveryStat, ILatestDeliveryItemPriceResponse } from '../models/delivery';
+import {
+	IDelivery,
+	IDeliveryStat,
+	ILatestDeliveryItemPriceResponse,
+	ITrackingDetails,
+} from '../models/delivery';
 
 @Injectable()
 export class DeliveryService extends BaseService {
@@ -87,6 +92,11 @@ export class DeliveryService extends BaseService {
 		return this.http.get<ILatestDeliveryItemPriceResponse>(this.apiUrl
 			+ '/Delivery/latest-delivery-unit-price/' + productId)
 			.pipe(catchError(e => this.handleError(e, 'Unable to get latest delivery price')));
+	}
+
+	public getTrackingDetails(trackingNumber: string): Observable<ITrackingDetails> {
+		return this.http.get<ITrackingDetails>(this.apiUrl + `/Delivery/get-tracking-details/${trackingNumber}`)
+			.pipe(catchError(e => this.handleError(e, 'Get tracking details')));
 	}
 
 	public getDeliveryCompleteUploadUrl() {

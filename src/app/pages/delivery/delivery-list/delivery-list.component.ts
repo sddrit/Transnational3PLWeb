@@ -11,7 +11,7 @@ import { LoaderHandler } from '../../../shared/utilities/loader.handler';
 import { NotifyHandler } from '../../../shared/utilities/notify.handler';
 import { AuthService } from '../../../shared/services';
 import { ACCESS_TOKEN_KEY } from '../../../shared/constants/common';
-import { DxFileUploaderComponent } from 'devextreme-angular';
+import { DxDataGridComponent, DxFileUploaderComponent } from 'devextreme-angular';
 import DataSource from 'devextreme/data/data_source';
 import ArrayStore from 'devextreme/data/array_store';
 
@@ -23,6 +23,7 @@ import ArrayStore from 'devextreme/data/array_store';
 export class DeliveryListComponent implements OnInit {
 
 	@ViewChild('fileUploader') fileUploader: DxFileUploaderComponent;
+	@ViewChild('grid') grid: DxDataGridComponent;
 
 	deliveryCompleteProcessUploadUrl = null;
 
@@ -87,6 +88,9 @@ export class DeliveryListComponent implements OnInit {
 
 	onUploaded(e) {
 		this.loader.show(false);
+		if (this.grid){
+			this.grid.instance.refresh();
+		}
 		this.showUploadDeliverySheetPopup = false;
 		this.uploadCompleteSheetResultDataSource = new DataSource({
 			store: new ArrayStore({
