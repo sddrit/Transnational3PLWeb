@@ -48,11 +48,11 @@ export class ProductListComponent implements OnInit {
 	}
 
 	canAdd() {
-		return this.authService.isAdmin;
+		return this.authService.isAdmin || this.authService.isWareHouseManager;
 	}
 
 	canEdit() {
-		return this.authService.isAdmin;
+		return this.authService.isAdmin || this.authService.isWareHouseManager;
 	}
 
 	canDisplaySupplierColumn() {

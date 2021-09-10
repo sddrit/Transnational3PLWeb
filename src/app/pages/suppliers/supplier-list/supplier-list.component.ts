@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SupplierService } from 'src/app/shared/services/supplier.service';
+import { AuthService } from '../../../shared/services';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class SupplierListComponent implements OnInit {
 
 	constructor(
 		private supplierService: SupplierService,
+		private authService: AuthService,
 		private router: Router,
 	) {
 		this.editSupplier = this.editSupplier.bind(this);
@@ -23,6 +25,14 @@ export class SupplierListComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.suppliers = this.supplierService.getSuppliers();
+	}
+
+	canAdd() {
+		return this.authService.isAdmin || this.authService.isWareHouseManager;
+	}
+
+	canUpdate() {
+		return this.authService.isAdmin || this.authService.isWareHouseManager;
 	}
 
 	openSupplier(id: number) {

@@ -3,7 +3,7 @@
 	<div class="page-header">
 		<h2>Suppliers</h2>
 		<h5>List of suppliers</h5>
-		<dx-button (onClick)="openSupplier(0)" class="btn-new-supplier" icon="icon ion-md-add" text="New Supplier" type="normal">
+		<dx-button [visible]="canAdd()" (onClick)="openSupplier(0)" class="btn-new-supplier" icon="icon ion-md-add" text="New Supplier" type="normal">
 		</dx-button>
 	</div>
 
@@ -28,7 +28,7 @@
 		<dxi-column dataField="vatNumber">
 		</dxi-column>
 		<dxi-column [width]="110" type="buttons">
-			<dxi-button visible="true" hint="Edit Supplier"
+			<dxi-button [visible]="canUpdate()" hint="Edit Supplier"
 						cssClass="default-button"
 						icon="icon ion-md-create"
 						[onClick]="editSupplier"></dxi-button>

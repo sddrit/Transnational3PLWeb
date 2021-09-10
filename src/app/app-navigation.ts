@@ -76,6 +76,11 @@ export const supplierNavigation = [
 		text: 'Invoices',
 		path: '/invoices',
 		icon: 'icon ion-md-paper'
+	},
+	{
+		text: 'Reports',
+		path: '/reports',
+		icon: 'icon ion-md-document'
 	}
 ];
 
@@ -86,6 +91,11 @@ export const userNavigations = [
 		icon: 'icon ion-md-apps'
 	},
 	{
+		text: 'Suppliers',
+		path: '/suppliers',
+		icon: 'icon ion-md-people'
+	},
+	{
 		text: 'Products',
 		path: '/products',
 		icon: 'icon ion-md-cube'
@@ -109,6 +119,11 @@ export const userNavigations = [
 		text: 'Deliveries',
 		path: '/deliveries',
 		icon: 'icon ion-md-walk'
+	},
+	{
+		text: 'Reports',
+		path: '/reports',
+		icon: 'icon ion-md-document'
 	}
 ];
 
@@ -119,6 +134,11 @@ export const wareHouseManagerNavigations = [
 		icon: 'icon ion-md-apps'
 	},
 	{
+		text: 'Suppliers',
+		path: '/suppliers',
+		icon: 'icon ion-md-people'
+	},
+	{
 		text: 'Products',
 		path: '/products',
 		icon: 'icon ion-md-cube'
@@ -142,6 +162,16 @@ export const wareHouseManagerNavigations = [
 		text: 'Deliveries',
 		path: '/deliveries',
 		icon: 'icon ion-md-walk'
+	},
+	{
+		text: 'Invoices',
+		path: '/invoices',
+		icon: 'icon ion-md-paper'
+	},
+	{
+		text: 'Reports',
+		path: '/reports',
+		icon: 'icon ion-md-document'
 	}
 ];
 

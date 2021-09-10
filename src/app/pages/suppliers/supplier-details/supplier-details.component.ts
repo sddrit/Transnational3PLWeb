@@ -162,6 +162,10 @@ export class SupplierDetailsComponent implements OnInit {
 		return arg.valueText + ' %';
 	}
 
+	canManageSupplierAccount() {
+		return this.authService.isAdmin;
+	}
+
 	private setSupplier() {
 		this.supplier = ModelHelper.newSupplier();
 		const supplierId = this.route.snapshot.paramMap.get('id');

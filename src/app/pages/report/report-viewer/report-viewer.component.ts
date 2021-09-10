@@ -27,4 +27,8 @@ export class ReportViewerComponent implements OnInit {
 	ngOnInit(): void {
 	}
 
+	beforeRender(e: any) {
+		e.args.reportPreview.zoom(1);
+	}
+
 }

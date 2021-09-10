@@ -15,6 +15,7 @@ export interface IUser {
 	username: string;
 	email: string;
 	active: boolean;
+	supplierId?: number;
 	wareHouses: number[];
 }
 

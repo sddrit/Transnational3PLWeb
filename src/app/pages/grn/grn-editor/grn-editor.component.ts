@@ -109,6 +109,8 @@ export class GrnEditorComponent implements OnInit {
 		this.purchaseOrderService.getPurchaseOrderById(purchaseOrderId).subscribe(po => {
 			if ( po.wareHouseId != null ) {
 				this.grn.wareHouseId = po.wareHouseId;
+			} else {
+				this.grn.wareHouseId = null;
 			}
 			this.grn.supplierId = po.supplierId;
 			const receivedNoteItems = po.purchaseOrderItems.map(item => {
