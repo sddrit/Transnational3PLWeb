@@ -11,6 +11,7 @@ import { ModelHelper } from 'src/app/shared/utilities/model.helper';
 import { NotifyHandler } from 'src/app/shared/utilities/notify.handler';
 import { IPickupAddressModalResponse } from './supplier-pickup-address-modal/supplier-pickup-address-modal.component';
 import CustomStore = DevExpress.data.CustomStore;
+import { IMetaData } from '../../../shared/models/metadata';
 
 @Component({
 	encapsulation: ViewEncapsulation.None,
@@ -20,6 +21,7 @@ import CustomStore = DevExpress.data.CustomStore;
 
 export class SupplierUpdateComponent {
 
+	public metaData: IMetaData;
 	public supplier: ISupplier;
 	public cityStore: CustomStore;
 
@@ -30,7 +32,7 @@ export class SupplierUpdateComponent {
 	constructor(
 		private supplierService: SupplierService,
 		private cityService: CityService,
-		private route: ActivatedRoute,
+		private activatedRoute: ActivatedRoute,
 		private router: Router,
 		private loader: LoaderHandler,
 		private notify: NotifyHandler,
@@ -38,6 +40,12 @@ export class SupplierUpdateComponent {
 	) {
 		this.cityStore = this.cityService.getCities();
 		this.setSupplier();
+	}
+
+	ngOnInit(): void {
+		this.activatedRoute.data.subscribe(data => {
+			this.metaData = data.metadata;
+		});
 	}
 
 	public backToSuppliers() {
@@ -115,7 +123,7 @@ export class SupplierUpdateComponent {
 
 	private setSupplier() {
 		this.supplier = ModelHelper.newSupplier();
-		const supplierId = this.route.snapshot.paramMap.get('id');
+		const supplierId = this.activatedRoute.snapshot.paramMap.get('id');
 
 		if ( supplierId !== '0' ) {
 			this.supplierService.getSupplierById(+supplierId).subscribe((data: ISupplier) => {

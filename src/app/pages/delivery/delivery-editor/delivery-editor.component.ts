@@ -25,7 +25,7 @@ export class DeliveryEditorComponent implements OnInit {
 
 	@ViewChild('dxDataGridDeliveryItems') dataGrid: DxDataGridComponent;
 	@ViewChild('completeForm') completeForm: DxFormComponent;
-	@ViewChild('customerReturnForm') customerReturnForm: DxFormComponent;
+	@ViewChild('returnForm') returnForm: DxFormComponent;
 
 	delivery: IDelivery;
 	supplierStore: CustomStore;
@@ -203,16 +203,24 @@ export class DeliveryEditorComponent implements OnInit {
 	}
 
 	return(e) {
-		this.returnPopupVisible = true;
 		e.event.preventDefault();
+		this.returnPopupVisible = true;
+		if (this.returnForm != null) {
+			this.returnForm.instance.resetValues();
+		}
 	}
 
 	handleReturnForm(e) {
 		e.preventDefault();
 		this.returnPopupVisible = false;
 		this.loader.show(true);
-		this.deliveryService.markAsReturn(this.delivery.id,
-			this.returnFormData.note).subscribe(() => {
+		const data = this.returnForm.instance.option('formData');
+		const trackingNumbers = Object.getOwnPropertyNames(data);
+		const selectedTrackingNumbers = trackingNumbers.filter(trackingNumber => {
+			return data[trackingNumber];
+		});
+		this.deliveryService.markAsReturn(this.delivery.id, selectedTrackingNumbers,
+			data.note).subscribe(() => {
 			this.notify.success('Successfully marked as return');
 			this.loader.show(false);
 			this.setDelivery();
@@ -270,7 +278,7 @@ export class DeliveryEditorComponent implements OnInit {
 
 	canMarkAsReturn() {
 		return this.delivery.deliveryStatus === 2 || this.delivery.deliveryStatus === 3 ||
-			this.delivery.deliveryStatus === 4;
+			this.delivery.deliveryStatus === 4 || this.delivery.deliveryStatus === 5;
 	}
 
 	disabledDates(args) {
@@ -312,6 +320,13 @@ export class DeliveryEditorComponent implements OnInit {
 			return [];
 		}
 		return this.delivery.deliveryTrackings.filter(item => item.status === 1);
+	}
+
+	getReturnTrackings() {
+		if (this.delivery == null || this.delivery.deliveryTrackings == null) {
+			return [];
+		}
+		return this.delivery.deliveryTrackings.filter(item => item.status === 1 || item.status === 2);
 	}
 
 	canOperate() {

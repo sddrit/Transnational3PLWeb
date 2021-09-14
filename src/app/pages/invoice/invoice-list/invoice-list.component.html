@@ -36,7 +36,7 @@
 		</dxi-column>
 		<dxi-column dataField="paid">
 		</dxi-column>
-		<dxi-column alignment="right" type="buttons">
+		<dxi-column alignment="center" type="buttons">
 			<dxi-button text="Manual Charges" cssClass="default-button" [visible]="canAddManualCharges" [onClick]="manualCharge" icon="edit">
 			</dxi-button>
 			<dxi-button text="Mark as Paid" cssClass="default-button" [visible]="canMarkAsPaid" [onClick]="markAsPaid" icon="check">
@@ -50,14 +50,12 @@
 		[width]="900"
 		[height]="'auto'"
 		[showTitle]="true"
-		title="Manual Charges"
+		title="Configure Manual Charges Of The Invoice"
 		[dragEnabled]="false"
 		[closeOnOutsideClick]="false"
 		[showCloseButton]="true"
 		[(visible)]="showManualChargePopup">
 		<div *dxTemplate="let data of 'content'">
-			<p class="popup-message">Configure the manual charges of this Invoice</p>
-			<br/>
 			<div *ngIf="currentInvoice">
 				<dx-form
 					labelLocation="left"
@@ -91,9 +89,14 @@
 					<dxi-column [allowSorting]="false"  dataField="description">
 						<dxi-validation-rule message="Description is required" type="required"></dxi-validation-rule>
 					</dxi-column>
-					<dxi-column [allowSorting]="false" width="100"  dataField="amount" dataType="number">
-						<dxi-validation-rule message="Amount is required" type="required"></dxi-validation-rule>
+					<dxi-column [allowSorting]="false" width="100"  dataField="quantity" dataType="number">
+						<dxi-validation-rule message="Quantity is required" type="required"></dxi-validation-rule>
 					</dxi-column>
+					<dxi-column [allowSorting]="false" width="100"  dataField="rate" dataType="number">
+						<dxi-validation-rule message="Rate is required" type="required"></dxi-validation-rule>
+					</dxi-column>
+					<dxi-column [allowEditing]="false" [calculateCellValue]='calcualteTotal' [width]="100" alignment="right"
+									 caption="Amount" dataType="total" name="amount"></dxi-column>
 				</dx-data-grid>
 				<br/><br/>
 				<dx-button type="success"

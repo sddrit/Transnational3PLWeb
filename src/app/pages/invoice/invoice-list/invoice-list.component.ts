@@ -87,12 +87,23 @@ export class InvoiceListComponent implements OnInit {
 		});
 	}
 
+	calcualteTotal(rowData) {
+		if ( rowData == null ) {
+			return 0;
+		}
+		if ( ! (rowData.rate) || ! (rowData.quantity) ) {
+			return 0;
+		}
+		return rowData.rate * rowData.quantity;
+	}
+
 	saveManualChanges() {
 		this.loader.show(true);
 		this.invoiceService.updateInvoice(this.currentInvoice.id, this.currentInvoiceItems.map(item => {
 			return {
 				description: item.description,
-				amount: item.amount,
+				rate: item.rate,
+				quantity: item.quantity,
 				type: 3,
 				date: null,
 				id: item.id
@@ -109,7 +120,7 @@ export class InvoiceListComponent implements OnInit {
 	}
 
 	canAddManualCharges(e) {
-		return !this.isSupplier();
+		return !this.isSupplier() && !e.row.data.paid;
 	}
 
 	isSupplier() {

@@ -29,4 +29,8 @@ export class InvoiceDetailsComponent implements OnInit {
 		this.router.navigate(['/invoices']);
 	}
 
+	beforeRender(e: any) {
+		e.args.reportPreview.zoom(1);
+	}
+
 }

@@ -44,7 +44,12 @@ export interface IPurchaseOrderType {
 	name: string;
 }
 
-export interface TrackingStatus {
+export interface ITrackingStatus {
+	id: number;
+	name: string;
+}
+
+export interface ITaxType {
 	id: number;
 	name: string;
 }
@@ -59,6 +64,7 @@ export interface IMetaData {
 	deliveryTypes: IDeliveryType[];
 	unitOfMeasures: IUnitOfMeasure[];
 	purchaseOrderStatus: IPurchaseOrderType[];
-	trackingStatus: TrackingStatus[];
+	trackingStatus: ITrackingStatus[];
+	taxTypes: ITaxType[];
 	roles: string[];
 }

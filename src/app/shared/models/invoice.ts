@@ -3,7 +3,8 @@ export interface IInvoiceItem {
 	date?: Date;
 	type: number;
 	description: string;
-	amount: number;
+	rate: number;
+	quantity: number;
 }
 
 export interface IInvoice {

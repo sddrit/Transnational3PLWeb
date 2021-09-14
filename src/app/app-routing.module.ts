@@ -82,7 +82,10 @@ const routes: Routes = [
 	{
 		path: 'supplier/:id',
 		component: SupplierUpdateComponent,
-		canActivate: [AuthGuardService]
+		canActivate: [AuthGuardService],
+		resolve: {
+			metadata: MetadataResolver
+		}
 	},
 	{
 		path: 'supplier/view/:id',

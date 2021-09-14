@@ -19,7 +19,12 @@
 					</dx-check-box>
 				</dxi-item>
 				<dxi-item dataField="businessRegistrationId"></dxi-item>
-				<dxi-item dataField="vatNumber"></dxi-item>
+				<dxi-item
+						  [editorOptions]="{ dataSource: metaData.taxTypes, displayExpr: 'name', valueExpr: 'id' }"
+						  [isRequired]="true"
+						  [label]="{ text: 'Status' }" dataField="taxType" editorType="dxSelectBox">
+				</dxi-item>
+				<dxi-item [label]="{text: 'VAT / SVAT Number'}" dataField="vatNumber"></dxi-item>
 				<dxi-item [colSpan]="2" itemType="empty"></dxi-item>
 				<dxi-item [colSpan]="2" itemType="empty"></dxi-item>
 				<dxi-item caption="Contact information" [colCount]="2" itemType="group">

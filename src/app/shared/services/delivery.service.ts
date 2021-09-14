@@ -82,9 +82,9 @@ export class DeliveryService extends BaseService {
 			.pipe(catchError(e => this.handleError(e, 'Mark as complete')));
 	}
 
-	public markAsReturn(deliveryId: number, note: string) {
+	public markAsReturn(deliveryId: number, trackingNumbers: string[], note: string) {
 		return this.http.post(this.apiUrl + '/Delivery/mark-as-return',
-			{ deliveryId, note })
+			{ deliveryId, note, trackingNumbers })
 			.pipe(catchError(e => this.handleError(e, 'Mark as return')));
 	}
 

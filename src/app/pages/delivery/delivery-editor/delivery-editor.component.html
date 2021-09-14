@@ -378,7 +378,11 @@
 			<form (submit)="handleReturnForm($event)">
 				<p class="popup-message">Enter your note for return the delivery</p>
 				<br/>
-				<dx-form [showColonAfterLabel]="true" [formData]="returnFormData" labelLocation="top">
+				<dx-form #returnForm [showColonAfterLabel]="true" [formData]="returnFormData" labelLocation="left">
+					<dxi-item
+						*ngFor="let tracking of getReturnTrackings()" [dataField]="tracking.trackingNumber"
+						editorType="dxCheckBox">
+					</dxi-item>
 					<dxi-item dataField="note" editorType="dxTextArea">
 						<dxi-validation-rule type="required"
 											 message="Note is required">
