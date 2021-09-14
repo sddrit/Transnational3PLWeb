@@ -14,21 +14,21 @@
 		<br/>
 		<form (submit)="handleSubmit($event)">
 			<dx-form [(formData)]="stockTransfer" id="form" labelLocation="top">
-				<dxi-item [editorOptions]="{ dataSource: warehouseStore, displayExpr: 'name', valueExpr: 'id',
+				<dxi-item [label]="{text: 'Warehouse'}" [editorOptions]="{ dataSource: warehouseStore, displayExpr: 'name', valueExpr: 'id',
 					searchEnabled: true, searchExpr: ['code', 'name'], fieldTemplate: 'warehouseField',
 					itemTemplate: 'warehouseField', readOnly: true }"
 						  [isRequired]="true"
-						  [label]="{ text: 'WareHouse' }" dataField="wareHouseId" editorType="dxLookup">
+						  dataField="wareHouseId" editorType="dxLookup">
 				</dxi-item>
 				<div *dxTemplate="let item of 'warehouseField'">
 					<div>{{item?.code}} - {{item?.name}}</div>
 				</div>
-				<dxi-item caption="Product Name" dataField="productId"
+				<dxi-item [label]="{text: 'Product Name'}" dataField="productId"
 						  [editorOptions]="{ dataSource: productStore, displayExpr: 'name', valueExpr: 'id',
 						  searchEnabled: true, searchExpr: ['name'], readOnly: true }"
 						  editorType="dxLookup" [isRequired]="true">
 				</dxi-item>
-				<dxi-item dataField="quantity" dataType="number" [isRequired]="true">
+				<dxi-item [label]="{text: 'Good Condition Quantity'}" dataField="quantity" dataType="number" [isRequired]="true">
 				</dxi-item>
 				<dxi-item dataField="damageQuantity" dataType="number" [isRequired]="true">
 				</dxi-item>

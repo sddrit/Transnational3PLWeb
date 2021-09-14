@@ -116,7 +116,10 @@
 
 	<br/><br/><br/>
 
-	<div class="ware-house-space-container">
+	<div *ngIf="!isSupplier" class="ware-house-space-container">
+
+		<h3 class="dashboard-title">Warehouses Utilization Analysis</h3>
+
 		<dx-pie-chart *ngFor="let warehouse of warehouseStorageInfo" class="pie"
 					  [title]="warehouse.title"
 					  [dataSource]="warehouse.spaces"
@@ -127,7 +130,8 @@
 				pla
 				argumentField="name"
 				valueField="value">
-				<dxo-label [visible]="true" [customizeText]="customizePieChartLabel"></dxo-label>
+				<dxo-label [visible]="true" [customizeText]="customizePieChartLabel">
+				</dxo-label>
 			</dxi-series>
 			<dxo-legend verticalAlignment="bottom"
 						horizontalAlignment="center"

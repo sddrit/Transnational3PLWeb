@@ -164,7 +164,7 @@
 
 		<div class="pie-chart">
 			<h4 class="total-used-title">Total Used Percentage</h4>
-			<h1 class="total-used-pecentage-val">{{ (supplierStorageDetails.totalStorage/supplierStorageDetails.allocatedStorage) * 100 }}%</h1>
+			<h1 class="total-used-pecentage-val">{{ ((supplierStorageDetails.totalStorage/supplierStorageDetails.allocatedStorage) * 100).toFixed(2) }}%</h1>
 		</div>
 
 	</div>

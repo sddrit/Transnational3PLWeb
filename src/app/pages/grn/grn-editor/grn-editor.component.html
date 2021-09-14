@@ -29,15 +29,17 @@
 						  [label]="{ text: 'Grn Type' }" dataField="type" editorType="dxSelectBox">
 				</dxi-item>
 				<dxi-item [visible]="grn.type == 0" [colSpan]="2" [editorOptions]="{ dataSource: purchaseOrderStore,
-												displayExpr: 'poNumber', valueExpr: 'id', onValueChanged: onPurchaseOrderChange, visible: grn.type == 0 }"
+												displayExpr: 'poNumber', valueExpr: 'id', onValueChanged: onPurchaseOrderChange, visible: grn.type == 0,
+												fieldTemplate: 'purchaseOrderField', itemTemplate: 'purchaseOrderField'}"
 						  [isRequired]="false"
-						  [label]="{ text: 'PO Number' }" dataField="purchaseOrderId" editorType="dxSelectBox">
+						  [label]="{ text: 'PO Number' }" dataField="purchaseOrderId" editorType="dxLookup">
 				</dxi-item>
 				<dxi-item [visible]="grn.type == 1" [colSpan]="2" [editorOptions]="{ dataSource: grnStore,
 												displayExpr: 'grnNo', valueExpr: 'id', onValueChanged: onGrnChange, visible: grn.type == 1 }"
 						  [isRequired]="false"
 						  [label]="{ text: 'Grn Received Number' }" dataField="returnGoodReceivedNoteId" editorType="dxSelectBox">
 				</dxi-item>
+				<dxi-item [colSpan]="2" dataField="supplierInvoiceNumber"></dxi-item>
 				<dxi-item [colSpan]="2" [editorOptions]="{ dataSource: warehouseStore, displayExpr: 'name', valueExpr: 'id', searchEnabled: true, searchExpr: ['code', 'name'],
 					fieldTemplate: 'warehouseField', itemTemplate: 'warehouseField'}"
 						  [isRequired]="true"
@@ -57,6 +59,10 @@
 
 			<div *dxTemplate="let item of 'warehouseField'">
 				<div>{{item?.code}} - {{item?.name}}</div>
+			</div>
+
+			<div *dxTemplate="let item of 'purchaseOrderField'">
+				<div>{{item?.poNumber}}</div>
 			</div>
 
 			<dxi-item [colSpan]="4" caption="GRN Items" itemType="group">

@@ -59,7 +59,8 @@ export class GrnEditorComponent implements OnInit {
 		this.warehouseStore = this.warehouseService.getWarehouses();
 		this.purchaseOrderStore = new DataSource({
 			store: this.purchaseOrderService.getPurchaseOrders(),
-			filter: ['status', '<>', 2]
+			filter: ['status', '<>', 2],
+			sort: [{ selector: 'created', desc: true }]
 		});
 		this.grnStore = new DataSource({
 			store: this.grnServie.getGrns(),

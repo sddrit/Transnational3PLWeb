@@ -2,6 +2,7 @@ export interface IGrn {
 	id: number;
 	type: number;
 	grnNo: string;
+	supplierInvoiceNumber: string;
 	purchaseOrderId?: number;
 	returnGoodReceivedNoteId?: number;
 	created: Date;

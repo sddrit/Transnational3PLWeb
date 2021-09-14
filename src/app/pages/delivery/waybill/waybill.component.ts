@@ -30,4 +30,8 @@ export class WaybillComponent implements OnInit {
 		this.router.navigate([`/delivery/${id}`]);
 	}
 
+	beforeRender(e: any) {
+		e.args.reportPreview.zoom(1);
+	}
+
 }

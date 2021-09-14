@@ -49,6 +49,7 @@ export class HomeComponent {
 				this.pendingCount = this.getDayStat(0);
 				this.processingCount = this.getDayStat(1);
 				this.dispatchedCount = this.getDayStat(2);
+				this.partiallyCompletedCount = this.getDayStat(3);
 				this.completedCount = this.getDayStat(4);
 				this.returnCount = this.getDayStat(5);
 				this.loader.show(false);
@@ -96,11 +97,15 @@ export class HomeComponent {
 	}
 
 	customizePieChartLabel(arg) {
-		return arg.percentText;
+		return (arg.percent * 100).toFixed(3) + '%';
 	}
 
 	screen(width) {
 		return ( width < 700 ) ? 'sm' : 'lg';
+	}
+
+	get isSupplier() {
+		return this.authService.isSupplier;
 	}
 
 	private setMonthlyDeliveryStat() {

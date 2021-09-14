@@ -345,6 +345,6 @@ export class DeliveryEditorComponent implements OnInit {
 	}
 
 	private getNewDelivery() {
-		return { id: 0, deliveryItems: [], deliveryStatus: 0, supplierId: null, wareHouseId: null, deliveryCustomer: {} } as IDelivery;
+		return { id: 0, deliveryDate: new Date(), deliveryItems: [], deliveryStatus: 0, supplierId: null, wareHouseId: null, deliveryCustomer: {} } as IDelivery;
 	}
 }
