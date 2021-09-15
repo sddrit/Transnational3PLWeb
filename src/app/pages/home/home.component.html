@@ -77,13 +77,13 @@
 
 	<br/><br/>
 
-	<div *ngIf="monthlyDeliveryStat">
+	<div *ngIf="weeklyDeliveryStat">
 		<dx-chart
-			palette="Soft Blue"
-			paletteExtensionMode="Blend"
-			id="monthly-delivery-stat"
-			title="Monthly Delivery Statistics"
-			[dataSource]="monthlyDeliveryStat">
+			palette="soft"
+			id="weekly-delivery-stat"
+			title="Weekly Delivery Statistics"
+			[rotated]="true"
+			[dataSource]="weeklyDeliveryStat">
 			<dxi-series valueField="Pending" name="Pending"></dxi-series>
 			<dxi-series valueField="Processing" name="Processing"></dxi-series>
 			<dxi-series valueField="Dispatched" name="Dispatched"></dxi-series>
@@ -92,18 +92,18 @@
 			<dxi-series valueField="Return" name="Return"></dxi-series>
 			<dxi-series valueField="Partially Customer Return" name="Partially Customer Return"></dxi-series>
 			<dxi-series valueField="Customer Return" name="Customer Return"></dxi-series>
-			<dxi-value-axis position="right">
+			<dxi-value-axis [valueType]="'numeric'" [visible]="false" [allowDecimals]="false" position="right">
 				<dxo-title text="Delivery Counts"></dxo-title>
 			</dxi-value-axis>
 			<dxo-common-series-settings
+				[barWidth]="10"
+				[barPadding]="1"
 				argumentField="date"
-				type="stackedBar">
+				type="bar">
 			</dxo-common-series-settings>
-			<dxo-argument-axis [label]="{ format: 'shortDate', displayMode: 'stagger'}"></dxo-argument-axis>
 			<dxo-legend
 				verticalAlignment="bottom"
-				horizontalAlignment="center"
-				itemTextPosition="top">
+				horizontalAlignment="center">
 			</dxo-legend>
 			<dxo-export [enabled]="true"></dxo-export>
 			<dxo-tooltip
@@ -123,8 +123,7 @@
 		<dx-pie-chart *ngFor="let warehouse of warehouseStorageInfo" class="pie"
 					  [title]="warehouse.title"
 					  [dataSource]="warehouse.spaces"
-					  palette="Soft Blue"
-					  paletteExtensionMode="Blend"
+					  palette="soft"
 					  sizeGroup="piesGroup">
 			<dxi-series
 				pla

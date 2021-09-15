@@ -56,7 +56,7 @@ export interface IDeliveryTrackingItem {
 
 export interface IDeliveryStat {
 	dayStat: IDeliveryStatItem[];
-	monthlyStat: IMonthyDeliveryStateItem[];
+	weeklyStat: IMonthyDeliveryStateItem[];
 }
 
 export interface IMonthyDeliveryStateItem {

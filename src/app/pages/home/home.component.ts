@@ -7,6 +7,7 @@ import { IMetaData } from '../../shared/models/metadata';
 import { IWareHouseStorageInfo } from '../../shared/models/warehouse';
 import { WarehouseService } from '../../shared/services/warehouse.service';
 import { AuthService } from '../../shared/services';
+import * as moment from 'moment';
 
 @Component({
 	templateUrl: 'home.component.html',
@@ -25,7 +26,7 @@ export class HomeComponent {
 	completedCount: number = 0;
 	returnCount: number = 0;
 
-	monthlyDeliveryStat: any;
+	weeklyDeliveryStat: any;
 	warehouseStorageInfo: any;
 
 	constructor(
@@ -45,7 +46,7 @@ export class HomeComponent {
 		this.deliveryService.getDeliveryStat()
 			.subscribe(stat => {
 				this.deliveryStat = stat;
-				this.setMonthlyDeliveryStat();
+				this.setWeeklyDeliveryStat();
 				this.pendingCount = this.getDayStat(0);
 				this.processingCount = this.getDayStat(1);
 				this.dispatchedCount = this.getDayStat(2);
@@ -108,18 +109,18 @@ export class HomeComponent {
 		return this.authService.isSupplier;
 	}
 
-	private setMonthlyDeliveryStat() {
-		this.monthlyDeliveryStat = this.deliveryStat.monthlyStat.map(stat => {
-			const monthlyStatItem = {
-				date: new Date(stat.date)
+	private setWeeklyDeliveryStat() {
+		this.weeklyDeliveryStat = this.deliveryStat.weeklyStat.map(stat => {
+			const weeklyStatItem = {
+				date: moment(stat.date).format('YYYY/MM/DD')
 			};
 			stat.deliveryStats.map(deliveryStat => {
 				const deliveryStatusName = this.metaData.deliveryStatus.filter(item => {
 					return item.id === deliveryStat.status;
 				})[0].name;
-				monthlyStatItem[deliveryStatusName] = deliveryStat.count;
+				weeklyStatItem[deliveryStatusName] = deliveryStat.count;
 			});
-			return monthlyStatItem;
+			return weeklyStatItem;
 		});
 	}
 }
