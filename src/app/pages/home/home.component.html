@@ -18,6 +18,8 @@
 			</dxi-col>
 			<dxi-col [ratio]="1">
 			</dxi-col>
+			<dxi-col [ratio]="1">
+			</dxi-col>
 			<dxi-item>
 				<dxi-location [row]="0" [col]="0"></dxi-location>
 				<div *dxTemplate class="header item">
@@ -67,6 +69,15 @@
 				<dxi-location [row]="0" [col]="5"></dxi-location>
 				<div *dxTemplate class="header item">
 					<div class="day-stat-box">
+						<p class="day-stat-count">{{this.partiallyReturnCount}}</p>
+						<p class="day-stat-name">Partially Return</p>
+					</div>
+				</div>
+			</dxi-item>
+			<dxi-item>
+				<dxi-location [row]="0" [col]="6"></dxi-location>
+				<div *dxTemplate class="header item">
+					<div class="day-stat-box">
 						<p class="day-stat-count">{{this.returnCount}}</p>
 						<p class="day-stat-name">Return</p>
 					</div>
@@ -89,9 +100,8 @@
 			<dxi-series valueField="Dispatched" name="Dispatched"></dxi-series>
 			<dxi-series valueField="Partially Completed" name="Partially Completed"></dxi-series>
 			<dxi-series valueField="Completed" name="Completed"></dxi-series>
+			<dxi-series valueField="Partially Return" name="Partially Return"></dxi-series>
 			<dxi-series valueField="Return" name="Return"></dxi-series>
-			<dxi-series valueField="Partially Customer Return" name="Partially Customer Return"></dxi-series>
-			<dxi-series valueField="Customer Return" name="Customer Return"></dxi-series>
 			<dxi-value-axis [valueType]="'numeric'" [visible]="false" [allowDecimals]="false" position="right">
 				<dxo-title text="Delivery Counts"></dxo-title>
 			</dxi-value-axis>

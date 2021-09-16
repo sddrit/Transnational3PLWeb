@@ -24,6 +24,7 @@ export class HomeComponent {
 	dispatchedCount: number = 0;
 	partiallyCompletedCount: number = 0;
 	completedCount: number = 0;
+	partiallyReturnCount: number = 0;
 	returnCount: number = 0;
 
 	weeklyDeliveryStat: any;
@@ -52,7 +53,8 @@ export class HomeComponent {
 				this.dispatchedCount = this.getDayStat(2);
 				this.partiallyCompletedCount = this.getDayStat(3);
 				this.completedCount = this.getDayStat(4);
-				this.returnCount = this.getDayStat(5);
+				this.partiallyReturnCount = this.getDayStat(5);
+				this.returnCount = this.getDayStat(6);
 				this.loader.show(false);
 			});
 		this.warehouseService.getWareHouseStorageInfo().subscribe(warehouseStorageInfos => {
@@ -122,5 +124,6 @@ export class HomeComponent {
 			});
 			return weeklyStatItem;
 		});
+		console.log(this.weeklyDeliveryStat);
 	}
 }
