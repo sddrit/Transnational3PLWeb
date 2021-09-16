@@ -59,6 +59,7 @@ import { GrnViewComponent } from './pages/grn/grn-view/grn-view.component';
 import { TransferStockPopupComponent } from './pages/products/components/transfer-stock-popup/transfer-stock-popup.component';
 import { PurchaseOrderPrintComponent } from './pages/purchase-order/purchase-order-print-viewer/purchase-order-print.component';
 import { ReportListComponent } from './pages/report/report-list/report-list.component';
+import { LogViewComponent } from './pages/logs/log-view/log-view.component';
 
 
 const routes: Routes = [
@@ -245,6 +246,11 @@ const routes: Routes = [
 		}
 	},
 	{
+		path: 'logs',
+		component: LogViewComponent,
+		canActivate: [AuthGuardService]
+	},
+	{
 		path: '**',
 		redirectTo: 'home'
 	}
@@ -303,7 +309,8 @@ const routes: Routes = [
 		CreateAccountPopupComponent,
 		SupplierDetailsComponent,
 		TransferStockPopupComponent,
-		ReportListComponent
+		ReportListComponent,
+		LogViewComponent
 	]
 })
 export class AppRoutingModule {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import {
@@ -29,6 +29,8 @@ import { StockService } from './shared/services/stock.service';
 import { StockTransferService } from './shared/services/stocktransfer.service';
 import { DeliveryService } from './shared/services/delivery.service';
 import { InvoiceService } from './shared/services/invoice.service';
+import { AppHttpInterceptor } from './shared/utilities/AppHttpInterceptor';
+import { LogService } from './shared/services/log.service';
 
 export function tokenGetter() {
 	return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -36,7 +38,7 @@ export function tokenGetter() {
 
 @NgModule({
 	declarations: [
-		AppComponent,
+		AppComponent
 	],
 	imports: [
 		BrowserModule,
@@ -71,7 +73,9 @@ export function tokenGetter() {
 		MetadataService,
 		MetadataResolver,
 		DeliveryService,
-		InvoiceService
+		InvoiceService,
+		LogService,
+		{ provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true }
 	],
 	exports: [],
 	bootstrap: [AppComponent]

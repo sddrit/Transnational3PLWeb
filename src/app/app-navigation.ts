@@ -53,6 +53,11 @@ export const adminNavigation = [
 		text: 'Users',
 		path: '/users',
 		icon: 'icon ion-md-person'
+	},
+	{
+		text: 'Logs',
+		path: '/logs',
+		icon: 'icon ion-md-bug'
 	}
 ];
 
