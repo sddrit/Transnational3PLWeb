@@ -63,6 +63,10 @@ export class DeliveryEditorComponent implements OnInit {
 		note: null
 	};
 
+	completeFormData = {
+
+	};
+
 	customerReturnFormData = {
 		note: null
 	};
@@ -203,10 +207,15 @@ export class DeliveryEditorComponent implements OnInit {
 	}
 
 	return(e) {
+		this.returnFormData = {
+			note: null
+		};
 		e.event.preventDefault();
 		this.returnPopupVisible = true;
 		if (this.returnForm != null) {
-			this.returnForm.instance.resetValues();
+			setTimeout(() => {
+				this.returnForm.instance.resetValues();
+			}, 100);
 		}
 	}
 
@@ -217,7 +226,7 @@ export class DeliveryEditorComponent implements OnInit {
 		const data = this.returnForm.instance.option('formData');
 		const trackingNumbers = Object.getOwnPropertyNames(data);
 		const selectedTrackingNumbers = trackingNumbers.filter(trackingNumber => {
-			return data[trackingNumber];
+			return data[trackingNumber] === true;
 		});
 		this.deliveryService.markAsReturn(this.delivery.id, selectedTrackingNumbers,
 			data.note).subscribe(() => {
@@ -228,10 +237,14 @@ export class DeliveryEditorComponent implements OnInit {
 	}
 
 	markAsComplete(e) {
+		this.completeFormData = {
+		};
 		e.event.preventDefault();
 		this.completePopupVisible = true;
 		if (this.completeForm != null) {
-			this.completeForm.instance.resetValues();
+			setTimeout(() => {
+				this.completeForm.instance.resetValues();
+			}, 100);
 		}
 	}
 
@@ -315,14 +328,14 @@ export class DeliveryEditorComponent implements OnInit {
 		});
 	}
 
-	getDispatchedTrackings() {
+	get DispatchedTrackings() {
 		if (this.delivery == null || this.delivery.deliveryTrackings == null) {
 			return [];
 		}
 		return this.delivery.deliveryTrackings.filter(item => item.status === 1);
 	}
 
-	getReturnTrackings() {
+	get ReturnTrackings() {
 		if (this.delivery == null || this.delivery.deliveryTrackings == null) {
 			return [];
 		}

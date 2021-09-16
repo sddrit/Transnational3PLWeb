@@ -346,9 +346,9 @@
 			<p class="popup-message">Select the completed tracking numbers</p>
 			<br/>
 			<form (submit)="handleComplete($event)">
-				<dx-form #completeForm labelLocation="left">
+				<dx-form #completeForm [formData]="completeFormData" labelLocation="left">
 					<dxi-item
-						*ngFor="let tracking of getDispatchedTrackings()" [dataField]="tracking.trackingNumber"
+						*ngFor="let tracking of DispatchedTrackings" [dataField]="tracking.trackingNumber"
 						editorType="dxCheckBox">
 					</dxi-item>
 
@@ -380,7 +380,7 @@
 				<br/>
 				<dx-form #returnForm [showColonAfterLabel]="true" [formData]="returnFormData" labelLocation="left">
 					<dxi-item
-						*ngFor="let tracking of getReturnTrackings()" [dataField]="tracking.trackingNumber"
+						*ngFor="let tracking of ReturnTrackings" [dataField]="tracking.trackingNumber"
 						editorType="dxCheckBox">
 					</dxi-item>
 					<dxi-item dataField="note" editorType="dxTextArea">
