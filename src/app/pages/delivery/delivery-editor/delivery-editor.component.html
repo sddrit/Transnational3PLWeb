@@ -422,11 +422,9 @@
 				<dxo-paging [pageSize]="10"></dxo-paging>
 				<dxo-pager [showInfo]="true" [showPageSizeSelector]="true"></dxo-pager>
 				<dxo-filter-row [visible]="true"></dxo-filter-row>
-				<dxi-column dataField="receiverNumber"></dxi-column>
-				<dxi-column caption="Location" dataField="toLocation"></dxi-column>
-				<dxi-column dataField="area"></dxi-column>
-				<dxi-column dataField="receiverName"></dxi-column>
-				<dxi-column dataField="receiverAddress"></dxi-column>
+				<dxi-column dataField="statusDate" dataType="datetime"></dxi-column>
+				<dxi-column dataField="hub"></dxi-column>
+				<dxi-column dataField="status"></dxi-column>
 			</dx-data-grid>
 		</div>
 	</dx-popup>
