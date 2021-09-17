@@ -73,7 +73,7 @@ export class ProductUpdateComponent implements OnInit {
 	}
 
 	private getNewProduct() {
-		return { id: 0 } as IProduct;
+		return { id: 0, weight: 0, width: 0, height: 0, reorderLevel: 0, unitPrice: 0, length: 0 } as IProduct;
 	}
 
 }

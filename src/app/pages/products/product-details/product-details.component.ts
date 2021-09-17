@@ -67,6 +67,8 @@ export class ProductDetailsComponent {
 			this.productService.getProductById(+productId).subscribe(product => {
 				this.product = product;
 			});
+		} else {
+			this.product = this.getNewProduct();
 		}
 	}
 
@@ -100,9 +102,12 @@ export class ProductDetailsComponent {
 		this.productStocksSection.refresh();
 	}
 
-	// tslint:disable-next-line:indent
 	 onTransferStockModalCancel(): void {
 		this.showTransferStockModal = false;
+	}
+
+	private getNewProduct() {
+		return { id: 0 } as IProduct;
 	}
 
 }
