@@ -1,6 +1,6 @@
 export const environment = {
 	production: true,
-	apiUrl: 'http://3pl.transnational-lk.local:8101/api',
-	apiDomainName: '3pl.transnational-lk.local:8101',
-	reportHostUrl: 'http://3pl.transnational-lk.local:8101'
+	apiUrl: 'https://3pl-pronto-api.transnational-lk.com/api',
+	apiDomainName: '3pl-pronto-api.transnational-lk.com',
+	reportHostUrl: 'https://3pl-pronto-api.transnational-lk.com'
 };
