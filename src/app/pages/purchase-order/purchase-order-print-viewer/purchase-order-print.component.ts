@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from '../../../../environments/environment';
 import { PurchaseOrderService } from '../../../shared/services/purchaseorder.service';
+import { getReportUrl } from '../../../shared/utilities/report.helper';
 
 @Component({
 	selector: 'app-stock-balance-report',
@@ -13,7 +13,7 @@ export class PurchaseOrderPrintComponent implements OnInit {
 
 	title = 'Purchase Order';
 	reportUrl = '';
-	hostUrl = `${environment.reportHostUrl}/`;
+	hostUrl = getReportUrl();
 	invokeAction = 'DXXRDV';
 
 	constructor(private route: ActivatedRoute,

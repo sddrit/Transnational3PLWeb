@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from '../../../../environments/environment';
+import { getReportUrl } from '../../../shared/utilities/report.helper';
 
 @Component({
 	selector: 'app-stock-balance-report',
@@ -13,7 +13,7 @@ export class WaybillComponent implements OnInit {
 
 	title = 'WayBill';
 	reportUrl = '';
-	hostUrl = `${environment.reportHostUrl}/`;
+	hostUrl = getReportUrl();
 	invokeAction = 'DXXRDV';
 
 	constructor(private route: ActivatedRoute,

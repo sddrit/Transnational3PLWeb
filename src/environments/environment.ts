@@ -6,7 +6,10 @@ export const environment = {
 	production: false,
 	apiUrl: 'https://localhost:44361/api',
 	apiDomainName: 'localhost:44361',
-	reportHostUrl: 'https://localhost:44361'
+	reportHostUrl: 'https://localhost:44361',
+	localApiUrl: 'http://3pl.transnational-lk.local:8101/api',
+	localApiDomainName: '3pl.transnational-lk.local:8101',
+	localReportHostUrl: 'http://3pl.transnational-lk.local:8101'
 };
 
 /*

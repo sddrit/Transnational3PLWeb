@@ -9,7 +9,8 @@ import { LoaderHandler } from '../utilities/loader.handler';
 
 @Injectable()
 export class BaseService {
-	public apiUrl: string = environment.apiUrl;
+	public apiUrl: string = location.host.toLocaleLowerCase().includes('.local') ?
+		environment.localApiUrl : environment.apiUrl;
 
 	constructor(
 		public notify: NotifyHandler,

@@ -52,7 +52,7 @@ export function tokenGetter() {
 		JwtModule.forRoot({
 			config: {
 				tokenGetter,
-				allowedDomains: [environment.apiDomainName]
+				allowedDomains: [environment.apiDomainName, environment.localApiDomainName]
 			},
 		})
 	],
